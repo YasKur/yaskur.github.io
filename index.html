@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Приветствие</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Пригласительный | София</title>
+    <!-- Романтичный шрифт и базовые стили -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,115 +17,344 @@
 
         body {
             min-height: 100vh;
+            background: linear-gradient(145deg, #fce9f0 0%, #fbd9e5 100%);
+            font-family: 'Quicksand', sans-serif;
             display: flex;
-            justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
-            padding: 1rem;
+            justify-content: center;
+            padding: 20px;
+            /* нежные искорки на фоне — только CSS, без перегрузки */
+            position: relative;
         }
 
-        .greeting-card {
-            max-width: 600px;
+        /* декоративный слой — едва заметные сердечки */
+        body::before {
+            content: "❤️ ❤️ ❤️";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 24px;
+            letter-spacing: 15px;
+            opacity: 0.08;
+            white-space: nowrap;
+            transform: rotate(-8deg);
+            pointer-events: none;
+        }
+
+        body::after {
+            content: "❤️ ❤️ ❤️";
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 28px;
+            letter-spacing: 18px;
+            opacity: 0.08;
+            white-space: nowrap;
+            transform: rotate(5deg);
+            pointer-events: none;
+        }
+
+        .invitation-card {
+            max-width: 440px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 2.5rem;
-            padding: 3rem 2.5rem;
-            box-shadow: 0 25px 50px -8px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            background: rgba(255, 245, 248, 0.7);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 48px 48px 48px 48px;
+            box-shadow: 0 20px 60px rgba(180, 80, 110, 0.2),
+            0 8px 24px rgba(200, 100, 130, 0.15),
+            inset 0 1px 4px rgba(255, 255, 255, 0.6);
+            padding: 32px 28px 40px;
+            border: 1px solid rgba(255, 220, 230, 0.5);
+            position: relative;
+            transition: all 0.2s ease;
             text-align: center;
-            transition: transform 0.3s ease;
         }
 
-        .greeting-card:hover {
-            transform: scale(1.02);
+        /* декоративный конвертик/рамка */
+        .invitation-card::before {
+            content: "💌";
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 42px;
+            filter: drop-shadow(0 8px 12px rgba(200, 80, 120, 0.2));
+            background: #fce9f0;
+            padding: 0 12px;
+            border-radius: 60px;
+            line-height: 1;
         }
 
-        .greeting-icon {
-            font-size: 4.5rem;
-            margin-bottom: 0.75rem;
-            display: block;
+        /* дополнительный акцент */
+        .invitation-card::after {
+            content: "";
+            position: absolute;
+            top: 18px;
+            left: 20px;
+            right: 20px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #f7b0c4, #f5a0b8, #f7b0c4, transparent);
+            opacity: 0.3;
+            border-radius: 10px;
+        }
+
+        .header-icon {
+            font-size: 28px;
+            margin-top: 12px;
+            margin-bottom: 6px;
+            letter-spacing: 4px;
+            opacity: 0.7;
         }
 
         h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            color: #ffffff;
-            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            letter-spacing: -0.02em;
-            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            font-size: 2.2rem;
+            color: #7a3b4f;
+            margin: 8px 0 6px;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 8px rgba(200, 100, 130, 0.1);
+            word-break: break-word;
         }
 
-        .greeting-sub {
-            font-size: 1.25rem;
-            color: rgba(255, 255, 255, 0.85);
+        .subhead {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
             font-weight: 400;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            padding-bottom: 1.25rem;
+            font-size: 1.0rem;
+            color: #b26a7e;
+            margin-top: -4px;
+            margin-bottom: 22px;
+            letter-spacing: 0.3px;
+            border-bottom: 1px dashed #e8b6c7;
+            padding-bottom: 12px;
+            display: inline-block;
+            padding-left: 18px;
+            padding-right: 18px;
         }
 
-        .greeting-message {
+        .message-body {
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 400;
             font-size: 1.1rem;
+            line-height: 1.7;
+            color: #3d2832;
+            background: rgba(255, 240, 245, 0.4);
+            padding: 18px 16px;
+            border-radius: 32px;
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            margin: 12px 0 16px;
+            box-shadow: inset 0 0 0 1px rgba(255, 210, 220, 0.3);
+            text-align: left;
+        }
+
+        .message-body p {
+            margin-bottom: 14px;
+        }
+
+        .message-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .highlight-name {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            color: #a14b65;
+            font-size: 1.25rem;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #fbd1dd, #fccfde);
+            padding: 0 10px;
+            border-radius: 40px;
+            display: inline-block;
+            box-shadow: 0 2px 6px rgba(190, 80, 110, 0.1);
+        }
+
+        .address-block {
+            background: rgba(255, 225, 235, 0.5);
+            border-radius: 40px;
+            padding: 12px 16px;
+            margin: 16px 0 10px;
+            font-weight: 500;
+            color: #4f2e3b;
+            border-left: 4px solid #edb0c4;
+            border-right: 4px solid #edb0c4;
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            font-size: 1.0rem;
             line-height: 1.6;
-            color: rgba(255, 255, 255, 0.9);
-            background: rgba(0, 0, 0, 0.15);
-            padding: 1rem 1.5rem;
-            border-radius: 2rem;
-            display: inline-block;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 10px rgba(200, 120, 140, 0.08);
         }
 
-        .greeting-message span {
+        .address-block span {
             display: inline-block;
-            animation: wave 2s infinite ease-in-out;
+            background: #fce3eb;
+            padding: 2px 14px;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            color: #682f44;
+            margin-top: 6px;
         }
 
-        @keyframes wave {
-            0%,
-            100% {
-                transform: rotate(0deg);
-            }
-            50% {
-                transform: rotate(12deg);
-            }
+        .free-style {
+            font-style: italic;
+            color: #754a5b;
+            background: rgba(255, 235, 240, 0.6);
+            padding: 10px 12px;
+            border-radius: 60px;
+            font-size: 1.0rem;
+            margin: 14px 0 12px;
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            border: 1px solid #f7cfdd;
+            display: inline-block;
+            width: auto;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .answer-request {
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+            font-size: 1.5rem;
+            color: #8a4b61;
+            margin: 24px 0 12px;
+            background: rgba(255, 220, 230, 0.3);
+            padding: 12px 10px 8px;
+            border-radius: 100px;
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            display: inline-block;
+            padding-left: 28px;
+            padding-right: 28px;
+            border: 1px solid rgba(255, 180, 200, 0.4);
+        }
+
+        .answer-request span {
+            display: inline-block;
+            animation: pulse-soft 2.4s ease-in-out infinite;
+        }
+
+        @keyframes pulse-soft {
+            0% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.04); opacity: 1; text-shadow: 0 0 12px #f7b8cb; }
+            100% { transform: scale(1); opacity: 0.9; }
+        }
+
+        .footer-emoji {
+            font-size: 26px;
+            letter-spacing: 8px;
+            margin-top: 12px;
+            opacity: 0.6;
+            filter: drop-shadow(0 2px 4px rgba(200, 100, 130, 0.1));
+        }
+
+        .date-highlight {
+            background: #f9d4e0;
+            padding: 2px 14px;
+            border-radius: 60px;
+            font-weight: 600;
+            color: #592d3e;
+            display: inline-block;
+            font-size: 1.1rem;
+        }
+
+        /* маленькие акценты — ручка, лего */
+        .lego-icon {
+            font-size: 1.2rem;
+            margin: 0 2px;
         }
 
         /* адаптив */
         @media (max-width: 480px) {
-            .greeting-card {
-                padding: 2rem 1.5rem;
-                border-radius: 2rem;
+            .invitation-card {
+                padding: 28px 18px 32px;
+                border-radius: 36px;
             }
             h1 {
-                font-size: 2.2rem;
+                font-size: 2.0rem;
             }
-            .greeting-icon {
-                font-size: 3.5rem;
+            .message-body {
+                font-size: 1.0rem;
+                padding: 16px 14px;
             }
-            .greeting-sub {
-                font-size: 1rem;
-            }
-            .greeting-message {
+            .address-block {
                 font-size: 0.95rem;
-                padding: 0.75rem 1.25rem;
             }
+            .answer-request {
+                font-size: 1.3rem;
+                padding: 10px 18px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .invitation-card {
+                padding: 24px 14px 28px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .message-body {
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+        }
+
+        /* hover-эффект для карточки (легкое свечение) */
+        .invitation-card:hover {
+            box-shadow: 0 24px 70px rgba(180, 70, 105, 0.25);
+            transition: box-shadow 0.3s ease;
+        }
+
+        /* чтобы не было переполнения */
+        .invitation-card * {
+            max-width: 100%;
         }
     </style>
 </head>
 <body>
+<div class="invitation-card">
+    <!-- небольшой декоративный элемент -->
+    <div class="header-icon">🌸 ✨ 🌸</div>
 
-    <div class="greeting-card">
-        <span class="greeting-icon">👋</span>
-        <h1>Привет, мир!</h1>
-        <div class="greeting-sub">Добро пожаловать</div>
-        <div class="greeting-message">
-            <span>✨</span> Рады видеть вас здесь! <span>✨</span>
+    <h1>Пригласительный</h1>
+    <div class="subhead">· приглашение ·</div>
+
+    <div class="message-body">
+        <p>
+            <span class="highlight-name">София Колот</span>,
+            сегодня <span class="date-highlight">08.07.26</span> вечером
+            приглашаю вас на сборку
+            <span class="lego-icon">🧱</span> LEGO в стиле квест.
+        </p>
+
+        <div class="address-block">
+            📍 <strong>Склизкова 58а к3</strong>, квартира 37, 5 этаж, домофон 337<br>
         </div>
+
+        <p style="margin-top: 14px;">
+            <span class="free-style">✨ Стиль свободный, главное пожелание — это ваше присутствие ✨</span>
+        </p>
     </div>
 
+    <!-- ответ с анимацией -->
+    <div class="answer-request">
+        <span>💌 Буду ожидать от вас ответа :)</span>
+    </div>
+
+    <!-- дополнительные романтичные штрихи -->
+    <div style="margin-top: 6px; font-size: 0.9rem; color: #af7b8b; letter-spacing: 1px; opacity: 0.7;">
+        ⸻ с нетерпением ⸻
+    </div>
+    <div class="footer-emoji">
+        🌙 🧩 💖
+    </div>
+
+    <!-- лёгкая подпись (почти невидимая) -->
+    <div style="margin-top: 18px; font-size: 0.65rem; color: #dbb2c0; letter-spacing: 2px; opacity: 0.5; border-top: 1px solid #f0ccd9; padding-top: 14px; width: 60%; margin-left: auto; margin-right: auto;">
+        ✦ только для вас ✦
+    </div>
+</div>
 </body>
 </html>
