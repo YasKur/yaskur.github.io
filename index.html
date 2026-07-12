@@ -2,672 +2,405 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Планируем встречу</title>
-    <!-- Подключаем EmailJS -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>♥ Вопросы ♥</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Arial', system-ui, -apple-system, sans-serif;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
         }
         body {
-            background: #fdeff2;
+            min-height: 100vh;
+            background: linear-gradient(145deg, #fce4ec 0%, #f8bbd0 100%);
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
             padding: 16px;
             margin: 0;
+            touch-action: manipulation;
         }
-        .app {
-            max-width: 400px;
-            width: 100%;
-            background: rgba(255, 245, 247, 0.75);
-            backdrop-filter: blur(2px);
+        .card {
+            background: rgba(255, 250, 250, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-radius: 48px 48px 32px 32px;
-            box-shadow: 0 20px 40px rgba(180, 80, 100, 0.2), 0 8px 16px rgba(0, 0, 0, 0.05);
-            padding: 24px 20px 32px;
-            border: 1px solid rgba(255, 220, 225, 0.5);
-            transition: all 0.2s;
-            position: relative;
-            overflow: hidden;
-        }
-        .app::before {
-            content: "❤️";
-            position: absolute;
-            top: -20px;
-            right: -10px;
-            font-size: 100px;
-            opacity: 0.07;
-            transform: rotate(15deg);
-            pointer-events: none;
-        }
-        .app::after {
-            content: "🌸";
-            position: absolute;
-            bottom: -30px;
-            left: -20px;
-            font-size: 120px;
-            opacity: 0.06;
-            transform: rotate(-10deg);
-            pointer-events: none;
-        }
-        .screen {
-            display: block;
-            animation: fade 0.3s ease;
-        }
-        .hidden {
-            display: none !important;
-        }
-        @keyframes fade {
-            0% {
-                opacity: 0.4;
-                transform: translateY(6px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            box-shadow: 0 25px 45px -12px rgba(180, 60, 80, 0.4),
+            inset 0 1px 3px rgba(255, 255, 255, 0.7);
+            width: 100%;
+            max-width: 420px;
+            padding: 28px 22px 32px;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 220, 230, 0.5);
+            display: flex;
+            flex-direction: column;
+            min-height: 500px;
         }
 
-        h1,
-        h2,
-        h3 {
-            font-weight: 300;
-            letter-spacing: -0.01em;
-            color: #4a2c33;
-        }
-        h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
-            font-weight: 400;
-            text-shadow: 0 2px 4px rgba(255, 200, 210, 0.3);
-        }
-        h2 {
-            font-size: 22px;
-            margin-bottom: 14px;
-            font-weight: 400;
-            border-left: 4px solid #e8a0b0;
-            padding-left: 14px;
-        }
-        h3 {
-            font-size: 18px;
-            font-weight: 400;
-            margin-bottom: 12px;
-            color: #5e3d44;
-        }
-        p,
-        .desc {
-            font-size: 16px;
-            line-height: 1.5;
-            color: #3d2a2f;
-            margin-bottom: 16px;
-            background: rgba(255, 235, 240, 0.4);
-            padding: 12px 16px;
-            border-radius: 28px;
-            backdrop-filter: blur(2px);
-            border: 1px solid rgba(255, 200, 210, 0.2);
-        }
-        .greeting-icon {
-            font-size: 44px;
-            display: block;
-            text-align: center;
-            margin: 4px 0 6px;
-        }
-        .btn-group {
+        .header {
             display: flex;
-            gap: 14px;
-            flex-wrap: wrap;
-            margin: 18px 0 12px;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px dashed rgba(200, 100, 120, 0.25);
         }
+        .header h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #7a3e4b;
+            letter-spacing: -0.3px;
+            text-shadow: 0 1px 2px rgba(255, 200, 210, 0.6);
+        }
+        .progress-badge {
+            background: #b94a5f;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            box-shadow: 0 4px 8px rgba(180, 60, 80, 0.2);
+            letter-spacing: 0.3px;
+        }
+
+        .question-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 240px;
+            margin: 12px 0 18px;
+        }
+
+        .question-text {
+            font-size: 1.5rem;
+            line-height: 1.4;
+            font-weight: 500;
+            color: #2d1b20;
+            text-align: center;
+            padding: 8px 4px;
+            background: rgba(255, 240, 245, 0.3);
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            box-shadow: inset 0 2px 8px rgba(200, 100, 120, 0.08);
+            transition: opacity 0.25s ease;
+            word-break: break-word;
+        }
+
+        .placeholder-end {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #8a4d5c;
+            text-align: center;
+            padding: 30px 10px;
+            background: rgba(255, 220, 230, 0.4);
+            border-radius: 60px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 200, 210, 0.5);
+        }
+        .placeholder-end span {
+            display: block;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+
         .btn {
-            flex: 1 0 auto;
-            min-width: 100px;
-            padding: 14px 18px;
+            background: #c75b72;
             border: none;
             border-radius: 60px;
-            font-size: 18px;
-            font-weight: 400;
-            background: #fadadd;
-            color: #4a2c33;
-            box-shadow: 0 4px 8px rgba(180, 80, 100, 0.1);
-            transition: all 0.15s;
+            padding: 18px 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+            width: 100%;
+            box-shadow: 0 10px 20px -8px rgba(160, 60, 80, 0.4);
+            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1);
+            letter-spacing: 0.6px;
+            backdrop-filter: blur(4px);
+            background: linear-gradient(135deg, #d46b82, #b84a62);
+            border: 1px solid rgba(255, 220, 230, 0.3);
+            touch-action: manipulation;
             cursor: pointer;
-            backdrop-filter: blur(2px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            letter-spacing: 0.3px;
-            text-align: center;
-        }
-        .btn-primary {
-            background: #dca8b5;
-            color: #2e1c21;
-            font-weight: 400;
-            box-shadow: 0 6px 12px rgba(190, 100, 120, 0.2);
-        }
-        .btn-primary:active {
-            background: #c7909e;
-            transform: scale(0.97);
+            margin-top: 8px;
         }
         .btn:active {
             transform: scale(0.96);
+            box-shadow: 0 6px 12px -6px #a0445a;
         }
-        .btn-outline {
-            background: transparent;
-            border: 1.5px solid #dca8b5;
-            box-shadow: none;
-        }
-        .btn-outline:active {
-            background: #f5e0e4;
-        }
-        .btn-block {
-            width: 100%;
-            flex: 1 1 100%;
-            margin-top: 10px;
-        }
-        textarea {
-            width: 100%;
-            padding: 16px 18px;
-            border-radius: 36px;
-            border: 1px solid #ecc6ce;
-            background: rgba(255, 245, 247, 0.7);
-            backdrop-filter: blur(2px);
-            font-size: 16px;
-            resize: vertical;
-            min-height: 90px;
-            margin: 10px 0 8px;
-            color: #2e1c21;
-            transition: 0.2s;
-            outline: none;
-            font-family: inherit;
-        }
-        textarea:focus {
-            border-color: #d48a9e;
-            background: rgba(255, 240, 243, 0.9);
-            box-shadow: 0 0 0 4px rgba(200, 120, 140, 0.1);
-        }
-        .plan-card {
-            background: rgba(255, 240, 243, 0.5);
-            border-radius: 32px;
-            padding: 20px 18px;
-            margin: 12px 0 18px;
-            border: 1px solid rgba(255, 200, 215, 0.3);
-            backdrop-filter: blur(2px);
-        }
-        .plan-card p {
-            background: transparent;
-            border: none;
-            padding: 0;
-            margin-bottom: 6px;
-            border-radius: 0;
-        }
-        .small-note {
-            font-size: 14px;
-            color: #5f4249;
-            opacity: 0.8;
-            margin-top: 4px;
-        }
-        .toast-msg {
-            background: #4a2c33;
-            color: #fce8ec;
-            padding: 10px 14px;
-            border-radius: 60px;
-            font-size: 14px;
-            text-align: center;
-            margin-top: 12px;
-            opacity: 0;
-            transition: 0.2s;
-        }
-        .toast-msg.show {
-            opacity: 1;
-        }
-        .lock-icon {
-            display: inline-block;
-            margin-right: 6px;
-        }
-        /* Спиннер для кнопки */
-        .btn.loading {
+        .btn:disabled {
+            opacity: 0.5;
+            transform: scale(0.98);
+            box-shadow: 0 4px 10px -6px #a0445a;
+            background: #b0a0a5;
             pointer-events: none;
-            opacity: 0.7;
-            position: relative;
         }
-        .btn.loading::after {
-            content: "⏳";
-            display: inline-block;
-            margin-left: 8px;
-            animation: spin 1s linear infinite;
+        .btn-restart {
+            background: #a06673;
+            background: linear-gradient(135deg, #b07a87, #8f5e6b);
+            margin-top: 12px;
+            font-size: 1rem;
+            padding: 14px 20px;
+            box-shadow: 0 6px 14px -6px #6a3f49;
         }
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+        .btn-restart:active {
+            transform: scale(0.96);
         }
 
-        /* Экран благодарности */
-        .thanks-icon {
-            font-size: 64px;
-            display: block;
+        .footer-note {
             text-align: center;
-            margin: 16px 0 12px;
+            font-size: 0.7rem;
+            color: #946a74;
+            margin-top: 18px;
+            opacity: 0.8;
+            letter-spacing: 0.4px;
         }
-        .thanks-text {
-            text-align: center;
-            font-size: 20px;
-            line-height: 1.6;
-            background: transparent;
-            border: none;
-            padding: 8px 0;
+
+        /* маленькие анимации */
+        .fade-in {
+            animation: fadeIn 0.4s ease forwards;
         }
-        .thanks-sub {
-            text-align: center;
-            font-size: 16px;
-            color: #5f4249;
-            margin-top: 8px;
-            background: transparent;
-            border: none;
-            padding: 0;
+        @keyframes fadeIn {
+            0% { opacity: 0.4; transform: translateY(8px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* скролл для длинных вопросов */
+        .question-text {
+            max-height: 400px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #d48a9a #fce4ec;
+        }
+        .question-text::-webkit-scrollbar {
+            width: 4px;
+        }
+        .question-text::-webkit-scrollbar-track {
+            background: #fce4ec;
+            border-radius: 20px;
+        }
+        .question-text::-webkit-scrollbar-thumb {
+            background: #d48a9a;
+            border-radius: 20px;
+        }
+
+        /* для мобильной приятности */
+        @media (max-width: 480px) {
+            .card { padding: 20px 16px 24px; }
+            .question-text { font-size: 1.3rem; }
         }
     </style>
 </head>
 <body>
-<div class="app" id="appContainer">
-    <!-- ЭКРАН ПРИВЕТСТВИЯ -->
-    <div id="welcomeScreen" class="screen">
-        <div class="greeting-icon">🌹</div>
-        <h1>Доброго времени суток</h1>
-        <p style="background: transparent; border: none; padding: 0 0 8px 0; font-size: 18px;">
-            Софья Эдуардовна, давайте договоримся о нашей следующей встрече, предлагаю спланировать ее вместе.
-        </p>
-        <button class="btn btn-primary btn-block" id="startBtn">Начать выбор ✨</button>
-        <div style="height: 8px;"></div>
+<div class="card" role="main">
+    <div class="header">
+        <h2>✨</h2>
+        <div class="progress-badge" id="progressDisplay">0 / 20</div>
     </div>
 
-    <!-- ЭКРАН РЕСТОРАН -->
-    <div id="restaurantScreen" class="screen hidden">
-        <h2>🍽️ Желаете покушать?</h2>
-        <p>Предлагаю посидеть в Roof?<br> <br> Если есть пожелание по другому ресторану, можно будет написать их в конце.</p>
-
-        <div class="btn-group">
-            <button class="btn btn-primary" id="restoYes">Да, с удовольствием</button>
-            <button class="btn btn-outline" id="restoNo">Нет</button>
+    <div class="question-container" id="questionContainer">
+        <div class="question-text fade-in" id="questionText">
+            Нажми «Следующий вопрос» и начнем 💕
         </div>
     </div>
 
-    <!-- ЭКРАН ПРОГУЛКА (после ресторана ДА) -->
-    <div id="walkAfterRestoScreen" class="screen hidden">
-        <h2>🚶‍♀️ Прогуляемся после ужина?</h2>
-        <p>Хотите прогуляться, после ужина до дома в моей компании?</p>
-        <div class="btn-group">
-            <button class="btn btn-primary" id="walkAfterRestoYes">Да</button>
-            <button class="btn btn-outline" id="walkAfterRestoNo">Нет</button>
-        </div>
-    </div>
-
-    <!-- ЭКРАН ПРОГУЛКА (если ресторан НЕТ) -->
-    <div id="walkInsteadScreen" class="screen hidden">
-        <h2>🌿 Тогда есть вариант с прогулкой?</h2>
-        <p>Пойдем гулять?</p>
-        <div class="btn-group">
-            <button class="btn btn-primary" id="walkInsteadYes">Да, гуляем</button>
-            <button class="btn btn-outline" id="walkInsteadNo">Нет</button>
-        </div>
-    </div>
-
-    <!-- ФИНАЛЬНЫЙ ПЛАН: РЕСТОРАН ДА + ПРОГУЛКА ДА -->
-    <div id="planRestoWalk" class="screen hidden">
-        <h2>💫 Все включено</h2>
-        <div class="plan-card">
-            <p>🚗 Оставляете машину у моего дома, едем на такси до Roof(пожелания по ресторану можно оставить ниже).</p>
-            <p>🍷 Кушаем, болтаем, наслаждаемся.</p>
-            <p>🚶‍♀️ Прогуливаемся до дома.</p>
-            <p>🍦 На десерт — мороженое и собираем LEGO.</p>
-        </div>
-        <div style="margin: 12px 0 6px;">
-            <label style="font-weight: 300; color: #4a2c33;">Можете написать пожелания к вечеру или чего бы еще хотели добавить.</label>
-            <textarea id="wishesRestoWalk" placeholder="Ваши пожелания, Софья"></textarea>
-            <button class="btn btn-primary btn-block" id="sendRestoWalk">Отправить 💌</button>
-        </div>
-    </div>
-
-    <!-- ФИНАЛЬНЫЙ ПЛАН: РЕСТОРАН НЕТ + ПРОГУЛКА ДА -->
-    <div id="planWalkOnly" class="screen hidden">
-        <h2>🌳 План прогулка!</h2>
-        <div class="plan-card">
-            <p>🚗 Оставляете машину у моего дома.</p>
-            <p>🚶‍♀️ Идем гулять(пожелания можно оставить ниже).</p>
-            <p>🏠 После едем/идем домой.</p>
-            <p>🍦 Мороженое + LEGO.</p>
-        </div>
-        <div style="margin: 12px 0 6px;">
-            <label style="font-weight: 300; color: #4a2c33;">Можете написать пожелания к вечеру или чего бы еще хотели добавить.</label>
-            <textarea id="wishesWalkOnly" placeholder="Ваши пожелания, Софья"></textarea>
-            <button class="btn btn-primary btn-block" id="sendWalkOnly">Отправить 💌</button>
-        </div>
-    </div>
-
-    <!-- ФИНАЛЬНЫЙ ПЛАН: РЕСТОРАН НЕТ + ПРОГУЛКА НЕТ (или ресторан да + прогулка нет) -->
-    <div id="planHome" class="screen hidden">
-        <h2>🏠 План домашний вечер</h2>
-        <div class="plan-card" id="homePlanCard">
-            <p>Ожидаю вас дома.</p>
-            <p>🍦 Мороженое и набор LEGO уже ждут.</p>
-            <p>🕯️ Спокойный вечер в теплой атмосфере.</p>
-        </div>
-        <div style="margin: 12px 0 6px;">
-            <label style="font-weight: 300; color: #4a2c33;">Можете написать пожелания к вечеру или чего бы ещё хотели добавить.</label>
-            <textarea id="wishesHome" placeholder="Ваши пожелания, Софья"></textarea>
-            <button class="btn btn-primary btn-block" id="sendHome">Отправить 💌</button>
-        </div>
-    </div>
-
-    <!-- ЭКРАН БЛАГОДАРНОСТИ (после отправки) -->
-    <div id="thanksScreen" class="screen hidden">
-        <div class="thanks-icon">💖</div>
-        <p class="thanks-text">Софья Эдуардовна, следующая встреча будет по вашим пожеланиям, время и день встречи обсудим!</p>
-    </div>
-
-    <!-- единый тост -->
-    <div id="toastMessage" class="toast-msg">✨ Отправлено! Проверьте почту.</div>
+    <button class="btn" id="nextBtn">💫 Следующий вопрос</button>
+    <button class="btn btn-restart" id="restartBtn">⟳ Начать заново</button>
 </div>
 
 <script>
     (function() {
-        const EMAILJS_PUBLIC_KEY = 'TQM_-g5ns9huzhXd4';
-        const EMAILJS_SERVICE_ID = 'service_e47sdsp';
-        const EMAILJS_TEMPLATE_ID = 'template_13wtd6g';
-        const TO_EMAIL = 'yaroslav-kurov@yandex.ru';
+        // -------- СПИСОК ВОПРОСОВ (20) --------
+        const QUESTIONS = [
+            "Если бы ты могла взять с собой на необитаемый остров только 3 вещи (не считая еды и воды), что бы это было?",
+            "Какая самая странная еда, которую ты пробовала, и она тебе понравилась?",
+            "Если бы у тебя был супергеройский псевдоним, основанный на твоей привычке, как бы тебя звали?",
+            "Что тебя бесит молниеносно, а остальные считают это ерундой? (Например, звук жующих людей или криво висящая картина).",
+            "Твоя самая смешная детская травма или падение, о котором ты вспоминаешь со смехом?",
+            "Каким животным ты была бы в прошлой жизни и почему?",
+            "Что из мультфильмов/сериалов детства ты пересматриваешь до сих пор, когда болеешь или грустишь?",
+            "Какая у тебя «закидонная» утренняя привычка, без которой день не задался? (Не встану без телефона / Сначала носки, потом трусы и т.д.).",
+            "Какой фильм или книга заставили тебя плакать, хотя ты этого не ожидала?",
+            "Какая песня у тебя сейчас стоит на репите, но ты стесняешься сказать об этом друзьям?",
+            "Если бы ты могла научиться чему угодно за один день, не прилагая усилий, что бы ты выбрала?",
+            "Самая бесполезная покупка в твоей жизни, которая сейчас пылится на полке?",
+            "Что для тебя самое главное в людях, когда ты только начинаешь общение — внешность, голос, чувство юмора или запах?",
+            "Какое место в городе вызывает у тебя самые тёплые воспоминания?",
+            "Какую фразу тебе редко говорят, но тебе очень хочется её слышать?",
+            "Если бы ты могла дать совет своему 16-летнему \"я\", что бы ты сказала?",
+            "Какая твоя «тихая гордость», о которой ты редко рассказываешь, но знаешь, что ты в этом крута?",
+            "Как ты обычно принимаешь сложные решения — сердцем или головой?",
+            "Если бы деньги не имели значения, какую странную работу ты бы выбрала на месяц?",
+            "Какая страна вызывает у тебя иррациональный страх и одновременно дикое желание туда поехать?",
+            "Какое кино ты хотела бы стереть себе из памяти, чтобы пересмотреть его заново?",
+            "Ты бы хотела прославиться, и если да, то за какое занятие?",
+            "Какая идея для идеального воскресного дня у тебя в голове?",
+            "Если бы ты встретила инопланетянина, что бы ты показала ему на Земле в первую очередь?"
+        ];
 
-        emailjs.init(EMAILJS_PUBLIC_KEY);
+        // -------- КЛЮЧИ ДЛЯ LOCALSTORAGE --------
+        const STORAGE_KEY = 'romantic_questions_asked';  // строка с индексами через запятую
+        const TOTAL_QUESTIONS = QUESTIONS.length;
 
-        const STORAGE_KEY = 'romantic_evening_data';
-        let savedData = null;
-        try {
-            const raw = localStorage.getItem(STORAGE_KEY);
-            if (raw) savedData = JSON.parse(raw);
-        } catch (e) {}
+        // -------- DOM ЭЛЕМЕНТЫ --------
+        const questionTextEl = document.getElementById('questionText');
+        const nextBtn = document.getElementById('nextBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const progressDisplay = document.getElementById('progressDisplay');
 
-        const isFilled = savedData && savedData.filled === true;
+        // -------- СОСТОЯНИЕ --------
+        let askedIndices = [];        // массив чисел (индексы уже показанных вопросов)
+        let currentQuestionIndex = null; // индекс текущего вопроса (или null, если все заданы)
 
-        const welcomeScreen = document.getElementById('welcomeScreen');
-        const restaurantScreen = document.getElementById('restaurantScreen');
-        const walkAfterRestoScreen = document.getElementById('walkAfterRestoScreen');
-        const walkInsteadScreen = document.getElementById('walkInsteadScreen');
-        const planRestoWalk = document.getElementById('planRestoWalk');
-        const planWalkOnly = document.getElementById('planWalkOnly');
-        const planHome = document.getElementById('planHome');
-        const thanksScreen = document.getElementById('thanksScreen');
-        const homePlanCard = document.getElementById('homePlanCard');
-
-        const startBtn = document.getElementById('startBtn');
-        const restoYes = document.getElementById('restoYes');
-        const restoNo = document.getElementById('restoNo');
-        const walkAfterRestoYes = document.getElementById('walkAfterRestoYes');
-        const walkAfterRestoNo = document.getElementById('walkAfterRestoNo');
-        const walkInsteadYes = document.getElementById('walkInsteadYes');
-        const walkInsteadNo = document.getElementById('walkInsteadNo');
-
-        const sendRestoWalk = document.getElementById('sendRestoWalk');
-        const sendWalkOnly = document.getElementById('sendWalkOnly');
-        const sendHome = document.getElementById('sendHome');
-
-        const wishesRestoWalk = document.getElementById('wishesRestoWalk');
-        const wishesWalkOnly = document.getElementById('wishesWalkOnly');
-        const wishesHome = document.getElementById('wishesHome');
-
-        const toast = document.getElementById('toastMessage');
-
-        function showScreen(screenId) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
-            document.getElementById(screenId).classList.remove('hidden');
+        // -------- ФУНКЦИИ РАБОТЫ С LOCALSTORAGE --------
+        function loadAskedFromStorage() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    if (Array.isArray(parsed)) {
+                        // фильтруем только валидные индексы (на случай изменений)
+                        askedIndices = parsed.filter(idx => Number.isInteger(idx) && idx >= 0 && idx < TOTAL_QUESTIONS);
+                        return;
+                    }
+                } catch (e) {}
+            }
+            askedIndices = [];
         }
 
-        function showToast(msg, duration = 3500) {
-            toast.textContent = msg;
-            toast.classList.add('show');
-            clearTimeout(toast._timer);
-            toast._timer = setTimeout(() => toast.classList.remove('show'), duration);
+        function saveAskedToStorage() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(askedIndices));
         }
 
-        function lockAll() {
-            document.querySelectorAll('.btn, textarea').forEach(el => {
-                el.disabled = true;
-                el.style.pointerEvents = 'none';
-                el.style.opacity = '0.6';
-            });
+        // -------- ОСНОВНАЯ ЛОГИКА --------
+        function getRandomUnaskedIndex() {
+            const allIndices = Array.from({ length: TOTAL_QUESTIONS }, (_, i) => i);
+            const unasked = allIndices.filter(i => !askedIndices.includes(i));
+            if (unasked.length === 0) return null; // все вопросы заданы
+            const randomIdx = Math.floor(Math.random() * unasked.length);
+            return unasked[randomIdx];
         }
 
-        function saveState(data) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-        }
-
-        function sendViaEmailJS(planType, wishes, extraInfo = '') {
-            if (isFilled) {
-                showToast('❌ Вы уже отправляли ответы.', 3000);
+        // обновить отображение вопроса и прогресса
+        function renderQuestion() {
+            // проверяем, все ли вопросы заданы
+            if (askedIndices.length >= TOTAL_QUESTIONS) {
+                // все вопросы показаны
+                questionTextEl.innerHTML = `
+            <div class="placeholder-end">
+              <span>💞</span>
+              Вопросы закончились
+            </div>
+          `;
+                questionTextEl.classList.remove('fade-in');
+                void questionTextEl.offsetWidth; // триггер перерисовки
+                questionTextEl.classList.add('fade-in');
+                nextBtn.disabled = true;
+                progressDisplay.textContent = `${TOTAL_QUESTIONS} / ${TOTAL_QUESTIONS}`;
+                currentQuestionIndex = null;
                 return;
             }
 
-            // Собираем данные для письма
-            let planDescription = '';
-            if (planType === 'restoWalk') planDescription = 'Ресторан + прогулка пешком';
-            else if (planType === 'walkOnly') planDescription = 'Прогулка (без ресторана)';
-            else if (planType === 'home') planDescription = 'Домашний вечер (без прогулки)';
-
-            let answersText = '';
-            if (savedData) {
-                answersText += `Ресторан: ${savedData.restaurant === true ? 'Да' : savedData.restaurant === false ? 'Нет' : '—'}\n`;
-                if (savedData.restaurant === true) {
-                    answersText +=
-                        `Прогулка после ужина: ${savedData.walkAfterResto === true ? 'Да' : savedData.walkAfterResto === false ? 'Нет' : '—'}\n`;
-                } else if (savedData.restaurant === false) {
-                    answersText +=
-                        `Прогулка вместо ресторана: ${savedData.walkInstead === true ? 'Да' : savedData.walkInstead === false ? 'Нет' : '—'}\n`;
-                }
-            }
-            answersText += `\nФинальный план: ${planDescription}`;
-            if (wishes) answersText += `\n\nПожелания: ${wishes}`;
-            if (extraInfo) answersText += `\n${extraInfo}`;
-
-            // Подготовка параметров для EmailJS
-            const templateParams = {
-                to_email: TO_EMAIL,
-                from_name: 'Романтический вечер',
-                message: answersText,
-                plan: planDescription,
-                wishes: wishes || '—',
-            };
-
-            // Находим активную кнопку отправки и добавляем спиннер
-            let currentBtn = null;
-            if (planType === 'restoWalk') currentBtn = sendRestoWalk;
-            else if (planType === 'walkOnly') currentBtn = sendWalkOnly;
-            else if (planType === 'home') currentBtn = sendHome;
-            if (currentBtn) currentBtn.classList.add('loading');
-
-            // Отправляем
-            emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
-                .then(() => {
-                    if (currentBtn) currentBtn.classList.remove('loading');
-                    const newData = { ...savedData, filled: true, wishes: wishes, plan: planType };
-                    saveState(newData);
-                    lockAll();
-
-                    showScreen('thanksScreen');
-                })
-                .catch((error) => {
-                    if (currentBtn) currentBtn.classList.remove('loading');
-                    console.error('EmailJS error:', error);
-                    showToast('❌ Ошибка отправки. Попробуйте еще раз.', 4000);
-                });
-        }
-
-        function restoreState() {
-            if (isFilled) {
-                lockAll();
-                startBtn.disabled = true;
-                startBtn.style.opacity = '0.5';
-                showScreen('thanksScreen');
-                showToast('🌸 Вы уже заполнили анкету. Спасибо!', 3000);
+            // если есть не заданные вопросы — берём случайный
+            const nextIndex = getRandomUnaskedIndex();
+            if (nextIndex === null) {
+                // на всякий случай, если что-то пошло не так
+                questionTextEl.textContent = '💖 Ты ответила на все вопросы! (перезагрузи)';
+                nextBtn.disabled = true;
+                progressDisplay.textContent = `${TOTAL_QUESTIONS} / ${TOTAL_QUESTIONS}`;
+                currentQuestionIndex = null;
                 return;
             }
 
-            if (savedData) {
-                const step = savedData.step || 'welcome';
-                switch (step) {
-                    case 'restaurant':
-                        showScreen('restaurantScreen');
-                        break;
-                    case 'walkAfterResto':
-                        showScreen('walkAfterRestoScreen');
-                        break;
-                    case 'walkInstead':
-                        showScreen('walkInsteadScreen');
-                        break;
-                    case 'planRestoWalk':
-                        showScreen('planRestoWalk');
-                        if (savedData.wishes) wishesRestoWalk.value = savedData.wishes;
-                        break;
-                    case 'planWalkOnly':
-                        showScreen('planWalkOnly');
-                        if (savedData.wishes) wishesWalkOnly.value = savedData.wishes;
-                        break;
-                    case 'planHome':
-                        showScreen('planHome');
-                        if (savedData.wishes) wishesHome.value = savedData.wishes;
-                        if (savedData.restaurant === true && savedData.walkAfterResto === false) {
-                            homePlanCard.innerHTML =
-                                `<p>🍽️ Ужин в Roof(пожелания по ресторану можно оставить ниже)</p>
-                                                         <p>🍦 Мороженое и LEGO ждут.</p>
-                                                         <p>🕯️ Уютный вечер.</p>`;
-                        }
-                        break;
-                    default:
-                        showScreen('welcomeScreen');
-                }
+            // сохраняем индекс как текущий
+            currentQuestionIndex = nextIndex;
+            // добавляем в список заданных и сохраняем
+            askedIndices.push(nextIndex);
+            saveAskedToStorage();
+
+            // отображаем вопрос
+            questionTextEl.textContent = QUESTIONS[nextIndex];
+            // анимация
+            questionTextEl.classList.remove('fade-in');
+            void questionTextEl.offsetWidth;
+            questionTextEl.classList.add('fade-in');
+
+            // обновляем прогресс
+            progressDisplay.textContent = `${askedIndices.length} / ${TOTAL_QUESTIONS}`;
+            nextBtn.disabled = false;
+        }
+
+        // -------- ОБРАБОТЧИКИ --------
+        function handleNextQuestion() {
+            // если все вопросы уже заданы — ничего не делаем (или можно просто перерендерить)
+            if (askedIndices.length >= TOTAL_QUESTIONS) {
+                renderQuestion(); // покажет финальный экран
+                return;
+            }
+            renderQuestion();
+        }
+
+        function handleRestart() {
+            // сбрасываем всё: очищаем массив и localStorage
+            askedIndices = [];
+            localStorage.removeItem(STORAGE_KEY);
+            currentQuestionIndex = null;
+            // рендерим первый случайный вопрос
+            renderQuestion();
+            // если вдруг все вопросы (0) — но у нас их 20, так что ок
+            nextBtn.disabled = false;
+        }
+
+        // -------- ИНИЦИАЛИЗАЦИЯ --------
+        function init() {
+            // загружаем сохранённые индексы
+            loadAskedFromStorage();
+
+            // если в сторадже есть индексы, но они уже все — показываем завершение
+            if (askedIndices.length >= TOTAL_QUESTIONS) {
+                // все вопросы были отвечены, показываем финал
+                questionTextEl.innerHTML = `
+            <div class="placeholder-end">
+              <span>💞</span>
+              Ты ответила на все вопросы!<br>
+              <span style="font-size: 1.2rem; margin-top: 10px; display: inline-block;">Ты — моя бесконечность ✨</span>
+            </div>
+          `;
+                questionTextEl.classList.add('fade-in');
+                nextBtn.disabled = true;
+                progressDisplay.textContent = `${TOTAL_QUESTIONS} / ${TOTAL_QUESTIONS}`;
+                currentQuestionIndex = null;
             } else {
-                showScreen('welcomeScreen');
+                // если есть неотвеченные — показываем первый случайный
+                // но сначала проверим, есть ли вообще неотвеченные (на случай если массив повреждён)
+                const unasked = Array.from({ length: TOTAL_QUESTIONS }, (_, i) => i).filter(i => !askedIndices.includes(i));
+                if (unasked.length === 0) {
+                    // странно, но если все заданы (при несовпадении длины) — показываем финал
+                    questionTextEl.innerHTML = `
+              <div class="placeholder-end">
+                <span>💞</span>
+                Ты ответила на все вопросы!<br>
+                <span style="font-size: 1.2rem; margin-top: 10px; display: inline-block;">Ты — моя бесконечность ✨</span>
+              </div>
+            `;
+                    nextBtn.disabled = true;
+                    progressDisplay.textContent = `${TOTAL_QUESTIONS} / ${TOTAL_QUESTIONS}`;
+                    currentQuestionIndex = null;
+                } else {
+                    // рендерим первый вопрос
+                    renderQuestion();
+                }
             }
+
+            // навешиваем слушатели
+            nextBtn.addEventListener('click', handleNextQuestion);
+            restartBtn.addEventListener('click', handleRestart);
         }
 
-        // ===== ОБРАБОТЧИКИ =====
-        startBtn.addEventListener('click', function() {
-            if (isFilled) {
-                showToast('❌ Опрос уже завершен.', 2500);
-                return;
-            }
-            savedData = { restaurant: null, walkAfterResto: null, walkInstead: null, step: 'restaurant' };
-            saveState(savedData);
-            showScreen('restaurantScreen');
-        });
+        // Запуск
+        init();
 
-        restoYes.addEventListener('click', function() {
-            if (isFilled) return;
-            savedData.restaurant = true;
-            savedData.step = 'walkAfterResto';
-            saveState(savedData);
-            showScreen('walkAfterRestoScreen');
-        });
-
-        restoNo.addEventListener('click', function() {
-            if (isFilled) return;
-            savedData.restaurant = false;
-            savedData.step = 'walkInstead';
-            saveState(savedData);
-            showScreen('walkInsteadScreen');
-        });
-
-        walkAfterRestoYes.addEventListener('click', function() {
-            if (isFilled) return;
-            savedData.walkAfterResto = true;
-            savedData.step = 'planRestoWalk';
-            saveState(savedData);
-            showScreen('planRestoWalk');
-        });
-
-        walkAfterRestoNo.addEventListener('click', function() {
-            if (isFilled) return;
-            savedData.walkAfterResto = false;
-            savedData.step = 'planHome';
-            saveState(savedData);
-            homePlanCard.innerHTML =
-                `<p>🍽️ Ужин в Roof, а затем возвращаемся домой.</p>
-                                         <p>🍦 Мороженое и LEGO ждут.</p>
-                                         <p>🕯️ Уютный вечер.</p>`;
-            showScreen('planHome');
-        });
-
-        walkInsteadYes.addEventListener('click', function() {
-            if (isFilled) return;
-            savedData.walkInstead = true;
-            savedData.step = 'planWalkOnly';
-            saveState(savedData);
-            showScreen('planWalkOnly');
-        });
-
-        walkInsteadNo.addEventListener('click', function() {
-            if (isFilled) return;
-            savedData.walkInstead = false;
-            savedData.step = 'planHome';
-            saveState(savedData);
-            homePlanCard.innerHTML =
-                `<p>Ожидаю вас дома.</p>
-                                         <p>🍦 Мороженое и набор LEGO уже ждут.</p>
-                                         <p>🕯️ Спокойный вечер в теплой атмосфере.</p>`;
-            showScreen('planHome');
-        });
-
-        // Отправка
-        sendRestoWalk.addEventListener('click', function() {
-            if (isFilled) return;
-            const wishes = wishesRestoWalk.value.trim();
-            savedData.wishes = wishes;
-            saveState(savedData);
-            sendViaEmailJS('restoWalk', wishes);
-        });
-
-        sendWalkOnly.addEventListener('click', function() {
-            if (isFilled) return;
-            const wishes = wishesWalkOnly.value.trim();
-            savedData.wishes = wishes;
-            saveState(savedData);
-            sendViaEmailJS('walkOnly', wishes);
-        });
-
-        sendHome.addEventListener('click', function() {
-            if (isFilled) return;
-            const wishes = wishesHome.value.trim();
-            savedData.wishes = wishes;
-            saveState(savedData);
-            let extra = '';
-            if (savedData.restaurant === true && savedData.walkAfterResto === false) {
-                extra = '(Был выбран ужин в Roof, без прогулки)';
-            } else if (savedData.restaurant === false && savedData.walkInstead === false) {
-                extra = '(Без ресторана и без прогулки)';
-            }
-            sendViaEmailJS('home', wishes, extra);
-        });
-
-        // ===== ИНИЦИАЛИЗАЦИЯ =====
-        restoreState();
-        if (isFilled) {
-            lockAll();
-            startBtn.disabled = true;
-            startBtn.style.opacity = '0.5';
-        }
-
-        // Проверка, что EmailJS настроен
-        if (EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY' || EMAILJS_SERVICE_ID === 'service_xxxxx') {
-            console.warn('⚠️ EmailJS не настроен. Замените YOUR_PUBLIC_KEY, service_xxxxx и template_xxxxx на свои данные.');
-            setTimeout(() => {
-                showToast('⚠️ Настройте EmailJS в коде (публичный ключ, service_id, template_id)', 5000);
-            }, 1000);
-        }
     })();
 </script>
 </body>
