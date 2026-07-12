@@ -3,297 +3,671 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Романтический таймер</title>
+    <title>Будущее свидание</title>
+    <!-- Подключаем EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', 'Arial', system-ui, -apple-system, sans-serif;
         }
-
         body {
-            min-height: 100vh;
+            background: #fdeff2;
             display: flex;
-            align-items: center;
             justify-content: center;
-            background: linear-gradient(145deg, #ffdde1 0%, #fad0d4 100%);
-            font-family: 'Segoe UI', 'Roboto', system-ui, -apple-system, sans-serif;
+            align-items: center;
+            min-height: 100vh;
             padding: 16px;
             margin: 0;
         }
-
-        .timer-card {
-            background: rgba(255, 245, 247, 0.65);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 56px 56px 48px 48px;
-            padding: 32px 24px 40px;
-            max-width: 440px;
+        .app {
+            max-width: 400px;
             width: 100%;
-            box-shadow:
-                    0 25px 45px -10px rgba(200, 100, 120, 0.3),
-                    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
-            transition: all 0.2s ease;
-            text-align: center;
-            border: 1px solid rgba(255, 220, 230, 0.5);
+            background: rgba(255, 245, 247, 0.75);
+            backdrop-filter: blur(2px);
+            border-radius: 48px 48px 32px 32px;
+            box-shadow: 0 20px 40px rgba(180, 80, 100, 0.2), 0 8px 16px rgba(0, 0, 0, 0.05);
+            padding: 24px 20px 32px;
+            border: 1px solid rgba(255, 220, 225, 0.5);
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .app::before {
+            content: "❤️";
+            position: absolute;
+            top: -20px;
+            right: -10px;
+            font-size: 100px;
+            opacity: 0.07;
+            transform: rotate(15deg);
+            pointer-events: none;
+        }
+        .app::after {
+            content: "🌸";
+            position: absolute;
+            bottom: -30px;
+            left: -20px;
+            font-size: 120px;
+            opacity: 0.06;
+            transform: rotate(-10deg);
+            pointer-events: none;
+        }
+        .screen {
+            display: block;
+            animation: fade 0.3s ease;
+        }
+        .hidden {
+            display: none !important;
+        }
+        @keyframes fade {
+            0% {
+                opacity: 0.4;
+                transform: translateY(6px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .romantic-icon {
-            font-size: 2.6rem;
-            line-height: 1;
-            margin-bottom: 8px;
-            display: inline-block;
-            filter: drop-shadow(0 6px 10px rgba(200, 70, 90, 0.2));
-            letter-spacing: 4px;
-        }
-
-        .title {
-            font-size: 1.8rem;
+        h1,
+        h2,
+        h3 {
             font-weight: 300;
-            letter-spacing: 2px;
-            color: #6b3f4a;
+            letter-spacing: -0.01em;
+            color: #4a2c33;
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 400;
+            text-shadow: 0 2px 4px rgba(255, 200, 210, 0.3);
+        }
+        h2 {
+            font-size: 22px;
+            margin-bottom: 14px;
+            font-weight: 400;
+            border-left: 4px solid #e8a0b0;
+            padding-left: 14px;
+        }
+        h3 {
+            font-size: 18px;
+            font-weight: 400;
             margin-bottom: 12px;
-            text-shadow: 0 2px 8px rgba(255, 200, 210, 0.6);
-            font-family: 'Georgia', 'Times New Roman', serif;
+            color: #5e3d44;
         }
-
-        .subtitle {
-            font-size: 0.95rem;
-            font-weight: 300;
-            color: #8a5a67;
-            background: rgba(255, 220, 225, 0.3);
-            display: inline-block;
-            padding: 6px 24px;
-            border-radius: 40px;
-            backdrop-filter: blur(4px);
-            margin-bottom: 28px;
-            border: 0.5px solid rgba(255, 200, 210, 0.4);
-            letter-spacing: 0.5px;
+        p,
+        .desc {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #3d2a2f;
+            margin-bottom: 16px;
+            background: rgba(255, 235, 240, 0.4);
+            padding: 12px 16px;
+            border-radius: 28px;
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(255, 200, 210, 0.2);
         }
-
-        .countdown-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            margin: 16px 0 22px;
+        .greeting-icon {
+            font-size: 44px;
+            display: block;
+            text-align: center;
+            margin: 4px 0 6px;
         }
-
-        .time-block {
-            background: rgba(255, 240, 242, 0.5);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
+        .btn-group {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin: 18px 0 12px;
+            justify-content: center;
+        }
+        .btn {
+            flex: 1 0 auto;
+            min-width: 100px;
+            padding: 14px 18px;
+            border: none;
+            border-radius: 60px;
+            font-size: 18px;
+            font-weight: 400;
+            background: #fadadd;
+            color: #4a2c33;
+            box-shadow: 0 4px 8px rgba(180, 80, 100, 0.1);
+            transition: all 0.15s;
+            cursor: pointer;
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.3px;
+            text-align: center;
+        }
+        .btn-primary {
+            background: #dca8b5;
+            color: #2e1c21;
+            font-weight: 400;
+            box-shadow: 0 6px 12px rgba(190, 100, 120, 0.2);
+        }
+        .btn-primary:active {
+            background: #c7909e;
+            transform: scale(0.97);
+        }
+        .btn:active {
+            transform: scale(0.96);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #dca8b5;
+            box-shadow: none;
+        }
+        .btn-outline:active {
+            background: #f5e0e4;
+        }
+        .btn-block {
+            width: 100%;
+            flex: 1 1 100%;
+            margin-top: 10px;
+        }
+        textarea {
+            width: 100%;
+            padding: 16px 18px;
+            border-radius: 36px;
+            border: 1px solid #ecc6ce;
+            background: rgba(255, 245, 247, 0.7);
+            backdrop-filter: blur(2px);
+            font-size: 16px;
+            resize: vertical;
+            min-height: 90px;
+            margin: 10px 0 8px;
+            color: #2e1c21;
+            transition: 0.2s;
+            outline: none;
+            font-family: inherit;
+        }
+        textarea:focus {
+            border-color: #d48a9e;
+            background: rgba(255, 240, 243, 0.9);
+            box-shadow: 0 0 0 4px rgba(200, 120, 140, 0.1);
+        }
+        .plan-card {
+            background: rgba(255, 240, 243, 0.5);
             border-radius: 32px;
-            padding: 14px 0 12px;
-            box-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.7), 0 6px 14px rgba(190, 100, 120, 0.12);
-            border: 0.5px solid rgba(255, 255, 255, 0.6);
+            padding: 20px 18px;
+            margin: 12px 0 18px;
+            border: 1px solid rgba(255, 200, 215, 0.3);
+            backdrop-filter: blur(2px);
+        }
+        .plan-card p {
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin-bottom: 6px;
+            border-radius: 0;
+        }
+        .small-note {
+            font-size: 14px;
+            color: #5f4249;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+        .toast-msg {
+            background: #4a2c33;
+            color: #fce8ec;
+            padding: 10px 14px;
+            border-radius: 60px;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 12px;
+            opacity: 0;
             transition: 0.2s;
         }
-
-        .time-number {
-            font-size: 2.8rem;
-            font-weight: 400;
-            color: #442a32;
-            letter-spacing: 1px;
-            line-height: 1.1;
-            font-family: 'Georgia', 'Times New Roman', serif;
-            text-shadow: 0 2px 8px rgba(255, 180, 190, 0.3);
+        .toast-msg.show {
+            opacity: 1;
         }
-
-        .time-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #936a78;
-            font-weight: 400;
-            margin-top: 4px;
-            opacity: 0.9;
-            background: rgba(255, 220, 225, 0.2);
-            padding: 2px 10px;
-            border-radius: 30px;
+        .lock-icon {
             display: inline-block;
-            backdrop-filter: blur(2px);
+            margin-right: 6px;
         }
-
-        .heartbeat {
-            margin-top: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            font-size: 1rem;
-            color: #7e4d5b;
-            letter-spacing: 0.4px;
+        /* Спиннер для кнопки */
+        .btn.loading {
+            pointer-events: none;
+            opacity: 0.7;
+            position: relative;
         }
-
-        .heartbeat span {
+        .btn.loading::after {
+            content: "⏳";
             display: inline-block;
-            animation: pulse 1.8s infinite ease-in-out;
+            margin-left: 8px;
+            animation: spin 1s linear infinite;
         }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.7; }
-            50% { transform: scale(1.3); opacity: 1; }
-            100% { transform: scale(1); opacity: 0.7; }
-        }
-
-        .message {
-            font-size: 0.9rem;
-            font-weight: 300;
-            color: #8a5a67;
-            margin-top: 10px;
-            padding: 6px 14px;
-            background: rgba(255, 240, 242, 0.3);
-            border-radius: 50px;
-            display: inline-block;
-            backdrop-filter: blur(4px);
-            border: 0.3px solid rgba(255, 200, 210, 0.3);
-            font-style: italic;
-        }
-
-        .target-date {
-            font-size: 0.75rem;
-            color: #a47482;
-            margin-top: 12px;
-            opacity: 0.8;
-            letter-spacing: 0.8px;
-            background: rgba(255, 220, 230, 0.2);
-            padding: 4px 12px;
-            border-radius: 40px;
-            display: inline-block;
-            backdrop-filter: blur(2px);
-        }
-
-        /* Mobile first — дополнительная адаптация */
-        @media (max-width: 380px) {
-            .timer-card {
-                padding: 24px 12px 28px;
-                border-radius: 44px;
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
             }
-            .time-number {
-                font-size: 2.2rem;
-            }
-            .title {
-                font-size: 1.5rem;
-            }
-            .countdown-grid {
-                gap: 6px;
-            }
-            .time-block {
-                padding: 10px 0 8px;
+            100% {
+                transform: rotate(360deg);
             }
         }
 
-        @media (min-width: 600px) {
-            .timer-card {
-                padding: 48px 36px 48px;
-                border-radius: 80px 80px 64px 64px;
-            }
-            .time-number {
-                font-size: 4rem;
-            }
-            .title {
-                font-size: 2.6rem;
-            }
-            .countdown-grid {
-                gap: 16px;
-            }
-            .time-block {
-                padding: 20px 0 16px;
-            }
+        /* Экран благодарности */
+        .thanks-icon {
+            font-size: 64px;
+            display: block;
+            text-align: center;
+            margin: 16px 0 12px;
         }
-
-        /* лёгкая тень и свечение */
-        .timer-card:hover {
-            box-shadow: 0 30px 55px -12px rgba(180, 80, 100, 0.3);
+        .thanks-text {
+            text-align: center;
+            font-size: 20px;
+            line-height: 1.6;
+            background: transparent;
+            border: none;
+            padding: 8px 0;
+        }
+        .thanks-sub {
+            text-align: center;
+            font-size: 16px;
+            color: #5f4249;
+            margin-top: 8px;
+            background: transparent;
+            border: none;
+            padding: 0;
         }
     </style>
 </head>
 <body>
-<div class="timer-card" role="main" aria-label="Романтический таймер до 17 июля 2026 года">
-    <div class="romantic-icon">💕</div>
-    <div class="countdown-grid" id="countdownGrid">
-        <div class="time-block">
-            <div class="time-number" id="days">00</div>
-            <div class="time-label">дней</div>
-        </div>
-        <div class="time-block">
-            <div class="time-number" id="hours">00</div>
-            <div class="time-label">часов</div>
-        </div>
-        <div class="time-block">
-            <div class="time-number" id="minutes">00</div>
-            <div class="time-label">минут</div>
-        </div>
-        <div class="time-block">
-            <div class="time-number" id="seconds">00</div>
-            <div class="time-label">секунд</div>
+<div class="app" id="appContainer">
+    <!-- ЭКРАН ПРИВЕТСТВИЯ -->
+    <div id="welcomeScreen" class="screen">
+        <div class="greeting-icon">🌹</div>
+        <h1>Доброго времени суток</h1>
+        <p style="background: transparent; border: none; padding: 0 0 8px 0; font-size: 18px;">
+            Софья Эдуардовна, давайте договоримся о нашей следующей встрече, предлагаю спланировать ее вместе.
+        </p>
+        <button class="btn btn-primary btn-block" id="startBtn">Начать выбор ✨</button>
+        <div style="height: 8px;"></div>
+    </div>
+
+    <!-- ЭКРАН РЕСТОРАН -->
+    <div id="restaurantScreen" class="screen hidden">
+        <h2>🍽️ Желаете покушать?</h2>
+        <p>Предлагаю посидеть в Roof?<br> <br> Если есть пожелание по другому ресторану, можно будет написать их в конце.</p>
+
+        <div class="btn-group">
+            <button class="btn btn-primary" id="restoYes">Да, с удовольствием</button>
+            <button class="btn btn-outline" id="restoNo">Нет</button>
         </div>
     </div>
+
+    <!-- ЭКРАН ПРОГУЛКА (после ресторана ДА) -->
+    <div id="walkAfterRestoScreen" class="screen hidden">
+        <h2>🚶‍♀️ Прогуляемся после ужина?</h2>
+        <p>Хотите прогуляться, после ужина до дома в моей компании?</p>
+        <div class="btn-group">
+            <button class="btn btn-primary" id="walkAfterRestoYes">Да</button>
+            <button class="btn btn-outline" id="walkAfterRestoNo">Нет</button>
+        </div>
+    </div>
+
+    <!-- ЭКРАН ПРОГУЛКА (если ресторан НЕТ) -->
+    <div id="walkInsteadScreen" class="screen hidden">
+        <h2>🌿 Тогда есть вариант с прогулкой?</h2>
+        <p>Пойдем гулять?</p>
+        <div class="btn-group">
+            <button class="btn btn-primary" id="walkInsteadYes">Да, гуляем</button>
+            <button class="btn btn-outline" id="walkInsteadNo">Нет</button>
+        </div>
+    </div>
+
+    <!-- ФИНАЛЬНЫЙ ПЛАН: РЕСТОРАН ДА + ПРОГУЛКА ДА -->
+    <div id="planRestoWalk" class="screen hidden">
+        <h2>💫 Все включено</h2>
+        <div class="plan-card">
+            <p>🚗 Оставляете машину у моего дома, едем на такси до Roof(пожелания по ресторану можно оставить ниже).</p>
+            <p>🍷 Кушаем, болтаем, наслаждаемся.</p>
+            <p>🚶‍♀️ Прогуливаемся до дома.</p>
+            <p>🍦 На десерт — мороженое и собираем LEGO.</p>
+        </div>
+        <div style="margin: 12px 0 6px;">
+            <label style="font-weight: 300; color: #4a2c33;">Можете написать пожелания к вечеру или чего бы еще хотели добавить.</label>
+            <textarea id="wishesRestoWalk" placeholder="Ваши пожелания, Софья"></textarea>
+            <button class="btn btn-primary btn-block" id="sendRestoWalk">Отправить 💌</button>
+        </div>
+    </div>
+
+    <!-- ФИНАЛЬНЫЙ ПЛАН: РЕСТОРАН НЕТ + ПРОГУЛКА ДА -->
+    <div id="planWalkOnly" class="screen hidden">
+        <h2>🌳 План прогулка!</h2>
+        <div class="plan-card">
+            <p>🚗 Оставляете машину у моего дома.</p>
+            <p>🚶‍♀️ Идем гулять(пожелания можно оставить ниже).</p>
+            <p>🏠 После едем/идем домой.</p>
+            <p>🍦 Мороженое + LEGO.</p>
+        </div>
+        <div style="margin: 12px 0 6px;">
+            <label style="font-weight: 300; color: #4a2c33;">Можете написать пожелания к вечеру или чего бы еще хотели добавить.</label>
+            <textarea id="wishesWalkOnly" placeholder="Ваши пожелания, Софья"></textarea>
+            <button class="btn btn-primary btn-block" id="sendWalkOnly">Отправить 💌</button>
+        </div>
+    </div>
+
+    <!-- ФИНАЛЬНЫЙ ПЛАН: РЕСТОРАН НЕТ + ПРОГУЛКА НЕТ (или ресторан да + прогулка нет) -->
+    <div id="planHome" class="screen hidden">
+        <h2>🏠 План домашний вечер</h2>
+        <div class="plan-card" id="homePlanCard">
+            <p>Ожидаю вас дома.</p>
+            <p>🍦 Мороженое и набор LEGO уже ждут.</p>
+            <p>🕯️ Спокойный вечер в теплой атмосфере.</p>
+        </div>
+        <div style="margin: 12px 0 6px;">
+            <label style="font-weight: 300; color: #4a2c33;">Можете написать пожелания к вечеру или чего бы ещё хотели добавить.</label>
+            <textarea id="wishesHome" placeholder="Ваши пожелания, Софья"></textarea>
+            <button class="btn btn-primary btn-block" id="sendHome">Отправить 💌</button>
+        </div>
+    </div>
+
+    <!-- ЭКРАН БЛАГОДАРНОСТИ (после отправки) -->
+    <div id="thanksScreen" class="screen hidden">
+        <div class="thanks-icon">💖</div>
+        <p class="thanks-text">Софья Эдуардовна, следующая встреча будет по вашим пожеланиям, время и день встречи обсудим!</p>
+    </div>
+
+    <!-- единый тост -->
+    <div id="toastMessage" class="toast-msg">✨ Отправлено! Проверьте почту.</div>
 </div>
 
 <script>
     (function() {
-        // Целевая дата: 17 июля 2026 17:00
-        const TARGET_DATE = new Date(2026, 6, 17, 17, 0, 0).getTime(); // month 6 = July
+        const EMAILJS_PUBLIC_KEY = 'TQM_-g5ns9huzhXd4';
+        const EMAILJS_SERVICE_ID = 'service_e47sdsp';
+        const EMAILJS_TEMPLATE_ID = 'template_13wtd6g';
+        const TO_EMAIL = 'yaroslav-kurov@yandex.ru';
 
-        // Элементы
-        const daysEl = document.getElementById('days');
-        const hoursEl = document.getElementById('hours');
-        const minutesEl = document.getElementById('minutes');
-        const secondsEl = document.getElementById('seconds');
+        emailjs.init(EMAILJS_PUBLIC_KEY);
 
-        // Форматирование с ведущим нулём
-        function formatTime(value) {
-            return String(value).padStart(2, '0');
+        const STORAGE_KEY = 'romantic_evening_data';
+        let savedData = null;
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (raw) savedData = JSON.parse(raw);
+        } catch (e) {}
+
+        const isFilled = savedData && savedData.filled === true;
+
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const restaurantScreen = document.getElementById('restaurantScreen');
+        const walkAfterRestoScreen = document.getElementById('walkAfterRestoScreen');
+        const walkInsteadScreen = document.getElementById('walkInsteadScreen');
+        const planRestoWalk = document.getElementById('planRestoWalk');
+        const planWalkOnly = document.getElementById('planWalkOnly');
+        const planHome = document.getElementById('planHome');
+        const thanksScreen = document.getElementById('thanksScreen');
+        const homePlanCard = document.getElementById('homePlanCard');
+
+        const startBtn = document.getElementById('startBtn');
+        const restoYes = document.getElementById('restoYes');
+        const restoNo = document.getElementById('restoNo');
+        const walkAfterRestoYes = document.getElementById('walkAfterRestoYes');
+        const walkAfterRestoNo = document.getElementById('walkAfterRestoNo');
+        const walkInsteadYes = document.getElementById('walkInsteadYes');
+        const walkInsteadNo = document.getElementById('walkInsteadNo');
+
+        const sendRestoWalk = document.getElementById('sendRestoWalk');
+        const sendWalkOnly = document.getElementById('sendWalkOnly');
+        const sendHome = document.getElementById('sendHome');
+
+        const wishesRestoWalk = document.getElementById('wishesRestoWalk');
+        const wishesWalkOnly = document.getElementById('wishesWalkOnly');
+        const wishesHome = document.getElementById('wishesHome');
+
+        const toast = document.getElementById('toastMessage');
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+            document.getElementById(screenId).classList.remove('hidden');
         }
 
-        // Обновление таймера
-        function updateTimer() {
-            const now = Date.now();
-            let diff = TARGET_DATE - now;
+        function showToast(msg, duration = 3500) {
+            toast.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.remove('show'), duration);
+        }
 
-            // Если таймер достиг цели или пересёк её
-            if (diff <= 0) {
-                daysEl.textContent = '00';
-                hoursEl.textContent = '00';
-                minutesEl.textContent = '00';
-                secondsEl.textContent = '00';
+        function lockAll() {
+            document.querySelectorAll('.btn, textarea').forEach(el => {
+                el.disabled = true;
+                el.style.pointerEvents = 'none';
+                el.style.opacity = '0.6';
+            });
+        }
+
+        function saveState(data) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        function sendViaEmailJS(planType, wishes, extraInfo = '') {
+            if (isFilled) {
+                showToast('❌ Вы уже отправляли ответы.', 3000);
                 return;
             }
 
-            // Вычисление дней, часов, минут, секунд
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            diff -= days * (1000 * 60 * 60 * 24);
-            const hours = Math.floor(diff / (1000 * 60 * 60));
-            diff -= hours * (1000 * 60 * 60);
-            const minutes = Math.floor(diff / (1000 * 60));
-            diff -= minutes * (1000 * 60);
-            const seconds = Math.floor(diff / 1000);
+            // Собираем данные для письма
+            let planDescription = '';
+            if (planType === 'restoWalk') planDescription = 'Ресторан + прогулка пешком';
+            else if (planType === 'walkOnly') planDescription = 'Прогулка (без ресторана)';
+            else if (planType === 'home') planDescription = 'Домашний вечер (без прогулки)';
 
-            // Обновление DOM
-            daysEl.textContent = formatTime(days);
-            hoursEl.textContent = formatTime(hours);
-            minutesEl.textContent = formatTime(minutes);
-            secondsEl.textContent = formatTime(seconds);
+            let answersText = '';
+            if (savedData) {
+                answersText += `Ресторан: ${savedData.restaurant === true ? 'Да' : savedData.restaurant === false ? 'Нет' : '—'}\n`;
+                if (savedData.restaurant === true) {
+                    answersText +=
+                        `Прогулка после ужина: ${savedData.walkAfterResto === true ? 'Да' : savedData.walkAfterResto === false ? 'Нет' : '—'}\n`;
+                } else if (savedData.restaurant === false) {
+                    answersText +=
+                        `Прогулка вместо ресторана: ${savedData.walkInstead === true ? 'Да' : savedData.walkInstead === false ? 'Нет' : '—'}\n`;
+                }
+            }
+            answersText += `\nФинальный план: ${planDescription}`;
+            if (wishes) answersText += `\n\nПожелания: ${wishes}`;
+            if (extraInfo) answersText += `\n${extraInfo}`;
+
+            // Подготовка параметров для EmailJS
+            const templateParams = {
+                to_email: TO_EMAIL,
+                from_name: 'Романтический вечер',
+                message: answersText,
+                plan: planDescription,
+                wishes: wishes || '—',
+            };
+
+            // Находим активную кнопку отправки и добавляем спиннер
+            let currentBtn = null;
+            if (planType === 'restoWalk') currentBtn = sendRestoWalk;
+            else if (planType === 'walkOnly') currentBtn = sendWalkOnly;
+            else if (planType === 'home') currentBtn = sendHome;
+            if (currentBtn) currentBtn.classList.add('loading');
+
+            // Отправляем
+            emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+                .then(() => {
+                    if (currentBtn) currentBtn.classList.remove('loading');
+                    const newData = { ...savedData, filled: true, wishes: wishes, plan: planType };
+                    saveState(newData);
+                    lockAll();
+
+                    showScreen('thanksScreen');
+                })
+                .catch((error) => {
+                    if (currentBtn) currentBtn.classList.remove('loading');
+                    console.error('EmailJS error:', error);
+                    showToast('❌ Ошибка отправки. Попробуйте еще раз.', 4000);
+                });
         }
 
-        // Запускаем обновление сразу, чтобы не ждать первую секунду
-        updateTimer();
-
-        // Обновляем каждую секунду
-        const interval = setInterval(updateTimer, 1000);
-
-        // Очистка интервала при выгрузке страницы (хорошая практика)
-        window.addEventListener('beforeunload', function() {
-            clearInterval(interval);
-        });
-
-        // дополнительно: если вкладка была неактивна, при возврате обновим
-        document.addEventListener('visibilitychange', function() {
-            if (!document.hidden) {
-                updateTimer();
+        function restoreState() {
+            if (isFilled) {
+                lockAll();
+                startBtn.disabled = true;
+                startBtn.style.opacity = '0.5';
+                showScreen('thanksScreen');
+                showToast('🌸 Вы уже заполнили анкету. Спасибо!', 3000);
+                return;
             }
+
+            if (savedData) {
+                const step = savedData.step || 'welcome';
+                switch (step) {
+                    case 'restaurant':
+                        showScreen('restaurantScreen');
+                        break;
+                    case 'walkAfterResto':
+                        showScreen('walkAfterRestoScreen');
+                        break;
+                    case 'walkInstead':
+                        showScreen('walkInsteadScreen');
+                        break;
+                    case 'planRestoWalk':
+                        showScreen('planRestoWalk');
+                        if (savedData.wishes) wishesRestoWalk.value = savedData.wishes;
+                        break;
+                    case 'planWalkOnly':
+                        showScreen('planWalkOnly');
+                        if (savedData.wishes) wishesWalkOnly.value = savedData.wishes;
+                        break;
+                    case 'planHome':
+                        showScreen('planHome');
+                        if (savedData.wishes) wishesHome.value = savedData.wishes;
+                        if (savedData.restaurant === true && savedData.walkAfterResto === false) {
+                            homePlanCard.innerHTML =
+                                `<p>🍽️ Ужин в Roof(пожелания по ресторану можно оставить ниже)</p>
+                                                         <p>🍦 Мороженое и LEGO ждут.</p>
+                                                         <p>🕯️ Уютный вечер.</p>`;
+                        }
+                        break;
+                    default:
+                        showScreen('welcomeScreen');
+                }
+            } else {
+                showScreen('welcomeScreen');
+            }
+        }
+
+        // ===== ОБРАБОТЧИКИ =====
+        startBtn.addEventListener('click', function() {
+            if (isFilled) {
+                showToast('❌ Опрос уже завершен.', 2500);
+                return;
+            }
+            savedData = { restaurant: null, walkAfterResto: null, walkInstead: null, step: 'restaurant' };
+            saveState(savedData);
+            showScreen('restaurantScreen');
         });
+
+        restoYes.addEventListener('click', function() {
+            if (isFilled) return;
+            savedData.restaurant = true;
+            savedData.step = 'walkAfterResto';
+            saveState(savedData);
+            showScreen('walkAfterRestoScreen');
+        });
+
+        restoNo.addEventListener('click', function() {
+            if (isFilled) return;
+            savedData.restaurant = false;
+            savedData.step = 'walkInstead';
+            saveState(savedData);
+            showScreen('walkInsteadScreen');
+        });
+
+        walkAfterRestoYes.addEventListener('click', function() {
+            if (isFilled) return;
+            savedData.walkAfterResto = true;
+            savedData.step = 'planRestoWalk';
+            saveState(savedData);
+            showScreen('planRestoWalk');
+        });
+
+        walkAfterRestoNo.addEventListener('click', function() {
+            if (isFilled) return;
+            savedData.walkAfterResto = false;
+            savedData.step = 'planHome';
+            saveState(savedData);
+            homePlanCard.innerHTML =
+                `<p>🍽️ Ужин в Roof, а затем возвращаемся домой.</p>
+                                         <p>🍦 Мороженое и LEGO ждут.</p>
+                                         <p>🕯️ Уютный вечер.</p>`;
+            showScreen('planHome');
+        });
+
+        walkInsteadYes.addEventListener('click', function() {
+            if (isFilled) return;
+            savedData.walkInstead = true;
+            savedData.step = 'planWalkOnly';
+            saveState(savedData);
+            showScreen('planWalkOnly');
+        });
+
+        walkInsteadNo.addEventListener('click', function() {
+            if (isFilled) return;
+            savedData.walkInstead = false;
+            savedData.step = 'planHome';
+            saveState(savedData);
+            homePlanCard.innerHTML =
+                `<p>Ожидаю вас дома.</p>
+                                         <p>🍦 Мороженое и набор LEGO уже ждут.</p>
+                                         <p>🕯️ Спокойный вечер в теплой атмосфере.</p>`;
+            showScreen('planHome');
+        });
+
+        // Отправка
+        sendRestoWalk.addEventListener('click', function() {
+            if (isFilled) return;
+            const wishes = wishesRestoWalk.value.trim();
+            savedData.wishes = wishes;
+            saveState(savedData);
+            sendViaEmailJS('restoWalk', wishes);
+        });
+
+        sendWalkOnly.addEventListener('click', function() {
+            if (isFilled) return;
+            const wishes = wishesWalkOnly.value.trim();
+            savedData.wishes = wishes;
+            saveState(savedData);
+            sendViaEmailJS('walkOnly', wishes);
+        });
+
+        sendHome.addEventListener('click', function() {
+            if (isFilled) return;
+            const wishes = wishesHome.value.trim();
+            savedData.wishes = wishes;
+            saveState(savedData);
+            let extra = '';
+            if (savedData.restaurant === true && savedData.walkAfterResto === false) {
+                extra = '(Был выбран ужин в Roof, без прогулки)';
+            } else if (savedData.restaurant === false && savedData.walkInstead === false) {
+                extra = '(Без ресторана и без прогулки)';
+            }
+            sendViaEmailJS('home', wishes, extra);
+        });
+
+        // ===== ИНИЦИАЛИЗАЦИЯ =====
+        restoreState();
+        if (isFilled) {
+            lockAll();
+            startBtn.disabled = true;
+            startBtn.style.opacity = '0.5';
+        }
+
+        // Проверка, что EmailJS настроен
+        if (EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY' || EMAILJS_SERVICE_ID === 'service_xxxxx') {
+            console.warn('⚠️ EmailJS не настроен. Замените YOUR_PUBLIC_KEY, service_xxxxx и template_xxxxx на свои данные.');
+            setTimeout(() => {
+                showToast('⚠️ Настройте EmailJS в коде (публичный ключ, service_id, template_id)', 5000);
+            }, 1000);
+        }
     })();
 </script>
 </body>
