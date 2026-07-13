@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>❤️</title>
+    <style>
+        /* Сброс и базовые стили */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 50%, #e8eaf6 100%);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: 50%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Романтичные сердечки на фоне */
+        body::before {
+            content: '❤️';
+            position: fixed;
+            font-size: 20px;
+            opacity: 0.1;
+            top: 10%;
+            left: 5%;
+            animation: floatHeart 20s infinite ease-in-out;
+        }
+
+        body::after {
+            content: '💕';
+            position: fixed;
+            font-size: 30px;
+            opacity: 0.08;
+            bottom: 15%;
+            right: 5%;
+            animation: floatHeart 25s infinite ease-in-out reverse;
+        }
+
+        @keyframes floatHeart {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(10deg); }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 40px;
+            box-shadow: 
+                0 20px 60px rgba(233, 30, 99, 0.15),
+                0 0 0 1px rgba(233, 30, 99, 0.05);
+            padding: 40px 28px 36px;
+            max-width: 420px;
+            width: 100%;
+            min-height: 420px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* Декоративный градиентный верх */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ec407a, #ab47bc, #ec407a);
+            background-size: 200% 100%;
+            animation: gradientMove 3s ease-in-out infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Маленькие сердечки по углам контейнера */
+        .container .corner-heart {
+            position: absolute;
+            font-size: 14px;
+            opacity: 0.2;
+            color: #e91e63;
+        }
+
+        .container .corner-heart:nth-child(1) { top: 16px; left: 20px; }
+        .container .corner-heart:nth-child(2) { top: 16px; right: 20px; }
+        .container .corner-heart:nth-child(3) { bottom: 16px; left: 20px; }
+        .container .corner-heart:nth-child(4) { bottom: 16px; right: 20px; }
+
+        /* Текстовый блок входа */
+        .info-text {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: #4a148c;
+            text-align: center;
+            margin-bottom: 32px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            padding: 0 4px;
+            font-family: 'Georgia', serif;
+        }
+
+        .info-text strong {
+            color: #e91e63;
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        .info-text .sub {
+            display: block;
+            font-size: 0.95rem;
+            color: #7b1fa2;
+            margin-top: 6px;
+            font-weight: 300;
+        }
+
+        /* Поле ввода пароля */
+        .password-input {
+            width: 100%;
+            padding: 18px 22px;
+            font-size: 1.1rem;
+            border: 2px solid #f3e5f5;
+            border-radius: 60px;
+            background: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+            outline: none;
+            color: #4a148c;
+            font-family: 'Georgia', serif;
+            letter-spacing: 0.3px;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .password-input:focus {
+            border-color: #ec407a;
+            box-shadow: 0 0 0 6px rgba(233, 30, 99, 0.08), 0 4px 20px rgba(233, 30, 99, 0.1);
+            background: #ffffff;
+        }
+
+        .password-input::placeholder {
+            color: #ce93d8;
+            font-weight: 300;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* Кнопка входа */
+        .submit-btn {
+            width: 100%;
+            margin-top: 18px;
+            padding: 18px 20px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #ffffff;
+            background: linear-gradient(135deg, #e91e63, #9c27b0);
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 30px rgba(233, 30, 99, 0.25);
+            letter-spacing: 1px;
+            font-family: 'Georgia', serif;
+            -webkit-tap-highlight-color: transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::after {
+            content: '✨';
+            margin-left: 8px;
+        }
+
+        .submit-btn:active {
+            transform: scale(0.97);
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
+        }
+
+        .submit-btn:focus-visible {
+            outline: 3px solid #f48fb1;
+            outline-offset: 2px;
+        }
+
+        /* Сообщение об ошибке */
+        .error-msg {
+            color: #c62828;
+            font-size: 0.95rem;
+            text-align: center;
+            margin-top: 18px;
+            min-height: 1.6rem;
+            font-weight: 400;
+            background: rgba(255, 235, 238, 0.8);
+            padding: 8px 14px;
+            border-radius: 40px;
+            display: inline-block;
+            width: auto;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 20px;
+            padding-right: 20px;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+            border: 1px solid #ef9a9a;
+            font-family: 'Georgia', serif;
+        }
+
+        .error-msg.visible {
+            opacity: 1;
+        }
+
+        /* Скрытый контент (доступ после пароля) */
+        .hidden-content {
+            display: none;
+            text-align: center;
+            padding: 10px 0 4px;
+            flex-direction: column;
+            flex: 1;
+            animation: fadeInContent 0.8s ease;
+        }
+
+        @keyframes fadeInContent {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hidden-content.active {
+            display: flex;
+        }
+
+        .hidden-content .emoji-big {
+            font-size: 4rem;
+            display: block;
+            margin-bottom: 8px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hidden-content h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #4a148c;
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+            font-family: 'Georgia', serif;
+        }
+
+        .hidden-content h2 .heart-emoji {
+            color: #e91e63;
+            display: inline-block;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            35% { transform: scale(1); }
+            45% { transform: scale(1.15); }
+            55% { transform: scale(1); }
+        }
+
+        .hidden-content .message-text {
+            font-size: 1.08rem;
+            color: #4a148c;
+            line-height: 1.8;
+            max-width: 320px;
+            margin: 0 auto 20px;
+            text-align: left;
+            padding: 0 4px;
+            font-family: 'Georgia', serif;
+        }
+
+        .hidden-content .message-text p {
+            margin-bottom: 14px;
+            text-indent: 0;
+        }
+
+        .hidden-content .message-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .hidden-content .message-text .highlight {
+            color: #e91e63;
+            font-weight: 600;
+            background: linear-gradient(135deg, #fce4ec, #f3e5f5);
+            padding: 2px 12px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .hidden-content .message-text .romantic-line {
+            border-left: 3px solid #e91e63;
+            padding-left: 16px;
+            color: #6a1b9a;
+            font-style: italic;
+            margin-top: 4px;
+        }
+
+        .hidden-content .message-text .invite-highlight {
+            color: #6a1b9a;
+            font-weight: 600;
+            background: linear-gradient(135deg, #f3e5f5, #e8eaf6);
+            padding: 2px 12px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        /* Кнопка "Дальше" */
+        .next-btn {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffffff;
+            background: linear-gradient(135deg, #ec407a, #ab47bc);
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 30px rgba(233, 30, 99, 0.2);
+            letter-spacing: 1px;
+            font-family: 'Georgia', serif;
+            margin-top: auto;
+            -webkit-tap-highlight-color: transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .next-btn::after {
+            content: ' 💕';
+            transition: all 0.3s ease;
+        }
+
+        .next-btn:active {
+            transform: scale(0.97);
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.25);
+        }
+
+        .next-btn:focus-visible {
+            outline: 3px solid #f48fb1;
+            outline-offset: 2px;
+        }
+
+        /* Специальные стили для второго экрана */
+        #secondContent .emoji-big {
+            animation: sparkle 3s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.05) rotate(5deg); }
+        }
+
+        #secondContent h2 {
+            color: #6a1b9a;
+        }
+
+        /* Специальные стили для третьего экрана (Приглашаю) */
+        #thirdContent .emoji-big {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        #thirdContent h2 {
+            color: #6a1b9a;
+        }
+
+        /* Специальные стили для четвертого экрана (Мио) */
+        #fourthContent .emoji-big {
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0px rgba(233,30,99,0)); }
+            50% { transform: scale(1.05); filter: drop-shadow(0 0 20px rgba(233,30,99,0.3)); }
+        }
+
+        #fourthContent h2 {
+            background: linear-gradient(135deg, #e91e63, #9c27b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Стиль для ссылки вместо кнопки "В начало" */
+        .video-link {
+            display: inline-block;
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffffff;
+            background: linear-gradient(135deg, #ce93d8, #7b1fa2);
+            border: none;
+            border-radius: 60px;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 30px rgba(156, 39, 176, 0.2);
+            letter-spacing: 1px;
+            font-family: 'Georgia', serif;
+            margin-top: auto;
+            -webkit-tap-highlight-color: transparent;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .video-link::after {
+            content: ' 🎬';
+            transition: all 0.3s ease;
+        }
+
+        .video-link:active {
+            transform: scale(0.97);
+            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.25);
+        }
+
+        .video-link:focus-visible {
+            outline: 3px solid #f48fb1;
+            outline-offset: 2px;
+        }
+
+        .video-link:hover {
+            background: linear-gradient(135deg, #ba68c8, #6a1b9a);
+        }
+
+        /* Адаптив для совсем маленьких экранов */
+        @media (max-width: 400px) {
+            .container {
+                padding: 32px 20px 28px;
+            }
+            .info-text {
+                font-size: 1.05rem;
+            }
+            .password-input {
+                padding: 16px 18px;
+                font-size: 1rem;
+            }
+            .submit-btn {
+                padding: 16px 18px;
+                font-size: 1rem;
+            }
+            .hidden-content .message-text {
+                font-size: 0.98rem;
+            }
+            .next-btn {
+                padding: 14px 18px;
+                font-size: 1rem;
+            }
+            .video-link {
+                padding: 14px 18px;
+                font-size: 1rem;
+            }
+            .hidden-content h2 {
+                font-size: 1.5rem;
+            }
+            .hidden-content .emoji-big {
+                font-size: 3.2rem;
+            }
+        }
+
+        /* Стили для плавного появления контента при входе */
+        .hidden-content.active .emoji-big,
+        .hidden-content.active h2,
+        .hidden-content.active .message-text,
+        .hidden-content.active .next-btn,
+        .hidden-content.active .video-link {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .hidden-content.active .emoji-big { animation-delay: 0.1s; }
+        .hidden-content.active h2 { animation-delay: 0.2s; }
+        .hidden-content.active .message-text { animation-delay: 0.3s; }
+        .hidden-content.active .next-btn { animation-delay: 0.4s; }
+        .hidden-content.active .video-link { animation-delay: 0.4s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Убираем стандартный крестик у input в iOS */
+        .password-input::-webkit-search-decoration,
+        .password-input::-webkit-search-cancel-button,
+        .password-input::-webkit-search-results-button,
+        .password-input::-webkit-search-results-decoration {
+            -webkit-appearance: none;
+        }
+
+        .password-input[type="password"] {
+            letter-spacing: 0.4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="appContainer">
+        <!-- Декоративные сердечки -->
+        <span class="corner-heart">♥</span>
+        <span class="corner-heart">♥</span>
+        <span class="corner-heart">♥</span>
+        <span class="corner-heart">♥</span>
+
+        <!-- Блок входа -->
+        <div id="loginBlock">
+            <div class="info-text">
+                <strong>💕 Добро пожаловать</strong>
+                <span class="sub">Пароль для доступа доставит курьер</span>
+            </div>
+
+            <input 
+                type="password" 
+                id="passwordInput" 
+                class="password-input" 
+                placeholder="✨ Введи пароль" 
+                autocomplete="off"
+                aria-label="Пароль для входа"
+            >
+
+            <button id="submitBtn" class="submit-btn">Поехали</button>
+
+            <div id="errorMessage" class="error-msg">❤️ Попробуй еще раз...</div>
+        </div>
+
+        <!-- Первый экран: поздравление -->
+        <div id="firstContent" class="hidden-content">
+            <h2>🏆</h2>
+            <div class="message-text">
+                <p>Желаю вам победы в турнире, верю в вас, у вас все получится!</p>
+                <p class="romantic-line">Но при любых раскладах, для меня вы уже победили всех!🌸</p>
+            </div>
+            <button id="nextBtn1" class="next-btn">Дальше</button>
+        </div>
+
+        <!-- Второй экран: почему пароль 07052026 -->
+        <div id="secondContent" class="hidden-content">
+            <h2>07.05.2026💫</h2>
+            <div class="message-text">
+                <p>Пароль дата, нашего знакомства</span></p>
+                <p>В тот день мы с Артёмом проиграли в пирамиде, но я остался победителем, потому что выиграл гораздо больше — <span class="highlight">знакомство с Вами!</span></p>
+            </div>
+            <button id="nextBtn2" class="next-btn">Дальше</button>
+        </div>
+
+<!--         Третий экран: Приглашаю -->
+<!--        <div id="thirdContent" class="hidden-content">-->
+<!--            <h2>Мини отпуск</h2>-->
+<!--            <div class="message-text">-->
+<!--                <p>Приглашаю вас на следующей неделе <span class="invite-highlight">рвануть одним днем в Питер</span>, утром уехать, вечером приехать.</p>-->
+<!--                <p>Парк аттракционов, погулять, покушать и отправиться домой 🎢</p>-->
+<!--                <p class="romantic-line">От вас требуется только <span class="highlight">хорошее настроение</span> и ваше время, когда сможете) 💗</p>-->
+<!--            </div>-->
+<!--            <button id="nextBtn3" class="next-btn">Дальше</button>-->
+<!--        </div>-->
+
+        <!-- Четвертый экран: Мио(Мило) -->
+        <div id="thirdContent" class="hidden-content">
+            <h2>💕</h2>
+            <div class="message-text">
+                <p>Увидел рилс, где цветы доставляют с тайм-кодом, и сразу захотелось сделать вам такой сюрприз(в доработанном формате)!</p>
+                <p class="romantic-line">Потому что Вас, Софья Эдуардовна, хочется делать счастливой — Вы заслуживаете только лучшего!💗</p>
+            </div>
+            <!-- Ссылка на видео вместо кнопки "В начало" -->
+            <a href="https://rutube.ru/video/40ba21392524a74d2c2a8abad3e8c908/?r=wd&t=2601" 
+               class="video-link" 
+               target="_blank" 
+               rel="noopener noreferrer">
+               Посмотреть
+            </a>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ---------- НАСТРОЙКИ ----------
+            const CORRECT_PASSWORD = '07052026';
+            // ---------------------------------
+            const bodyElement = document.querySelector('body');
+
+            const loginBlock = document.getElementById('loginBlock');
+            const firstContent = document.getElementById('firstContent');
+            const secondContent = document.getElementById('secondContent');
+            const thirdContent = document.getElementById('thirdContent');
+            // const fourthContent = document.getElementById('fourthContent');
+            const passwordInput = document.getElementById('passwordInput');
+            const submitBtn = document.getElementById('submitBtn');
+            const errorMsg = document.getElementById('errorMessage');
+            const nextBtn1 = document.getElementById('nextBtn1');
+            const nextBtn2 = document.getElementById('nextBtn2');
+            const nextBtn3 = document.getElementById('nextBtn3');
+
+            // Функция переключения контента
+            function showContent(contentToShow) {
+                firstContent.classList.remove('active');
+                secondContent.classList.remove('active');
+                thirdContent.classList.remove('active');
+                // fourthContent.classList.remove('active');
+                // Небольшая задержка для перезапуска анимации
+                setTimeout(() => {
+                    contentToShow.classList.add('active');
+                }, 10);
+            }
+
+            // Функция проверки пароля
+            function attemptLogin() {
+                const enteredPassword = passwordInput.value;
+
+                if (enteredPassword === CORRECT_PASSWORD) {
+                    loginBlock.style.display = 'none';
+                    showContent(firstContent);
+                    errorMsg.classList.remove('visible');
+                    passwordInput.value = '';
+                } else {
+                    errorMsg.classList.add('visible');
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                    passwordInput.style.borderColor = '#ef9a9a';
+                    setTimeout(() => {
+                        passwordInput.style.borderColor = '#f3e5f5';
+                    }, 400);
+                }
+            }
+
+            // Обработчик клика по кнопке "Войти"
+            submitBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                attemptLogin();
+                document.body.style.backgroundImage = "url('2.jpg')";
+            });
+
+            // Обработчик нажатия Enter в поле ввода
+            passwordInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    attemptLogin();
+                }
+            });
+
+            // При фокусе на поле — скрываем ошибку
+            passwordInput.addEventListener('focus', function() {
+                if (errorMsg.classList.contains('visible')) {
+                    errorMsg.classList.remove('visible');
+                }
+                passwordInput.style.borderColor = '#f3e5f5';
+            });
+
+            // Кнопка "Дальше" → второй экран
+            nextBtn1.addEventListener('click', function(e) {
+                e.preventDefault();
+                showContent(secondContent);
+                document.body.style.backgroundImage = "url('1.jpg')";
+            });
+
+            // Кнопка "Дальше" → третий экран
+            nextBtn2.addEventListener('click', function(e) {
+                e.preventDefault();
+                bodyElement.style.backgroundImage = "url('./3.jpg')";
+                showContent(thirdContent);
+            });
+
+            // Кнопка "Дальше" → четвертый экран
+            nextBtn3.addEventListener('click', function(e) {
+                e.preventDefault();
+                bodyElement.style.backgroundImage = "url('./3.jpg')";
+                // showContent(fourthContent);
+            });
+
+            console.log('💕 Защита паролем активна (романтичная версия)');
+        })();
+    </script>
+
+</body>
+</html>
