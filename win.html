@@ -635,11 +635,11 @@
                 const enteredPassword = passwordInput.value;
 
                 if (enteredPassword === CORRECT_PASSWORD) {
+                    document.body.style.backgroundImage = "url('2.jpg')";
                     loginBlock.style.display = 'none';
                     showContent(firstContent);
                     errorMsg.classList.remove('visible');
                     passwordInput.value = '';
-                    document.body.style.backgroundImage = "url('2.jpg')";
                 } else {
                     errorMsg.classList.add('visible');
                     passwordInput.value = '';
