@@ -646,6 +646,7 @@
                     showContent(firstContent);
                     errorMsg.classList.remove('visible');
                     passwordInput.value = '';
+                    document.body.style.backgroundImage = "url('2.jpg')";
                 } else {
                     errorMsg.classList.add('visible');
                     passwordInput.value = '';
@@ -661,7 +662,6 @@
             submitBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 attemptLogin();
-                document.body.style.backgroundImage = "url('2.jpg')";
             });
 
             // Обработчик нажатия Enter в поле ввода
