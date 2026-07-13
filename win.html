@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>❤️</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <style>
         /* Сброс и базовые стили */
         * {
@@ -13,7 +16,9 @@
         }
 
         body {
-            font-family: 'Georgia', 'Times New Roman', serif;
+            font-family: "Pacifico", cursive;
+            font-weight: 400;
+            font-style: normal;
             background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 50%, #e8eaf6 100%);
             background-size: cover;
             background-repeat: no-repeat;
@@ -65,7 +70,7 @@
             padding: 40px 28px 36px;
             max-width: 420px;
             width: 100%;
-            min-height: 420px;
+            min-height: 360px;
             display: flex;
             flex-direction: column;
             position: relative;
@@ -106,29 +111,26 @@
 
         /* Текстовый блок входа */
         .info-text {
-            font-size: 1.2rem;
+            font-size: 2rem;
             line-height: 1.7;
             color: #4a148c;
             text-align: center;
-            margin-bottom: 32px;
+            margin-bottom: 24px;
             font-weight: 400;
             letter-spacing: 0.5px;
             padding: 0 4px;
-            font-family: 'Georgia', serif;
         }
 
         .info-text strong {
             color: #e91e63;
-            font-weight: 700;
-            font-size: 1.3rem;
+            font-size: 2rem;
         }
 
         .info-text .sub {
             display: block;
-            font-size: 0.95rem;
+            font-size: 1.1rem;
             color: #7b1fa2;
             margin-top: 6px;
-            font-weight: 300;
         }
 
         /* Поле ввода пароля */
@@ -142,7 +144,6 @@
             transition: all 0.3s ease;
             outline: none;
             color: #4a148c;
-            font-family: 'Georgia', serif;
             letter-spacing: 0.3px;
             -webkit-appearance: none;
             appearance: none;
@@ -176,7 +177,6 @@
             transition: all 0.3s ease;
             box-shadow: 0 8px 30px rgba(233, 30, 99, 0.25);
             letter-spacing: 1px;
-            font-family: 'Georgia', serif;
             -webkit-tap-highlight-color: transparent;
             position: relative;
             overflow: hidden;
@@ -217,7 +217,6 @@
             transition: opacity 0.3s ease;
             opacity: 0;
             border: 1px solid #ef9a9a;
-            font-family: 'Georgia', serif;
         }
 
         .error-msg.visible {
@@ -267,7 +266,6 @@
             color: #4a148c;
             margin-bottom: 16px;
             letter-spacing: 1px;
-            font-family: 'Georgia', serif;
         }
 
         .hidden-content h2 .heart-emoji {
@@ -292,7 +290,6 @@
             margin: 0 auto 20px;
             text-align: left;
             padding: 0 4px;
-            font-family: 'Georgia', serif;
         }
 
         .hidden-content .message-text p {
@@ -344,7 +341,6 @@
             transition: all 0.3s ease;
             box-shadow: 0 8px 30px rgba(233, 30, 99, 0.2);
             letter-spacing: 1px;
-            font-family: 'Georgia', serif;
             margin-top: auto;
             -webkit-tap-highlight-color: transparent;
             position: relative;
@@ -427,7 +423,6 @@
             transition: all 0.3s ease;
             box-shadow: 0 8px 30px rgba(156, 39, 176, 0.2);
             letter-spacing: 1px;
-            font-family: 'Georgia', serif;
             margin-top: auto;
             -webkit-tap-highlight-color: transparent;
             position: relative;
@@ -541,7 +536,7 @@
         <!-- Блок входа -->
         <div id="loginBlock">
             <div class="info-text">
-                <strong>💕 Добро пожаловать</strong>
+                <strong>💕</strong>
                 <span class="sub">Пароль для доступа доставит курьер</span>
             </div>
 
@@ -554,9 +549,7 @@
                 aria-label="Пароль для входа"
             >
 
-            <button id="submitBtn" class="submit-btn">Поехали</button>
-
-            <div id="errorMessage" class="error-msg">❤️ Попробуй еще раз...</div>
+            <button id="submitBtn" class="submit-btn">Отправить</button>
         </div>
 
         <!-- Первый экран: поздравление -->
@@ -564,7 +557,7 @@
             <h2>🏆</h2>
             <div class="message-text">
                 <p>Желаю вам победы в турнире, верю в вас, у вас все получится!</p>
-                <p class="romantic-line">Но при любых раскладах, для меня вы уже победили всех!🌸</p>
+                <p class="romantic-line">При любых раскладах, для меня вы уже победили!🌸</p>
             </div>
             <button id="nextBtn1" class="next-btn">Дальше</button>
         </div>
@@ -593,7 +586,7 @@
         <div id="thirdContent" class="hidden-content">
             <h2>💕</h2>
             <div class="message-text">
-                <p>Увидел рилс, где цветы доставляют с тайм-кодом, и сразу захотелось сделать вам такой сюрприз(в доработанном формате)!</p>
+                <p>Увидел рилс, где цветы доставляют с тайм-кодом, и сразу захотелось сделать вам такой сюрприз!</p>
                 <p class="romantic-line">Вас, Софья Эдуардовна, хочется делать счастливой — Вы заслуживаете только лучшего!💗</p>
             </div>
             <!-- Ссылка на видео вместо кнопки "В начало" -->
