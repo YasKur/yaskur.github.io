@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>❤️</title>
+    <title>💫</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <style>
-        /* Сброс и базовые стили */
+        /* ——— Сброс и база ——— */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -16,543 +16,226 @@
         }
 
         body {
-            font-family: "Pacifico", cursive;
-            font-weight: 400;
-            font-style: normal;
-            background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 50%, #e8eaf6 100%);
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: 50%;
-            background-image: url("./starts.jpg");
+            font-family: 'Pacifico', sans-serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: flex-end;
+            align-items: center;
             margin: 0;
-            padding: 0;
-            padding-bottom: 20px;
+            padding: 16px;
             position: relative;
+            overflow-x: hidden;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: 50%;
+            background-image: url(./space.jpg);
         }
 
-        /* Романтичные сердечки на фоне */
+        /* ——— Звёздное небо ——— */
         body::before {
-            content: '❤️';
+            content: '';
             position: fixed;
-            font-size: 20px;
-            opacity: 0.1;
-            top: 10%;
-            left: 5%;
-            animation: floatHeart 20s infinite ease-in-out;
+            inset: 0;
+            background-image:
+                    radial-gradient(2px 2px at 10% 20%, rgba(255, 255, 255, 0.6), transparent),
+                    radial-gradient(2px 2px at 30% 70%, rgba(255, 255, 255, 0.5), transparent),
+                    radial-gradient(3px 3px at 55% 15%, rgba(255, 255, 255, 0.7), transparent),
+                    radial-gradient(2px 2px at 70% 85%, rgba(255, 255, 255, 0.4), transparent),
+                    radial-gradient(2px 2px at 85% 40%, rgba(255, 255, 255, 0.6), transparent),
+                    radial-gradient(2px 2px at 15% 90%, rgba(255, 255, 255, 0.3), transparent),
+                    radial-gradient(3px 3px at 45% 45%, rgba(255, 255, 255, 0.5), transparent),
+                    radial-gradient(2px 2px at 92% 10%, rgba(255, 255, 255, 0.4), transparent),
+                    radial-gradient(2px 2px at 5% 50%, rgba(255, 255, 255, 0.5), transparent),
+                    radial-gradient(2px 2px at 60% 95%, rgba(255, 255, 255, 0.3), transparent);
+            background-size: 200px 200px;
+            background-repeat: repeat;
+            opacity: 0.8;
+            pointer-events: none;
+            z-index: 0;
         }
 
-        body::after {
-            content: '💕';
+        /* ——— Падающие звёзды ——— */
+        .shooting-star {
             position: fixed;
-            font-size: 30px;
-            opacity: 0.08;
-            bottom: 15%;
-            right: 5%;
-            animation: floatHeart 25s infinite ease-in-out reverse;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 6px 2px rgba(255, 200, 255, 0.6);
+            animation: shoot linear infinite;
+            opacity: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .shooting-star:nth-child(1) { top: 10%; left: 20%; animation-duration: 7s; animation-delay: 1s; }
+        .shooting-star:nth-child(2) { top: 30%; left: 70%; animation-duration: 9s; animation-delay: 4s; }
+        .shooting-star:nth-child(3) { top: 60%; left: 10%; animation-duration: 8s; animation-delay: 7s; }
+        .shooting-star:nth-child(4) { top: 80%; left: 50%; animation-duration: 11s; animation-delay: 2s; }
+
+        @keyframes shoot {
+            0% { transform: translate(0, 0) scale(0.5); opacity: 0; }
+            5% { opacity: 1; }
+            20% { transform: translate(120px, 80px) scale(1.2); opacity: 0.8; }
+            40% { transform: translate(250px, 180px) scale(0.8); opacity: 0.4; }
+            60% { transform: translate(380px, 280px) scale(0.3); opacity: 0.1; }
+            100% { transform: translate(500px, 400px) scale(0); opacity: 0; }
         }
 
-        @keyframes floatHeart {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(10deg); }
-        }
-
+        /* ——— Контейнер (стекло) ——— */
         .container {
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(5px);
-            border-radius: 40px;
-            box-shadow:
-                    0 20px 60px rgba(233, 30, 99, 0.15),
-                    0 0 0 1px rgba(233, 30, 99, 0.05);
-            padding: 40px 28px 36px;
-            max-width: 420px;
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(3px) saturate(1.2);
+            -webkit-backdrop-filter: blur(2px) saturate(1.2);
+            background: rgba(20, 10, 40, 0.45);
+            border-radius: 48px;
+            padding: 40px 32px 36px;
+            max-width: 460px;
             width: 100%;
-            min-height: 360px;
+            box-shadow:
+                    0 30px 80px rgba(0, 0, 0, 0.8),
+                    0 0 0 1px rgba(255, 200, 255, 0.08),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 200, 255, 0.06);
+            transition: all 0.4s ease;
+        }
+
+        /* ——— Декоративные уголки (лунные) ——— */
+        .corner-moon {
+            position: absolute;
+            font-size: 18px;
+            opacity: 0.2;
+            color: #f0e6ff;
+            filter: drop-shadow(0 0 6px #b39ddb);
+            user-select: none;
+            pointer-events: none;
+        }
+        .corner-moon:nth-child(1) { top: 18px; left: 22px; }
+        .corner-moon:nth-child(2) { top: 18px; right: 22px; }
+        .corner-moon:nth-child(3) { bottom: 18px; left: 22px; }
+        .corner-moon:nth-child(4) { bottom: 18px; right: 22px; }
+
+        /* ——— Основной экран ——— */
+        .content-screen {
             display: flex;
             flex-direction: column;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        /* Декоративный градиентный верх */
-        .container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background-size: 200% 100%;
-            animation: gradientMove 3s ease-in-out infinite;
-        }
-
-        @keyframes gradientMove {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        /* Маленькие сердечки по углам контейнера */
-        .container .corner-heart {
-            position: absolute;
-            font-size: 14px;
-            opacity: 0.2;
-            color: #e91e63;
-        }
-
-        .container .corner-heart:nth-child(1) { top: 16px; left: 20px; }
-        .container .corner-heart:nth-child(2) { top: 16px; right: 20px; }
-        .container .corner-heart:nth-child(3) { bottom: 16px; left: 20px; }
-        .container .corner-heart:nth-child(4) { bottom: 16px; right: 20px; }
-
-        /* Текстовый блок входа */
-        .info-text {
-            font-size: 2rem;
-            line-height: 1.7;
-            color: #ffffff;
+            gap: 18px;
             text-align: center;
-            margin-bottom: 24px;
-            font-weight: 400;
-            letter-spacing: 0.5px;
-            padding: 0 4px;
+            padding: 6px 0 2px;
+            animation: fadeUp 0.7s ease forwards;
         }
 
-        .info-text strong {
-            color: #e91e63;
-            font-size: 2rem;
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        .info-text .sub {
+        .emoji-big {
+            font-size: 4.2rem;
             display: block;
-            font-size: 1.1rem;
-            color: #7b1fa2;
+            margin-bottom: 2px;
+            filter: drop-shadow(0 0 30px rgba(180, 130, 255, 0.3));
+            animation: gentleFloat 4s ease-in-out infinite;
+        }
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.02); }
+        }
+
+        .content-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #f0eaff;
+            text-shadow: 0 0 20px rgba(180, 130, 255, 0.2);
+            letter-spacing: 1px;
+        }
+
+        .message-text {
+            font-size: 1.05rem;
+            color: #d4c8e8;
+            line-height: 1.8;
+            max-width: 340px;
+            margin: 0 auto;
+            text-align: left;
+            padding: 0 6px;
+            font-weight: 400;
+        }
+        .message-text p {
+            margin-bottom: 12px;
+        }
+        .message-text .highlight {
+            color: #d9b3ff;
+            font-weight: 600;
+            background: rgba(180, 130, 255, 0.08);
+            padding: 2px 14px;
+            border-radius: 30px;
+            display: inline-block;
+            border: 1px solid rgba(180, 130, 255, 0.1);
+        }
+        .message-text .romantic-line {
+            border-left: 3px solid #b380ff;
+            padding-left: 16px;
+            color: #e0d0f0;
+            font-style: italic;
             margin-top: 6px;
         }
-
-        /* Поле ввода пароля */
-        .password-input {
-            width: 100%;
-            padding: 18px 22px;
-            font-size: 1.1rem;
-            border: 2px solid #f3e5f5;
-            border-radius: 60px;
-            background: rgba(255, 255, 255, 0.8);
-            transition: all 0.3s ease;
-            outline: none;
-            color: #ffffff;
-            letter-spacing: 0.3px;
-            -webkit-appearance: none;
-            appearance: none;
-            font-family: "Pacifico", cursive;
+        .message-text ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
         }
-
-        .password-input:focus {
-            border-color: #ec407a;
-            box-shadow: 0 0 0 6px rgba(233, 30, 99, 0.08), 0 4px 20px rgba(233, 30, 99, 0.1);
-            background: #ffffff;
-        }
-
-        .password-input::placeholder {
-            color: #ce93d8;
-            font-weight: 300;
-            font-size: 1rem;
-            letter-spacing: 0.5px;
-        }
-
-        /* Кнопка входа */
-        .submit-btn {
-            font-family: "Pacifico", cursive;
-            width: 100%;
-            margin-top: 18px;
-            padding: 18px 20px;
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: #ffffff;
-            background: linear-gradient(135deg, #e91e63, #9c27b0);
-            border: none;
-            border-radius: 60px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 30px rgba(233, 30, 99, 0.25);
-            letter-spacing: 1px;
-            -webkit-tap-highlight-color: transparent;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .submit-btn::after {
-            content: '✨';
-            margin-left: 8px;
-        }
-
-        .submit-btn:active {
-            transform: scale(0.97);
-            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
-        }
-
-        .submit-btn:focus-visible {
-            outline: 3px solid #f48fb1;
-            outline-offset: 2px;
-        }
-
-        /* Сообщение об ошибке */
-        .error-msg {
-            color: #c62828;
-            font-size: 0.95rem;
-            text-align: center;
-            margin-top: 18px;
-            min-height: 1.6rem;
-            font-weight: 400;
-            background: rgba(255, 235, 238, 0.8);
-            padding: 8px 14px;
-            border-radius: 40px;
-            display: inline-block;
-            width: auto;
-            margin-left: auto;
-            margin-right: auto;
-            padding-left: 20px;
-            padding-right: 20px;
-            transition: opacity 0.3s ease;
-            opacity: 0;
-            border: 1px solid #ef9a9a;
-        }
-
-        .error-msg.visible {
-            opacity: 1;
-        }
-
-        /* Скрытый контент (доступ после пароля) */
-         {
-            display: none;
-            text-align: center;
-            padding: 10px 0 4px;
-            flex-direction: column;
-            flex: 1;
-            animation: fadeInContent 0.8s ease;
-        }
-
-        @keyframes fadeInContent {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .active {
-            display: flex;
-        }
-
-         .emoji-big {
-            font-size: 4rem;
-            display: block;
-            margin-bottom: 8px;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        h2 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 16px;
-            letter-spacing: 1px;
-        }
-
-
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            25% { transform: scale(1.1); }
-            35% { transform: scale(1); }
-            45% { transform: scale(1.15); }
-            55% { transform: scale(1); }
-        }
-
-         .message-text {
-            font-size: 1.08rem;
-            color: #ffffff;
-            line-height: 1.8;
-            max-width: 320px;
-            margin: 0 auto 20px;
-            text-align: left;
-            padding: 0 4px;
-        }
-
-         .message-text p {
-            margin-bottom: 14px;
-            text-indent: 0;
-        }
-
-         .message-text p:last-child {
-            margin-bottom: 0;
-        }
-
-         .message-text .highlight {
+        .message-text ul li {
+            /*padding: 6px 0 6px 28px;*/
+            padding-bottom: 5px;
+            /*background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%23b380ff" stroke-width="2"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>') left center no-repeat;*/
+            /*background-size: 18px;*/
+            margin-bottom: 4px;
             color: #e91e63;
-            font-weight: 600;
-            background: linear-gradient(135deg, #fce4ec, #f3e5f5);
-            padding: 2px 12px;
-            border-radius: 20px;
-            display: inline-block;
         }
-
-         .message-text .romantic-line {
-            border-left: 3px solid #e91e63;
-            padding-left: 16px;
-            color: #ffffff;
-            font-style: italic;
-            margin-top: 4px;
+        h3 {
+            margin-bottom: 20px;
         }
-
-         .message-text .invite-highlight {
-            color: #6a1b9a;
-            font-weight: 600;
-            background: linear-gradient(135deg, #f3e5f5, #e8eaf6);
-            padding: 2px 12px;
-            border-radius: 20px;
-            display: inline-block;
-        }
-
-        /* Кнопка "Дальше" */
-        .next-btn {
-            font-family: "Pacifico", cursive;
-            width: 100%;
-            padding: 16px 20px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #ffffff;
-            background: linear-gradient(135deg, #ec407a, #ab47bc);
-            border: none;
-            border-radius: 60px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 30px rgba(233, 30, 99, 0.2);
-            letter-spacing: 1px;
-            margin-top: auto;
-            -webkit-tap-highlight-color: transparent;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .next-btn::after {
-            content: ' 💕';
-            transition: all 0.3s ease;
-        }
-
-        .next-btn:active {
-            transform: scale(0.97);
-            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.25);
-        }
-
-        .next-btn:focus-visible {
-            outline: 3px solid #f48fb1;
-            outline-offset: 2px;
-        }
-
-        /* Специальные стили для второго экрана */
-        #secondContent .emoji-big {
-            animation: sparkle 3s ease-in-out infinite;
-        }
-
-        @keyframes sparkle {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.05) rotate(5deg); }
-        }
-
-        #secondContent h2 {
-            color: #6a1b9a;
-        }
-
-        /* Специальные стили для третьего экрана (Приглашаю) */
-        #thirdContent .emoji-big {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        #thirdContent h2 {
-            color: #6a1b9a;
-        }
-
-        /* Специальные стили для четвертого экрана (Мио) */
-        #fourthContent .emoji-big {
-            animation: glow 3s ease-in-out infinite;
-        }
-
-        @keyframes glow {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0px rgba(233,30,99,0)); }
-            50% { transform: scale(1.05); filter: drop-shadow(0 0 20px rgba(233,30,99,0.3)); }
-        }
-
-        #fourthContent h2 {
-            background: linear-gradient(135deg, #e91e63, #9c27b0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Стиль для ссылки вместо кнопки "В начало" */
-        .video-link {
-            display: inline-block;
-            width: 100%;
-            padding: 16px 20px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #ffffff;
-            background: linear-gradient(135deg, #ce93d8, #7b1fa2);
-            border: none;
-            border-radius: 60px;
-            text-decoration: none;
-            text-align: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 30px rgba(156, 39, 176, 0.2);
-            letter-spacing: 1px;
-            margin-top: auto;
-            -webkit-tap-highlight-color: transparent;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .video-link::after {
-            content: ' 🎬';
-            transition: all 0.3s ease;
-        }
-
-        .video-link:active {
-            transform: scale(0.97);
-            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.25);
-        }
-
-        .video-link:focus-visible {
-            outline: 3px solid #f48fb1;
-            outline-offset: 2px;
-        }
-
-        .video-link:hover {
-            background: linear-gradient(135deg, #ba68c8, #6a1b9a);
-        }
-        h2, h3 {
-            text-align: center;
-            padding: 0.5rem;
-        }
-        /* Адаптив для совсем маленьких экранов */
-        @media (max-width: 400px) {
-            .container {
-                padding: 32px 20px 28px;
-            }
-            .info-text {
-                font-size: 1.05rem;
-            }
-            .password-input {
-                padding: 16px 18px;
-                font-size: 1rem;
-            }
-            .submit-btn {
-                padding: 16px 18px;
-                font-size: 1rem;
-            }
-             .message-text {
-                font-size: 0.98rem;
-            }
-            .next-btn {
-                padding: 14px 18px;
-                font-size: 1rem;
-            }
-            .video-link {
-                padding: 14px 18px;
-                font-size: 1rem;
-            }
-             h2 {
-                font-size: 1.5rem;
-            }
-             .emoji-big {
-                font-size: 3.2rem;
-            }
-        }
-
-        /* Стили для плавного появления контента при входе */
-        .active .emoji-big,
-        .active h2,
-        .active .message-text,
-        .active .next-btn,
-        .active .video-link {
-            animation: fadeInUp 0.6s ease forwards;
-            opacity: 0;
-        }
-
-        .active .emoji-big { animation-delay: 0.1s; }
-        .active h2 { animation-delay: 0.2s; }
-        .active .message-text { animation-delay: 0.3s; }
-        .active .next-btn { animation-delay: 0.4s; }
-        .active .video-link { animation-delay: 0.4s; }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Убираем стандартный крестик у input в iOS */
-        .password-input::-webkit-search-decoration,
-        .password-input::-webkit-search-cancel-button,
-        .password-input::-webkit-search-results-button,
-        .password-input::-webkit-search-results-decoration {
-            -webkit-appearance: none;
-        }
-
-        .password-input[type="password"] {
-            letter-spacing: 0.4px;
-        }
-        .small-text {
-            color: gray;
-            font-size: 0.6rem;
+        /* ——— Адаптив ——— */
+        @media (max-width: 420px) {
+            .container { padding: 32px 20px 28px; }
+            .content-title { font-size: 1.6rem; }
+            .message-text { font-size: 0.95rem; }
+            .emoji-big { font-size: 3.4rem; }
         }
     </style>
 </head>
 <body>
 
-<div class="container" id="appContainer">
-    <!-- Декоративные сердечки -->
-    <span class="corner-heart">♥</span>
-    <span class="corner-heart">♥</span>
-    <span class="corner-heart">♥</span>
-    <span class="corner-heart">♥</span>
+<!-- Падающие звёзды -->
+<span class="shooting-star"></span>
+<span class="shooting-star"></span>
+<span class="shooting-star"></span>
+<span class="shooting-star"></span>
 
-    <!-- Блок входа -->
-    <div id="loginBlock">
-        <h2>💕💕💕</h2>
+<div class="container" id="appContainer">
+    <!-- Декоративные луны (просто украшение) -->
+    <span class="corner-moon">☾</span>
+    <span class="corner-moon">☽</span>
+    <span class="corner-moon">☾</span>
+    <span class="corner-moon">☽</span>
+
+    <!-- ====== Единственный экран ====== -->
+    <div id="mainScreen" class="content-screen">
+        <div class="content-title">Приглашение</div>
         <div class="message-text">
-            <span class="highlight">Cофья Эдуардовна</span>, буду ждать вас сегодня 20.07.26, после 20:00.
-            <h3>Программа на вечер</h3>
-            <p class="romantic-line">
-                Расскажите как ваши дела<br>
-                Покушаем<br>
-                Массаж<br>
-                Сборка лего
-            </p>
+            <p style="text-align: center">Софья Эдуардовна, сегодня после игры, жду вас в гости.</p>
+<!--            <h3 style="text-align: center">Программа вечера</h3>-->
+            <ul style="text-align: center">
+                <li>🍔 Готовим и кушаем бургеры</li>
+                <li>💬 Расскажите как прошел ваш день?</li>
+                <li>💆‍♀️ Массаж по расписанию</li>
+                <li>🪟 Выбор штор</li>
+                <li>🎫 Посмотрим билеты</li>
+                <li>🧱 Может быть начнем собирать Lego</li>
+            </ul>
         </div>
     </div>
 </div>
-
 
 </body>
 </html>
