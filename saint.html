@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>✨ Saint Petersburg 29.07.26 ✨</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding: 20px;
+            background-image: url('./saint.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            overflow-x: hidden;
+            font-family: 'Great Vibes', cursive;
+        }
+
+        /* ——— Романтичная дымка «белые ночи» ——— */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 30% 40%, rgba(210, 230, 255, 0.25), rgba(40, 50, 80, 0.55));
+            backdrop-filter: blur(4px);
+            z-index: 0;
+        }
+
+        /* ——— Падающие звёзды (золотые искры) ——— */
+        .shooting-star {
+            position: fixed;
+            font-size: 1.6rem;
+            color: #f7e3af;
+            opacity: 0.4;
+            filter: drop-shadow(0 0 12px #d4af37);
+            animation: shootStar 12s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .shooting-star:nth-child(1) { left: 5%; animation-delay: 0s; font-size: 2.0rem; }
+        .shooting-star:nth-child(2) { left: 25%; animation-delay: 3.2s; font-size: 2.4rem; }
+        .shooting-star:nth-child(3) { left: 55%; animation-delay: 6.5s; font-size: 1.6rem; }
+        .shooting-star:nth-child(4) { left: 80%; animation-delay: 9s; font-size: 2.2rem; }
+        .shooting-star:nth-child(5) { left: 92%; animation-delay: 2.5s; font-size: 1.4rem; }
+
+        @keyframes shootStar {
+            0% { transform: translateY(-10vh) rotate(0deg) scale(0.4); opacity: 0; }
+            6% { opacity: 0.9; transform: translateY(2vh) rotate(8deg) scale(1.2); }
+            25% { opacity: 0.8; transform: translateY(25vh) rotate(18deg) scale(1); }
+            50% { opacity: 0.5; transform: translateY(60vh) rotate(35deg) scale(0.7); }
+            80% { opacity: 0.2; transform: translateY(100vh) rotate(55deg) scale(0.3); }
+            100% { opacity: 0; transform: translateY(130vh) rotate(80deg) scale(0); }
+        }
+
+        /* ——— Контейнер — лёгкий, «серебряный век» ——— */
+        .container {
+            position: relative;
+            z-index: 10;
+            backdrop-filter: blur(14px) saturate(1.5);
+            -webkit-backdrop-filter: blur(14px) saturate(1.5);
+            background: rgba(230, 240, 255, 0.18);
+            border-radius: 56px 56px 48px 48px;
+            padding: 28px 24px 32px;
+            max-width: 480px;
+            width: 100%;
+            box-shadow:
+                    0 30px 60px rgba(20, 30, 60, 0.5),
+                    0 0 0 1px rgba(215, 200, 160, 0.3),
+                    inset 0 1px 0 rgba(255, 245, 210, 0.3);
+            border: 1px solid rgba(215, 200, 160, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        /* ——— Декоративные элементы (вензеля) ——— */
+        .corner-moon {
+            position: absolute;
+            font-size: 2.0rem;
+            opacity: 0.25;
+            color: #d4b68a;
+            filter: drop-shadow(0 0 14px #b8956a);
+            user-select: none;
+            pointer-events: none;
+            animation: softPulse 4s ease-in-out infinite;
+        }
+        .corner-moon:nth-child(1) { top: 18px; left: 20px; animation-delay: 0s; }
+        .corner-moon:nth-child(2) { top: 18px; right: 20px; animation-delay: 1.2s; }
+        .corner-moon:nth-child(3) { bottom: 18px; left: 20px; animation-delay: 0.8s; }
+        .corner-moon:nth-child(4) { bottom: 18px; right: 20px; animation-delay: 1.8s; }
+
+        @keyframes softPulse {
+            0%, 100% { transform: scale(0.9) rotate(-2deg); opacity: 0.2; }
+            50% { transform: scale(1.15) rotate(4deg); opacity: 0.5; }
+        }
+
+        /* ——— Основной экран ——— */
+        .content-screen {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            text-align: center;
+            animation: fadeRomance 1s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeRomance {
+            0% { opacity: 0; transform: translateY(28px) scale(0.94); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .emoji-big {
+            font-size: 3.0rem;
+            display: block;
+            margin-bottom: 0px;
+            filter: drop-shadow(0 0 40px rgba(200, 170, 110, 0.4));
+            animation: gentleFloat 6s ease-in-out infinite;
+            line-height: 1.2;
+            letter-spacing: 4px;
+        }
+
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0) scale(1) rotate(-1deg); }
+            50% { transform: translateY(-12px) scale(1.03) rotate(1deg); }
+        }
+
+        .content-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8rem;
+            font-weight: 400;
+            color: #f5efe0;
+            text-shadow: 0 0 30px rgba(200, 170, 110, 0.4), 0 4px 20px rgba(20, 20, 40, 0.4);
+            letter-spacing: 2px;
+            margin-top: 2px;
+            background: linear-gradient(145deg, #f7f0dd, #dac29c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 40px rgba(200, 180, 120, 0.25);
+        }
+
+        .message-text {
+            font-size: 1.1rem;
+            color: #f2ede4;
+            line-height: 1.9;
+            max-width: 360px;
+            margin: 0 auto;
+            text-align: left;
+            padding: 6px 8px;
+            font-weight: 400;
+            backdrop-filter: blur(2px);
+            background: rgba(210, 200, 180, 0.08);
+            border-radius: 32px;
+            padding: 20px 22px 18px;
+            border: 1px solid rgba(210, 195, 160, 0.2);
+        }
+
+        .message-text p {
+            margin-bottom: 14px;
+            font-weight: 300;
+            color: #f4efe6;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.2);
+            font-size: 1.0rem;
+        }
+        .message-text p:first-of-type {
+            font-size: 1.05rem;
+            color: #fcf6ea;
+            letter-spacing: 0.4px;
+        }
+
+        .message-text .highlight {
+            color: #e8d5b0;
+            font-weight: 600;
+            background: rgba(180, 150, 100, 0.15);
+            padding: 2px 16px;
+            border-radius: 30px;
+            display: inline-block;
+            border: 1px solid rgba(200, 170, 120, 0.25);
+            backdrop-filter: blur(4px);
+            box-shadow: 0 0 20px rgba(160, 130, 80, 0.1);
+        }
+
+        .message-text .romantic-line {
+            border-left: 3px solid #c9b28b;
+            padding-left: 20px;
+            color: #ece2d0;
+            font-style: italic;
+            margin-top: 12px;
+            font-weight: 300;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .message-text ul, .message-text ol {
+            list-style: none;
+            padding: 0;
+            margin-top: 8px;
+        }
+
+        /* ——— НОВЫЙ СТИЛЬ СПИСКА: без рамок, только нежные точки ——— */
+        .message-text ol li {
+            padding: 10px 0 10px 40px;
+            margin-bottom: 6px;
+            color: #f5efe6;
+            font-weight: 300;
+            position: relative;
+            border: none;                    /* убрали все рамки */
+            border-radius: 0;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+            background: transparent;
+        }
+
+        .message-text ol li::before {
+            content: "✦";
+            position: absolute;
+            left: 8px;
+            top: 10px;
+            color: #dac29c;
+            font-size: 1.3rem;
+            filter: drop-shadow(0 0 12px #c9a87a);
+        }
+
+        /* лёгкая точка-разделитель (вместо рамки) */
+        .message-text ol li:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 40px;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(200, 180, 140, 0.3), transparent);
+        }
+
+        .message-text ol li:last-child {
+            border-bottom: none;
+        }
+
+        .message-text ol li:last-child::after {
+            display: none;
+        }
+
+        /* ——— Подпись ——— */
+        .signature {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.9rem;
+            color: #e7d9c0;
+            text-align: right;
+            margin-top: 8px;
+            padding-right: 12px;
+            opacity: 0.75;
+            text-shadow: 0 0 20px rgba(200, 170, 120, 0.3);
+            letter-spacing: 1px;
+        }
+
+        /* ——— Адаптив ——— */
+        @media (max-width: 420px) {
+            .container { padding: 24px 14px 28px; border-radius: 40px; }
+            .content-title { font-size: 2.3rem; }
+            .message-text { font-size: 0.95rem; padding: 16px 16px; }
+            .emoji-big { font-size: 2.2rem; }
+            .message-text ol li { padding: 8px 0 8px 34px; font-size: 0.9rem; }
+            .message-text ol li:not(:last-child)::after { left: 34px; }
+            .signature { font-size: 1.5rem; }
+            .corner-moon { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Золотые искры -->
+<span class="shooting-star">✦</span>
+<span class="shooting-star">✦</span>
+<span class="shooting-star">✦</span>
+<span class="shooting-star">✦</span>
+<span class="shooting-star">✦</span>
+
+<div class="container" id="appContainer">
+    <!-- Декоративные вензеля -->
+    <span class="corner-moon">⚜</span>
+    <span class="corner-moon">⚜</span>
+    <span class="corner-moon">🏛</span>
+    <span class="corner-moon">🏛</span>
+
+    <!-- ====== Основной экран ====== -->
+    <div id="mainScreen" class="content-screen">
+        <!-- новые эмодзи: шпиль, мост, белая ночь -->
+        <span class="emoji-big">🏛️🌉🌙</span>
+        <div class="content-title">Saint Petersburg</div>
+        <div class="message-text">
+            <p style="text-align: center">Софья Эдуардовна, план на наше совместное путешествие</p>
+            <ol>
+                <li>Завтрак в ресторане («Парус на Крыше»)</li>
+                <li>Парк аттракционов — Диво Остров</li>
+                <li>Прогулка по набережным и мостам</li>
+                <li>Ужин в ресторане(Be Italian)</li>
+            </ol>
+        </div>
+        <div class="signature">Ваш спутник</div>
+    </div>
+</div>
+
+</body>
+</html>
