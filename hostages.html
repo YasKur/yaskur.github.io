@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Спасите ромовых баб!</title>
+    <!-- Шрифты для акцента -->
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Rubik:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at 30% 20%, #2a0d00, #0d0400);
+            font-family: 'Rubik', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.2rem;
+            position: relative;
+            overflow-x: hidden;
+            background-image: url("./rom.jpg");
+            background-size: cover;
+        }
+
+        /* Мягкое мерцание фона (без резких мигалок) */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(45deg, rgba(255, 60, 0, 0.04) 0px, rgba(255, 60, 0, 0.04) 40px, rgba(200, 40, 0, 0.08) 40px, rgba(200, 40, 0, 0.08) 80px);
+            pointer-events: none;
+            z-index: 0;
+            animation: gentlePulse 2.4s infinite alternate ease-in-out;
+        }
+
+        @keyframes gentlePulse {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.8; }
+        }
+
+        .card {
+            max-width: 520px;
+            width: 100%;
+            /*background: rgba(18, 7, 0, 0.88);*/
+            /*backdrop-filter: blur(12px);*/
+            /*-webkit-backdrop-filter: blur(12px);*/
+            border-radius: 48px 48px 32px 32px;
+            padding: 2.2rem 1.8rem 2.8rem;
+            border: 2px solid #ff5a1a;
+            /*box-shadow: 0 0 60px rgba(255, 60, 0, 0.35), inset 0 0 30px rgba(255, 40, 0, 0.15);*/
+            position: relative;
+            z-index: 10;
+            transition: all 0.2s;
+            text-align: center;
+            /* мягкое дыхание рамки */
+            animation: borderBreath 3s infinite alternate ease-in-out;
+        }
+
+        @keyframes borderBreath {
+            0% { border-color: #ff4d0a; box-shadow: 0 0 40px rgba(255, 60, 0, 0.3); }
+            100% { border-color: #ff8a3a; box-shadow: 0 0 70px rgba(255, 100, 0, 0.6); }
+        }
+
+        /* Шапка — кричалка */
+        .alert-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.6rem;
+            background: #2a0c00;
+            border-radius: 100px;
+            padding: 0.5rem 1.4rem;
+            margin-bottom: 1.8rem;
+            border: 1px solid #ff6a00;
+            box-shadow: 0 0 25px rgba(255, 50, 0, 0.4);
+            animation: headerFlick 1.8s infinite alternate;
+        }
+
+        @keyframes headerFlick {
+            0% { opacity: 0.8; transform: scale(0.98); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .alert-header span {
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+
+        .alert-header h2 {
+            font-family: 'Rubik Mono One', monospace;
+            color: #ffb07c;
+            text-shadow: 0 0 15px #ff4400, 0 0 30px #ff2200;
+            font-size: 1.3rem;
+            letter-spacing: 0.06em;
+            font-weight: 700;
+        }
+
+        /* Главный заголовок */
+        h1 {
+            font-family: 'Rubik Mono One', monospace;
+            color: #ffdbb5;
+            text-shadow: 0 0 25px #ff5500, 0 0 50px #ff3300, 0 4px 0 #4a1a00;
+            line-height: 1.2;
+            margin: 0.2rem 0 0.8rem;
+            letter-spacing: 0.02em;
+            word-break: break-word;
+        }
+
+        .subhead {
+            font-size: clamp(1.2rem, 5vw, 1.8rem);
+            font-weight: 700;
+            color: #ffb07c;
+            background: rgba(80, 20, 0, 0.5);
+            padding: 0.5rem 1rem;
+            border-radius: 60px;
+            display: inline-block;
+            backdrop-filter: blur(4px);
+            border: 1px solid #ff7b3a;
+            margin-bottom: 1.8rem;
+            box-shadow: 0 0 25px rgba(255, 80, 0, 0.2);
+        }
+
+        /* Блок с датой и предупреждением */
+        .date-block {
+            background: #140600;
+            border-radius: 60px;
+            padding: 1.2rem 1rem;
+            border: 2px solid #ff4d0a;
+            margin: 1.2rem 0 1.8rem;
+            box-shadow: inset 0 0 20px #4a1a00, 0 0 40px rgba(255, 50, 0, 0.2);
+        }
+
+        .date-block .big-date {
+            font-family: 'Rubik Mono One', monospace;
+            font-size: 2rem;
+            color: #ffc8a0;
+            text-shadow: 0 0 30px #ff4400, 0 0 60px #ff3300;
+            background: #1f0a00;
+            padding: 0.2rem 0.6rem;
+            border-radius: 40px;
+            display: inline-block;
+            border: 1px solid #ff7b3a;
+            margin-bottom: 0.4rem;
+        }
+
+        .date-block .label-date {
+            font-size: 1rem;
+            color: #ffb07c;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            opacity: 0.9;
+        }
+
+        .date-block .warning-text {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: #ff8866;
+            text-shadow: 0 0 20px #ff2200;
+            margin-top: 0.6rem;
+            background: rgba(100, 20, 0, 0.4);
+            padding: 0.3rem 0.8rem;
+            border-radius: 40px;
+            display: inline-block;
+            border: 1px solid #ff4422;
+        }
+
+        /* Основное описание */
+        .description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #f0cfb5;
+            background: rgba(30, 10, 0, 0.6);
+            padding: 1.2rem 1.2rem;
+            border-radius: 32px;
+            border-left: 4px solid #ff6a1a;
+            border-right: 4px solid #ff6a1a;
+            margin: 1.6rem 0 2rem;
+            text-align: left;
+            backdrop-filter: blur(4px);
+            box-shadow: inset 0 0 20px rgba(255, 60, 0, 0.1);
+        }
+
+        .description strong {
+            color: #ffa77a;
+            font-weight: 900;
+            text-shadow: 0 0 12px #ff4400;
+        }
+
+        .description .emoji-big {
+            font-size: 1.8rem;
+            display: inline-block;
+            margin-right: 0.2rem;
+        }
+
+        .action-box {
+            background: #1f0a00;
+            border-radius: 60px;
+            padding: 1.5rem 1.2rem;
+            border: 2px dashed #ff7b3a;
+            margin: 1.8rem 0 1.2rem;
+            box-shadow: 0 0 30px rgba(255, 60, 0, 0.15);
+        }
+
+        .action-box .action-title {
+            font-family: 'Rubik Mono One', monospace;
+            font-size: 1.6rem;
+            color: #ffb07c;
+            text-shadow: 0 0 20px #ff4400;
+            letter-spacing: 0.04em;
+        }
+
+        .action-box .action-desc {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffdbb5;
+            margin-top: 0.4rem;
+            background: #2a0f00;
+            padding: 0.6rem 0.8rem;
+            border-radius: 40px;
+            border: 1px solid #ff5a1a;
+        }
+
+        .action-box .address {
+            font-size: 1.1rem;
+            background: #0d0400;
+            padding: 0.8rem 0.8rem;
+            border-radius: 60px;
+            margin: 0.8rem 0 0.2rem;
+            color: #ffb07c;
+            border: 1px solid #a33a00;
+            word-break: break-word;
+        }
+
+        .action-box .address strong {
+            color: #ffccaa;
+            font-weight: 900;
+        }
+
+        .footer-note {
+            margin-top: 2rem;
+            color: #b07a5a;
+            font-weight: 700;
+            font-size: 1rem;
+            border-top: 2px solid #4a1a00;
+            padding-top: 1.4rem;
+            opacity: 0.9;
+            letter-spacing: 0.04em;
+            text-shadow: 0 0 8px #2a0a00;
+        }
+
+        .footer-note strong {
+            color: #ff8a5c;
+            text-shadow: 0 0 15px #ff4400;
+        }
+
+        .footer-note .small-emoji {
+            font-size: 1.4rem;
+            display: inline-block;
+            animation: shake 1.2s infinite alternate;
+        }
+
+        @keyframes shake {
+            0% { transform: rotate(-2deg) scale(1); }
+            100% { transform: rotate(2deg) scale(1.05); }
+        }
+
+        /* Для мобильных — комфортные отступы */
+        @media (max-width: 450px) {
+            .card {
+                padding: 1.8rem 1.2rem 2.2rem;
+            }
+            .alert-header h2 {
+                font-size: 1rem;
+            }
+            .alert-header span {
+                font-size: 1.4rem;
+            }
+            .description {
+                font-size: 1rem;
+                padding: 1rem;
+            }
+            .action-box .action-title {
+                font-size: 1.4rem;
+            }
+            .action-box .action-desc {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .card {
+                padding: 1.2rem 0.8rem 1.8rem;
+            }
+            h1 {
+                font-size: 2.4rem;
+            }
+        }
+
+        /* Доп. акценты */
+        .glow {
+            animation: glowPulse 2.2s infinite alternate;
+        }
+
+        @keyframes glowPulse {
+            0% { text-shadow: 0 0 8px #ff3300, 0 0 20px #ff2200; }
+            100% { text-shadow: 0 0 25px #ff8800, 0 0 60px #ff4400, 0 0 80px #ff2200; }
+        }
+
+        .text-cursive {
+            font-weight: 700;
+            color: #ffaa77;
+        }
+
+        /* Имитация "съедят" */
+        .eaten-badge {
+            background: #2a0a00;
+            border-radius: 40px;
+            padding: 0.3rem 1.4rem;
+            display: inline-block;
+            border: 1px solid #ff3c00;
+            margin-top: 0.2rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ff8a5c;
+            text-shadow: 0 0 10px #b33a00;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <!-- Шапка -->
+    <div class="alert-header">
+        <span>🚨</span>
+        <h2>⚠️ СРОЧНО ⚠️</h2>
+        <span>🚨</span>
+    </div>
+
+    <!-- Заголовок -->
+    <h1 class="glow">РОМОВЫЕ БАБЫ В ЗАЛОЖНИКАХ</h1>
+
+    <!-- Блок с сегодняшней датой -->
+    <div class="date-block">
+        <div class="label-date">📅 ДЕНЬ ИКС</div>
+        <div class="big-date" id="todayDate">--</div>
+    </div>
+
+    <!-- Блок "Как забрать" -->
+    <div class="action-box">
+        <div class="action-title">🚗 ЗАБРАТЬ СЕГОДНЯ</div>
+        <div class="address">
+            <strong>📍 Адрес спасения:</strong><br>
+            ул. Склизкова 58А к3 кв 37<br>
+        </div>
+        <div style="margin-top: 0.6rem; font-size: 1.1rem; color: #ffaa77; font-weight: 700; background: #0d0400; border-radius: 40px; padding: 0.3rem 0.6rem; border: 1px solid #a33a00;">
+            ⏰ Время работы: до 23:59
+        </div>
+    </div>
+
+    <!-- Доп. предупреждение -->
+    <div class="eaten-badge">
+        ⚡ ИНАЧЕ ОНИ БУДУТ СЪЕДЕНЫ СЕГОДНЯ ⚡
+    </div>
+</div>
+</body>
+</html>
