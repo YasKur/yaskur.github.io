@@ -367,5 +367,23 @@
         ⚡ ИНАЧЕ ОНИ БУДУТ СЪЕДЕНЫ СЕГОДНЯ ⚡
     </div>
 </div>
+
+<script>
+    (function() {
+        // Устанавливаем сегодняшнюю дату в формате ДД.ММ.ГГГГ
+        const dateElem = document.getElementById('todayDate');
+        if (dateElem) {
+            const now = new Date();
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            // Формат: 31.12.2026
+            dateElem.textContent = `${day}.${month}.${year}`;
+        }
+
+        // Дополнительно: если нужно, можно добавить день недели, но по заданию просто дата.
+        // Также можно вставить дату в другие места, но везде уже указано "сегодня".
+    })();
+</script>
 </body>
 </html>
