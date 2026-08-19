@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>14.08.26 • LEGO + Фондю</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: #fce4ec;
+            font-family: 'Pacifico', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ——— РОЗОВЫЙ ФОН с оттенками и мягким свечением ——— */
+        .pink-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background:
+                    radial-gradient(circle at 20% 30%, #f8bbd0 0%, transparent 45%),
+                    radial-gradient(circle at 80% 70%, #f48fb1 0%, transparent 40%),
+                    radial-gradient(circle at 40% 80%, #f06292 0%, transparent 35%),
+                    radial-gradient(circle at 70% 20%, #ec407a 0%, transparent 30%),
+                    radial-gradient(circle at 10% 60%, #f8bbd0 0%, transparent 50%),
+                    radial-gradient(circle at 90% 40%, #f06292 0%, transparent 40%),
+                    radial-gradient(circle at 50% 50%, #fce4ec 0%, transparent 60%);
+            opacity: 0.95;
+            animation: pinkSwirl 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes pinkSwirl {
+            0% { transform: scale(1) rotate(-1deg); opacity: 0.9; }
+            100% { transform: scale(1.06) rotate(2deg); opacity: 1; }
+        }
+
+        /* ——— Нежная текстура (хлопья/частицы) ——— */
+        .pink-texture {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background-image:
+                    radial-gradient(circle at 15% 25%, rgba(255, 182, 193, 0.3) 6px, transparent 6px),
+                    radial-gradient(circle at 85% 60%, rgba(244, 143, 177, 0.25) 9px, transparent 9px),
+                    radial-gradient(circle at 45% 85%, rgba(240, 98, 146, 0.2) 12px, transparent 12px),
+                    radial-gradient(circle at 70% 15%, rgba(236, 64, 122, 0.2) 7px, transparent 7px);
+            background-size: 80px 80px, 120px 120px, 160px 160px, 100px 100px;
+            background-blend-mode: overlay;
+            opacity: 0.4;
+        }
+
+        /* ——— Мерцающие звёздочки ——— */
+        .sparkle {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background-image:
+                    radial-gradient(circle at 10% 30%, rgba(255, 255, 255, 0.5) 4px, transparent 4px),
+                    radial-gradient(circle at 92% 78%, rgba(255, 255, 255, 0.4) 6px, transparent 6px),
+                    radial-gradient(circle at 40% 20%, rgba(255, 255, 255, 0.45) 5px, transparent 5px),
+                    radial-gradient(circle at 75% 88%, rgba(255, 255, 255, 0.35) 7px, transparent 7px),
+                    radial-gradient(circle at 25% 65%, rgba(255, 255, 255, 0.3) 8px, transparent 8px);
+            background-size: 150px 150px, 200px 200px, 180px 180px, 220px 220px, 170px 170px;
+            animation: sparkleFloat 16s linear infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes sparkleFloat {
+            0% { transform: translate(0,0) rotate(0deg) scale(1); }
+            33% { transform: translate(12px, -8px) rotate(3deg) scale(1.02); }
+            66% { transform: translate(-10px, 14px) rotate(-4deg) scale(0.98); }
+            100% { transform: translate(0,0) rotate(0deg) scale(1); }
+        }
+
+        /* ——— LEGO-блоки (розовые оттенки) ——— */
+        .lego-block {
+            position: fixed;
+            z-index: 1;
+            pointer-events: none;
+            border-radius: 8px 8px 4px 4px;
+            box-shadow: 0 8px 0 rgba(0,0,0,0.1), 0 12px 28px rgba(0,0,0,0.08);
+            opacity: 0.2;
+            animation: blockDrift 26s ease-in-out infinite;
+        }
+        .lego-block-1 { width: 80px; height: 32px; background: #f8bbd0; bottom: 12%; left: 4%; border-radius: 10px 10px 4px 4px; animation-delay: 0s; }
+        .lego-block-2 { width: 55px; height: 22px; background: #f48fb1; top: 10%; right: 6%; border-radius: 8px 8px 3px 3px; animation-delay: 3s; }
+        .lego-block-3 { width: 100px; height: 38px; background: #f06292; bottom: 28%; right: 2%; border-radius: 12px 12px 5px 5px; animation-delay: 6s; }
+        .lego-block-4 { width: 45px; height: 18px; background: #ec407a; top: 32%; left: 2%; border-radius: 6px 6px 3px 3px; animation-delay: 2s; }
+        .lego-block-5 { width: 120px; height: 44px; background: #d81b60; top: 65%; left: 70%; border-radius: 14px 14px 5px 5px; animation-delay: 4s; }
+
+        @keyframes blockDrift {
+            0% { transform: translate(0,0) rotate(0deg) scale(1); }
+            33% { transform: translate(18px, -14px) rotate(4deg) scale(1.04); }
+            66% { transform: translate(-12px, 20px) rotate(-5deg) scale(0.96); }
+            100% { transform: translate(0,0) rotate(0deg) scale(1); }
+        }
+
+        /* ——— ФРУКТЫ (плавающие) ——— */
+        .fruit {
+            position: fixed;
+            z-index: 3;
+            pointer-events: none;
+            font-size: 2.8rem;
+            opacity: 0.4;
+            filter: drop-shadow(0 8px 20px rgba(0,0,0,0.1));
+            animation: fruitFloat 22s ease-in-out infinite;
+        }
+        .fruit-1 { top: 12%; left: 18%; animation-delay: 1s; font-size: 3.2rem; }
+        .fruit-2 { top: 70%; right: 16%; animation-delay: 5s; font-size: 3rem; }
+        .fruit-3 { bottom: 18%; left: 14%; animation-delay: 9s; font-size: 3.4rem; }
+        .fruit-4 { top: 40%; right: 10%; animation-delay: 3s; font-size: 2.6rem; }
+        .fruit-5 { top: 82%; left: 78%; animation-delay: 7s; font-size: 2.8rem; }
+
+        @keyframes fruitFloat {
+            0%, 100% { transform: translate(0,0) rotate(0deg) scale(1); }
+            30% { transform: translate(20px, -16px) rotate(10deg) scale(1.08); }
+            60% { transform: translate(-18px, 14px) rotate(-8deg) scale(0.92); }
+            85% { transform: translate(12px, -10px) rotate(5deg) scale(1.04); }
+        }
+
+        /* ——— ОСНОВНОЙ КОНТЕЙНЕР (розовый стиль) ——— */
+        .container {
+            position: relative;
+            z-index: 20;
+            backdrop-filter: blur(14px) saturate(1.6);
+            -webkit-backdrop-filter: blur(14px) saturate(1.6);
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 40px 40px 30px 30px;
+            padding: 28px 24px 26px;
+            max-width: 460px;
+            width: 100%;
+            box-shadow:
+                    0 20px 0 rgba(0, 0, 0, 0.06),
+                    0 30px 60px rgba(0, 0, 0, 0.08),
+                    inset 0 -4px 0 rgba(0, 0, 0, 0.05),
+                    inset 0 0 0 3px #f8bbd0,
+                    inset 0 0 0 6px #f48fb1;
+            border: 4px solid #f06292;
+            transition: all 0.3s ease;
+        }
+
+        /* ——— Уголки-декор ——— */
+        .corner-decor {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.4;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.05));
+            user-select: none;
+            pointer-events: none;
+            animation: decorBounce 8s ease-in-out infinite;
+            color: #ec407a;
+        }
+        .corner-decor:nth-child(1) { top: 10px; left: 14px; animation-delay: 0s; font-size: 2.4rem; }
+        .corner-decor:nth-child(2) { top: 10px; right: 14px; animation-delay: 2s; font-size: 2.6rem; }
+        .corner-decor:nth-child(3) { bottom: 10px; left: 14px; animation-delay: 1s; font-size: 2.2rem; }
+        .corner-decor:nth-child(4) { bottom: 10px; right: 14px; animation-delay: 3s; font-size: 2.4rem; }
+
+        @keyframes decorBounce {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            30% { transform: translateY(-12px) rotate(8deg) scale(1.08); }
+            60% { transform: translateY(6px) rotate(-6deg) scale(0.95); }
+            85% { transform: translateY(-8px) rotate(4deg) scale(1.04); }
+        }
+
+        /* ——— Содержимое ——— */
+        .content-screen {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: center;
+            animation: fadeLego 1s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeLego {
+            0% { opacity: 0; transform: translateY(20px) scale(0.92) rotate(-1deg); }
+            100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+        }
+
+        .content-title {
+            font-family: 'Pacifico', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #880e4f;
+            letter-spacing: 2px;
+            margin-top: 0;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #880e4f, #d81b60);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 4px 16px rgba(0,0,0,0.05));
+        }
+
+        .message-text {
+            font-size: 2rem;
+            color: #4a1a2e;
+            line-height: 1.6;
+            max-width: 360px;
+            margin: 0 auto;
+            text-align: left;
+            font-weight: 400;
+            background: rgba(255, 255, 255, 0.55);
+            border-radius: 30px;
+            padding: 18px 22px 16px;
+            border: 3px solid #f48fb1;
+            box-shadow: inset 0 -4px 0 rgba(0,0,0,0.04), 0 8px 0 rgba(0,0,0,0.04);
+            backdrop-filter: blur(6px);
+        }
+
+        .message-text p {
+            margin-bottom: 12px;
+            font-weight: 400;
+            color: #4a1a2e;
+            font-size: 1.4rem;
+        }
+        .message-text p:first-of-type {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: #880e4f;
+            padding: 6px 16px;
+            border-radius: 40px;
+            display: inline-block;
+            margin-bottom: 14px;
+            background: rgba(236, 64, 122, 0.1);
+        }
+
+        .message-text ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 6px;
+        }
+
+        .message-text ul li {
+            padding: 12px 0 12px 48px;
+            margin-bottom: 6px;
+            color: #4a1a2e;
+            font-weight: 400;
+            position: relative;
+            border-bottom: 2px solid rgba(236, 64, 122, 0.15);
+            transition: all 0.2s;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(2px);
+        }
+
+        .message-text ul li::before {
+            content: "🍫";
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            font-size: 1.6rem;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.05));
+        }
+        .message-text ul li:nth-child(2)::before { content: "🍓"; }
+        .message-text ul li:nth-child(3)::before { content: "🍌"; }
+        .message-text ul li:nth-child(4)::before { content: "🍇"; }
+
+        .message-text ul li:last-child {
+            border-bottom: none;
+        }
+
+        .message-text ul li:hover {
+            background: rgba(236, 64, 122, 0.08);
+            transform: scale(1.01);
+        }
+
+        /* ——— НИЖНИЙ СТИЛИЗОВАННЫЙ ТЕКСТ (пригласительный) ——— */
+        .invite-footer {
+            margin-top: 12px;
+            padding: 14px 16px 10px;
+            border-top: 2px solid rgba(236, 64, 122, 0.15);
+            font-family: 'Pacifico', sans-serif;
+            font-size: 1.5rem;
+            color: #880e4f;
+            text-align: center;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 16px rgba(0,0,0,0.02);
+            line-height: 1.4;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+        }
+
+        .invite-footer .small-line {
+            display: block;
+            font-family: 'Pacifico', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 300;
+            color: #ad1457;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 6px;
+            opacity: 0.7;
+        }
+
+        .invite-footer .icon {
+            display: inline-block;
+            animation: iconPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.15) rotate(6deg); }
+        }
+
+        /* ——— КОТИК С ГИФКОЙ ——— */
+        .cat-wrapper {
+            position: fixed;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 30;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: catSway 3s ease-in-out infinite;
+            cursor: default;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .cat-wrapper-2 {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 30;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: catSway 3s ease-in-out infinite;
+            cursor: default;
+            user-select: none;
+            pointer-events: none;
+        }
+        @keyframes catSway {
+            0%, 100% { transform: translateX(-50%) rotate(-2deg) scale(1); }
+            50% { transform: translateX(-50%) rotate(3deg) scale(1.04); }
+        }
+
+        .cat-gif {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border: 3px solid #f48fb1;
+            animation: catBounce 1.2s ease-in-out infinite;
+            background: #fce4ec;
+        }
+
+        @keyframes catBounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            30% { transform: translateY(-8px) scale(1.06); }
+            60% { transform: translateY(2px) scale(0.98); }
+            80% { transform: translateY(-4px) scale(1.02); }
+        }
+
+        .meow-bubble {
+            font-family: 'Pacifico', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #880e4f;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(6px);
+            padding: 4px 18px;
+            border-radius: 30px;
+            margin-top: 4px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            border: 2px solid #f48fb1;
+            animation: meowPulse 1.8s ease-in-out infinite;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        @keyframes meowPulse {
+            0%, 100% { opacity: 0.7; transform: scale(0.96); }
+            30% { opacity: 1; transform: scale(1.08); }
+            60% { opacity: 0.8; transform: scale(1); }
+            80% { opacity: 1; transform: scale(1.05); }
+        }
+
+        @media (max-width: 420px) {
+            .container { padding: 20px 12px 18px; border-radius: 28px; }
+            .content-title { font-size: 2.0rem; }
+            .message-text ul li { padding: 10px 0 10px 40px; font-size: 0.8rem; }
+            .corner-decor { font-size: 1.6rem; }
+            .invite-footer { font-size: 1.2rem; padding: 12px 12px 8px; }
+            .fruit { font-size: 2rem !important; }
+            .cat-gif { width: 60px; height: 60px; }
+            .meow-bubble { font-size: 0.9rem; padding: 2px 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- РОЗОВЫЙ ФОН -->
+<div class="pink-bg"></div>
+<div class="pink-texture"></div>
+<div class="sparkle"></div>
+
+<!-- Лего-блоки -->
+<div class="lego-block lego-block-1"></div>
+<div class="lego-block lego-block-2"></div>
+<div class="lego-block lego-block-3"></div>
+<div class="lego-block lego-block-4"></div>
+<div class="lego-block lego-block-5"></div>
+
+<!-- ФРУКТЫ (фондю) — розы убраны -->
+<div class="fruit fruit-1">🍓</div>
+<div class="fruit fruit-2">🍌</div>
+<div class="fruit fruit-3">🍇</div>
+<div class="fruit fruit-4">🍫</div>
+<div class="fruit fruit-5">🍓</div>
+<div class="cat-wrapper-2">
+    <img class="cat-gif" src="./1.gif" alt="милый котик" loading="lazy">
+</div>
+<!-- ОСНОВНОЙ КОНТЕЙНЕР -->
+<div class="container" id="appContainer">
+    <span class="corner-decor">🍌</span>
+    <span class="corner-decor">🍫</span>
+    <span class="corner-decor">🍌</span>
+    <span class="corner-decor">🍓</span>
+
+    <div id="mainScreen" class="content-screen">
+        <div class="content-title">19.08.26</div>
+
+        <div class="message-text">
+            <p style="text-align: center;">Софья Эдуардовна,<br>приглашение в гости с фондю</p>
+            <ul>
+                <li>Обсудим, как прошли дни;</li>
+                <li>Покушаем фрукты с шоколадом;</li>
+                <li>Насладимся компанией друг друга</li>
+            </ul>
+        </div>
+
+        <!-- НИЖНИЙ СТИЛИЗОВАННЫЙ ТЕКСТ – пригласительный -->
+        <div class="invite-footer">
+            <span class="small-line">✦ Желаю сиять сегодня весь день ✦</span>
+        </div>
+    </div>
+</div>
+
+<!-- КОТИК С ГИФКОЙ И АНИМАЦИЕЙ МЯУКАНЬЯ -->
+<div class="cat-wrapper">
+    <img class="cat-gif" src="./1.gif" alt="милый котик" loading="lazy">
+</div>
+
+</body>
+</html>
