@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>✨</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            background: linear-gradient(145deg, #2b0f1e 0%, #4a1a2e 30%, #5f2140 60%, #3d132a 100%);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Pacifico', sans-serif;
+        }
+
+        /* ——— Романтичное розовое свечение ——— */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                    radial-gradient(ellipse at 50% 80%, rgba(230, 140, 180, 0.25) 0%, transparent 60%),
+                    radial-gradient(ellipse at 30% 20%, rgba(220, 120, 170, 0.20) 0%, transparent 50%),
+                    radial-gradient(ellipse at 70% 40%, rgba(240, 160, 190, 0.15) 0%, transparent 40%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ——— Мерцающие огоньки (розовые) ——— */
+        .candle-glow {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(70px);
+            pointer-events: none;
+            z-index: 0;
+            animation: flickerGlow 5s ease-in-out infinite alternate;
+        }
+        .candle-glow:nth-child(1) {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(220, 130, 170, 0.25), transparent 70%);
+            bottom: -80px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+        .candle-glow:nth-child(2) {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(240, 140, 190, 0.22), transparent 70%);
+            top: 10px;
+            right: -80px;
+            animation-delay: 2.5s;
+        }
+        .candle-glow:nth-child(3) {
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(210, 110, 160, 0.20), transparent 70%);
+            bottom: 20px;
+            right: 20px;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes flickerGlow {
+            0% { opacity: 0.4; transform: scale(1); }
+            100% { opacity: 0.9; transform: scale(1.3); }
+        }
+
+        /* ——— Падающие звёзды (цветы и луна) ——— */
+        .shooting-star {
+            position: fixed;
+            font-size: 1.4rem;
+            opacity: 0.3;
+            filter: drop-shadow(0 0 15px rgba(230, 150, 190, 0.5));
+            animation: shootStar 14s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .shooting-star:nth-child(4) { left: 5%; animation-delay: 0s; font-size: 1.6rem; }
+        .shooting-star:nth-child(5) { left: 25%; animation-delay: 4s; font-size: 1.8rem; }
+        .shooting-star:nth-child(6) { left: 55%; animation-delay: 7s; font-size: 1.4rem; }
+        .shooting-star:nth-child(7) { left: 80%; animation-delay: 10s; font-size: 1.8rem; }
+        .shooting-star:nth-child(8) { left: 92%; animation-delay: 2.5s; font-size: 1.2rem; }
+
+        @keyframes shootStar {
+            0% { transform: translateY(-10vh) rotate(0deg) scale(0.5); opacity: 0; }
+            5% { opacity: 0.6; transform: translateY(0) rotate(10deg) scale(1); }
+            25% { opacity: 0.7; transform: translateY(25vh) rotate(20deg) scale(1.1); }
+            50% { opacity: 0.4; transform: translateY(55vh) rotate(45deg) scale(0.8); }
+            75% { opacity: 0.2; transform: translateY(85vh) rotate(60deg) scale(0.5); }
+            100% { opacity: 0; transform: translateY(120vh) rotate(90deg) scale(0); }
+        }
+
+        /* ——— Падающие сердца (как звёзды) ——— */
+        .falling-heart {
+            position: fixed;
+            font-size: 1.6rem;
+            opacity: 0.4;
+            filter: drop-shadow(0 0 20px rgba(255, 100, 150, 0.6));
+            animation: fallHeart 12s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .falling-heart:nth-child(9) { left: 8%; animation-delay: 1s; font-size: 1.8rem; }
+        .falling-heart:nth-child(10) { left: 20%; animation-delay: 3.5s; font-size: 1.4rem; }
+        .falling-heart:nth-child(11) { left: 40%; animation-delay: 6s; font-size: 2rem; }
+        .falling-heart:nth-child(12) { left: 60%; animation-delay: 8.5s; font-size: 1.5rem; }
+        .falling-heart:nth-child(13) { left: 75%; animation-delay: 2s; font-size: 1.9rem; }
+        .falling-heart:nth-child(14) { left: 90%; animation-delay: 5s; font-size: 1.3rem; }
+        .falling-heart:nth-child(15) { left: 48%; animation-delay: 10s; font-size: 1.7rem; }
+        .falling-heart:nth-child(16) { left: 15%; animation-delay: 7s; font-size: 1.2rem; }
+
+        @keyframes fallHeart {
+            0% { transform: translateY(-10vh) rotate(0deg) scale(0.3); opacity: 0; }
+            8% { opacity: 0.7; transform: translateY(2vh) rotate(15deg) scale(1); }
+            30% { opacity: 0.8; transform: translateY(30vh) rotate(30deg) scale(1.1); }
+            60% { opacity: 0.5; transform: translateY(65vh) rotate(50deg) scale(0.9); }
+            85% { opacity: 0.2; transform: translateY(95vh) rotate(70deg) scale(0.6); }
+            100% { opacity: 0; transform: translateY(120vh) rotate(90deg) scale(0); }
+        }
+
+        /* ——— Контейнер — розовое стекло с перламутром ——— */
+        .container {
+            position: relative;
+            z-index: 10;
+            backdrop-filter: blur(24px) saturate(1.5);
+            -webkit-backdrop-filter: blur(24px) saturate(1.5);
+            background: rgba(180, 100, 140, 0.18);
+            border-radius: 70px 70px 60px 60px;
+            padding: 28px 24px 26px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow:
+                    0 50px 90px rgba(0, 0, 0, 0.6),
+                    0 0 0 1px rgba(220, 160, 190, 0.20),
+                    inset 0 1px 0 rgba(240, 200, 220, 0.25),
+                    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(220, 160, 190, 0.12);
+            transition: all 0.4s ease;
+            text-align: center;
+        }
+
+        /* ——— Декоративные элементы (цветы и свечи) ——— */
+        .corner-moon {
+            position: absolute;
+            font-size: 1.4rem;
+            opacity: 0.2;
+            color: #e8b8d0;
+            filter: drop-shadow(0 0 20px rgba(230, 150, 190, 0.4));
+            user-select: none;
+            pointer-events: none;
+            animation: softPulse 5s ease-in-out infinite;
+        }
+        .corner-moon:nth-child(1) { top: 12px; left: 16px; animation-delay: 0s; }
+        .corner-moon:nth-child(2) { top: 12px; right: 16px; animation-delay: 1.2s; }
+        .corner-moon:nth-child(3) { bottom: 12px; left: 16px; animation-delay: 0.6s; }
+        .corner-moon:nth-child(4) { bottom: 12px; right: 16px; animation-delay: 2s; }
+
+        @keyframes softPulse {
+            0%, 100% { transform: scale(0.9) rotate(0deg); opacity: 0.1; }
+            50% { transform: scale(1.2) rotate(8deg); opacity: 0.35; }
+        }
+
+        /* ——— Бьющееся сердце ——— */
+        .beating-heart {
+            font-size: 3.2rem;
+            display: inline-block;
+            animation: heartbeat 1.2s ease-in-out infinite;
+            filter: drop-shadow(0 0 40px rgba(255, 80, 130, 0.5));
+            margin-bottom: 8px;
+        }
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            14% { transform: scale(1.2); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.15); }
+            56% { transform: scale(1); }
+        }
+
+        /* ——— Основной контент ——— */
+        .content-screen {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            text-align: center;
+            animation: fadeRomance 1.2s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+        }
+
+        .content-screen.hidden {
+            display: none;
+        }
+
+        @keyframes fadeRomance {
+            0% { opacity: 0; transform: translateY(40px) scale(0.92); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .content-title {
+            font-family: 'Pacifico', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 400;
+            background: linear-gradient(135deg, #f5e0ec, #e8b8d0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 60px rgba(230, 150, 190, 0.15);
+            letter-spacing: 2px;
+        }
+
+        .message-text {
+            font-size: 1.1rem;
+            color: #f5e8f0;
+            line-height: 1.8;
+            max-width: 340px;
+            margin: 0 auto;
+            font-weight: 300;
+            backdrop-filter: blur(4px);
+            background: rgba(140, 70, 110, 0.12);
+            border-radius: 28px;
+            padding: 20px 22px 18px;
+            border: 1px solid rgba(220, 160, 190, 0.06);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .message-text p {
+            font-family: 'Pacifico', sans-serif;
+            font-weight: 300;
+            font-size: 1rem;
+            color: #f5e8f0;
+            text-shadow: 0 1px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 6px;
+        }
+
+        .message-text p:last-of-type {
+            margin-bottom: 0;
+        }
+
+        /* ——— Кнопка с переливом ——— */
+        .instagram-link {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-family: 'Pacifico', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 400;
+            text-decoration: none;
+            color: #fff;
+            background: linear-gradient(135deg, #ff6b9d, #c44b8a, #ff6b9d);
+            background-size: 300% 300%;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            transition: 0.3s;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            box-shadow: 0 0 30px rgba(255, 80, 130, 0.2);
+            animation: shimmer 3s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .instagram-link::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.15), transparent 50%);
+            animation: shine 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; box-shadow: 0 0 30px rgba(255, 80, 130, 0.2); }
+            50% { background-position: 100% 50%; box-shadow: 0 0 50px rgba(255, 80, 130, 0.4), 0 0 80px rgba(255, 80, 130, 0.2); }
+            100% { background-position: 0% 50%; box-shadow: 0 0 30px rgba(255, 80, 130, 0.2); }
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(25deg); opacity: 0; }
+            30% { opacity: 1; }
+            60% { transform: translateX(100%) rotate(25deg); opacity: 0; }
+            100% { transform: translateX(100%) rotate(25deg); opacity: 0; }
+        }
+
+        .instagram-link:hover {
+            transform: scale(1.05);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 60px rgba(255, 80, 130, 0.5), 0 0 100px rgba(255, 80, 130, 0.2);
+        }
+
+        .instagram-link:active {
+            transform: scale(0.96);
+        }
+
+        /* ——— Стили для экрана входа ——— */
+        .password-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 0 4px;
+        }
+
+        .password-screen.hidden {
+            display: none;
+        }
+
+        .password-input {
+            background: rgba(220, 160, 190, 0.08);
+            border: 1px solid rgba(220, 160, 190, 0.20);
+            border-radius: 50px;
+            padding: 12px 20px;
+            width: 100%;
+            max-width: 220px;
+            font-size: 1.1rem;
+            text-align: center;
+            color: #f5e8f0;
+            backdrop-filter: blur(8px);
+            outline: none;
+            transition: 0.3s;
+            font-family: 'Quicksand', sans-serif;
+            letter-spacing: 4px;
+        }
+        .password-input:focus {
+            border-color: #e8b8d0;
+            box-shadow: 0 0 30px rgba(220, 150, 190, 0.15);
+            background: rgba(220, 160, 190, 0.12);
+        }
+        .password-input::placeholder {
+            color: rgba(240, 220, 230, 0.3);
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            font-weight: 300;
+        }
+
+        .password-btn {
+            background: rgba(220, 160, 190, 0.08);
+            border: 1px solid rgba(220, 160, 190, 0.15);
+            border-radius: 50px;
+            padding: 10px 40px;
+            font-size: 1.1rem;
+            font-family: 'Great Vibes', cursive;
+            color: #f5e8f0;
+            backdrop-filter: blur(8px);
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 30px rgba(220, 150, 190, 0.02);
+            letter-spacing: 2px;
+        }
+        .password-btn:hover {
+            background: rgba(220, 160, 190, 0.15);
+            border-color: #e8b8d0;
+            box-shadow: 0 0 40px rgba(220, 150, 190, 0.1);
+            transform: scale(1.02);
+        }
+        .password-btn:active {
+            transform: scale(0.96);
+        }
+
+        .password-error {
+            color: #f0b8d0;
+            font-size: 0.75rem;
+            font-family: 'Quicksand', sans-serif;
+            opacity: 0.7;
+            min-height: 1.2em;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        /* ——— Адаптив ——— */
+        @media (max-width: 420px) {
+            .container { padding: 20px 16px 18px; border-radius: 44px; }
+            .content-title { font-size: 1.8rem; }
+            .message-text { font-size: 0.95rem; padding: 16px 18px; }
+            .corner-moon { font-size: 1rem; }
+            .password-input { max-width: 180px; font-size: 1rem; padding: 10px 14px; }
+            .beating-heart { font-size: 2.4rem; }
+            .falling-heart { font-size: 1.2rem !important; }
+            .instagram-link { font-size: 0.9rem; padding: 12px 24px; }
+        }
+        @media (max-height: 700px) {
+            .container { padding: 16px 16px 14px; }
+            .message-text { padding: 14px 16px; }
+            .beating-heart { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Тёплое розовое свечение -->
+<div class="candle-glow"></div>
+<div class="candle-glow"></div>
+<div class="candle-glow"></div>
+
+<!-- Падающие звёзды (цветы и луна) -->
+<span class="shooting-star">🌸</span>
+<span class="shooting-star">🌙</span>
+<span class="shooting-star">✨</span>
+<span class="shooting-star">🌺</span>
+<span class="shooting-star">⭐</span>
+
+<!-- Падающие сердца -->
+<span class="falling-heart">❤️</span>
+<span class="falling-heart">❤️</span>
+<span class="falling-heart">❤️</span>
+<span class="falling-heart">❤️</span>
+<span class="falling-heart">❤️</span>
+<span class="falling-heart">❤️</span>
+<span class="falling-heart">❤️</span>
+<span class="falling-heart">❤️</span>
+
+<div class="container" id="appContainer">
+    <!-- Декоративные элементы -->
+    <span class="corner-moon">🌷</span>
+    <span class="corner-moon">🌙</span>
+    <span class="corner-moon">🌹</span>
+    <span class="corner-moon">✨</span>
+
+    <!-- ====== ЭКРАН ВВОДА ПАРОЛЯ ====== -->
+    <div id="passwordScreen" class="content-screen password-screen">
+        <div class="content-title" style="font-size:2rem;">Введите пароль</div>
+        <input type="password" id="passwordInput" class="password-input" placeholder="••••" maxlength="10" autofocus>
+        <button id="unlockBtn" class="password-btn">Открыть</button>
+        <div id="errorMsg" class="password-error"></div>
+    </div>
+
+    <!-- ====== ОСНОВНОЙ ЭКРАН ====== -->
+    <div id="mainScreen" class="content-screen hidden">
+        <!-- Бьющееся сердце -->
+        <div class="beating-heart">❤️</div>
+        <div class="message-text">
+            <p>Софья Эдуардовна</p>
+            <p>Спасибо вам, что дарите эмоций.</p>
+            <p>Спасибо вам, что доверяете!</p>
+            <p>Спасибо вам, что рядом!</p>
+            <p>Спасибо вам, что разделяете свое время со мной!</p>
+            <a href="https://www.instagram.com/reel/DQ4j1l4jR9W/" target="_blank" class="instagram-link">✨ Нажми ✨</a>
+            <span style="color: gray; display: block; font-size: 12px">Ведь если б тогда испугался...</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const passwordScreen = document.getElementById('passwordScreen');
+        const mainScreen = document.getElementById('mainScreen');
+        const passwordInput = document.getElementById('passwordInput');
+        const unlockBtn = document.getElementById('unlockBtn');
+        const errorMsg = document.getElementById('errorMsg');
+
+        const CORRECT_PASSWORD = '27';
+
+        function showMainScreen() {
+            passwordScreen.classList.add('hidden');
+            mainScreen.classList.remove('hidden');
+            mainScreen.style.animation = 'none';
+            requestAnimationFrame(() => {
+                mainScreen.style.animation = 'fadeRomance 1.2s cubic-bezier(0.2, 0.9, 0.3, 1) forwards';
+            });
+            errorMsg.textContent = '';
+            passwordInput.value = '';
+        }
+
+        function handleUnlock() {
+            const entered = passwordInput.value.trim();
+            if (entered === CORRECT_PASSWORD) {
+                showMainScreen();
+            } else {
+                errorMsg.textContent = '❀ Неверный пароль, попробуйте снова ❀';
+                passwordInput.value = '';
+                passwordInput.focus();
+                passwordInput.style.transform = 'scale(0.96)';
+                setTimeout(() => { passwordInput.style.transform = ''; }, 200);
+            }
+        }
+
+        unlockBtn.addEventListener('click', handleUnlock);
+
+        passwordInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleUnlock();
+            }
+        });
+
+        window.addEventListener('load', () => {
+            passwordInput.focus();
+        });
+    })();
+</script>
+
+</body>
+</html>
