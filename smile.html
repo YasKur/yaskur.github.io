@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Для тебя ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background: linear-gradient(145deg, #ff9a9e 0%, #fecfef 50%, #fdfcfb 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            touch-action: manipulation;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 48px;
+            padding: 32px 24px 40px;
+            width: 92%;
+            max-width: 400px;
+            margin: 0 16px;
+            box-shadow: 0 30px 60px rgba(255, 107, 107, 0.25), 0 10px 20px rgba(0,0,0,0.05);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 2.1rem;
+            font-weight: 700;
+            color: #4a2c3a;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #7a4b5a;
+            margin-bottom: 28px;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        .emoji-big {
+            font-size: 4.5rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 60px;
+            padding: 16px 40px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            letter-spacing: 0.5px;
+            min-width: 120px;
+            border: 1px solid rgba(255,255,255,0.4);
+            background: #ff6b8a;
+            color: white;
+            box-shadow: 0 8px 25px rgba(255, 107, 138, 0.4);
+        }
+
+        .btn:active {
+            transform: scale(0.94);
+            background: #e85a7a;
+        }
+
+        .hidden-message {
+            display: none;
+            margin-top: 20px;
+            animation: fadeUp 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.2) forwards;
+        }
+
+        .hidden-message.show {
+            display: block;
+        }
+
+        .hidden-message img {
+            width: 100%;
+            max-width: 280px;
+            border-radius: 30px;
+            margin: 12px 0 8px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+            border: 2px solid white;
+        }
+
+        .hidden-message p {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #3d1f2b;
+            background: rgba(255,255,240,0.6);
+            padding: 18px 14px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            margin-top: 12px;
+            line-height: 1.5;
+        }
+
+        .hidden-message .big-heart {
+            font-size: 2.8rem;
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.2;
+            animation: floatHeart 12s infinite ease-in-out;
+            color: #ff4d6d;
+        }
+
+        @keyframes floatHeart {
+            0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0.1; }
+            20% { opacity: 0.25; }
+            80% { opacity: 0.25; }
+            100% { transform: translateY(-10vh) rotate(720deg) scale(1.2); opacity: 0; }
+        }
+
+        @keyframes fadeUp {
+            0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        @media (max-width: 420px) {
+            .card { padding: 24px 16px 30px; }
+            h1 { font-size: 1.8rem; }
+            .btn { padding: 14px 28px; font-size: 1.2rem; min-width: 100px; }
+            .hidden-message p { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="floating-hearts" id="hearts-container"></div>
+<canvas id="confetti-canvas"></canvas>
+
+<div class="card" id="mainCard">
+    <span class="emoji-big">🌸</span>
+    <h1>Здравствуйте Софья Эдуардовна!</h1>
+    <p class="subtitle"> улыбнитесь 😉</p>
+
+    <button class="btn" id="yesBtn">Нажми меня ❤️</button>
+
+    <div class="hidden-message" id="surpriseMessage">
+        <img src="./1.gif" alt="милая гифка" style="width:100%; max-width:280px; border-radius:30px;">
+        <p>
+            Улыбайтесь, будьте счастливы, сияйте<br>
+            <span style="font-size:2rem;">💛✨</span>
+        </p>
+    </div>
+</div>
+
+<script>
+    (function() {
+        "use strict";
+
+        const yesBtn = document.getElementById('yesBtn');
+        const surprise = document.getElementById('surpriseMessage');
+        const mainCard = document.getElementById('mainCard');
+
+        // --- Фоновые сердечки ---
+        function createHearts() {
+            const container = document.getElementById('hearts-container');
+            const symbols = ['❤️', '💕', '💗', '🌸', '✨', '💖'];
+            for (let i = 0; i < 18; i++) {
+                const heart = document.createElement('span');
+                heart.className = 'heart';
+                heart.textContent = symbols[i % symbols.length];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.fontSize = (1.2 + Math.random() * 2.8) + 'rem';
+                heart.style.animationDuration = (10 + Math.random() * 18) + 's';
+                heart.style.animationDelay = (Math.random() * 15) + 's';
+                heart.style.opacity = 0.1 + Math.random() * 0.25;
+                container.appendChild(heart);
+            }
+        }
+        createHearts();
+
+        // --- Конфетти ---
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let confettiPieces = [];
+        let confettiActive = false;
+
+        function resizeCanvas() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class ConfettiPiece {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height - height;
+                this.size = 6 + Math.random() * 10;
+                this.speedY = 3 + Math.random() * 6;
+                this.speedX = (Math.random() - 0.5) * 4;
+                this.rotation = Math.random() * 360;
+                this.rotateSpeed = (Math.random() - 0.5) * 8;
+                this.color = `hsl(${Math.random() * 360}, 80%, 60%)`;
+                this.shape = Math.random() > 0.5 ? 'rect' : 'circle';
+            }
+
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX + Math.sin(this.y * 0.02) * 0.4;
+                this.rotation += this.rotateSpeed;
+                if (this.y > height + 30) {
+                    this.y = -30;
+                    this.x = Math.random() * width;
+                    this.speedY = 3 + Math.random() * 6;
+                    this.color = `hsl(${Math.random() * 360}, 80%, 60%)`;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.fillStyle = this.color;
+                ctx.shadowColor = 'rgba(255,200,200,0.3)';
+                ctx.shadowBlur = 6;
+
+                if (this.shape === 'rect') {
+                    ctx.fillRect(-this.size/2, -this.size/4, this.size, this.size/2);
+                } else {
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size/2, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.restore();
+            }
+        }
+
+        function startConfetti(count = 180) {
+            if (confettiActive) return;
+            confettiActive = true;
+            for (let i = 0; i < count; i++) {
+                confettiPieces.push(new ConfettiPiece());
+            }
+            animateConfetti();
+        }
+
+        function animateConfetti() {
+            if (!confettiActive) return;
+            ctx.clearRect(0, 0, width, height);
+            let alive = false;
+            for (let p of confettiPieces) {
+                p.update();
+                p.draw();
+                if (p.y < height + 30) alive = true;
+            }
+            if (alive || confettiPieces.length > 0) {
+                requestAnimationFrame(animateConfetti);
+            } else {
+                confettiActive = false;
+            }
+        }
+
+        function stopConfetti() {
+            confettiActive = false;
+            ctx.clearRect(0, 0, width, height);
+            confettiPieces = [];
+        }
+
+        // --- Показ сюрприза ---
+        function showSurprise() {
+            if (surprise.classList.contains('show')) return;
+
+            // Прячем кнопку
+            yesBtn.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            yesBtn.style.opacity = '0';
+            yesBtn.style.transform = 'scale(0.8)';
+            setTimeout(() => {
+                yesBtn.style.display = 'none';
+            }, 300);
+
+            // Меняем заголовок
+            document.querySelector('h1').textContent = '😍';
+            document.querySelector('.subtitle').textContent = 'Вы прекрасный человек!';
+            document.querySelector('.emoji-big').textContent = '🌟';
+
+            // Показываем сообщение
+            surprise.classList.add('show');
+
+            // Запускаем конфетти
+            startConfetti(200);
+
+            if (navigator.vibrate) navigator.vibrate(30);
+
+            setTimeout(() => {
+                stopConfetti();
+            }, 7000);
+        }
+
+        yesBtn.addEventListener('click', showSurprise);
+        yesBtn.addEventListener('touchstart', function(e) {
+            // Чтобы на телефоне не было двойного срабатывания
+            e.preventDefault();
+            showSurprise();
+        }, { passive: false });
+
+        // --- Защита от скролла внутри карточки ---
+        document.addEventListener('touchmove', function(e) {
+            if (e.target.closest('.card')) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        console.log('Сайт для поднятия настроения загружен! ❤️');
+    })();
+</script>
+</body>
+</html>
