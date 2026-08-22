@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>:)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: #fce4ec;
+            font-family: 'Pacifico', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* —— НОВЫЙ ФОН: нежно-персиковый с розовыми оттенками —— */
+        .romantic-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background:
+                    radial-gradient(circle at 15% 25%, #ffd9e6 0%, transparent 45%),
+                    radial-gradient(circle at 85% 70%, #fcccd9 0%, transparent 40%),
+                    radial-gradient(circle at 40% 80%, #fbb1c2 0%, transparent 35%),
+                    radial-gradient(circle at 70% 15%, #f598b0 0%, transparent 30%),
+                    radial-gradient(circle at 10% 70%, #ffd9e6 0%, transparent 50%),
+                    radial-gradient(circle at 90% 30%, #fbb1c2 0%, transparent 40%),
+                    radial-gradient(circle at 50% 50%, #fff0f3 0%, transparent 60%);
+            opacity: 0.95;
+            animation: romanticSwirl 22s ease-in-out infinite alternate;
+        }
+
+        @keyframes romanticSwirl {
+            0% { transform: scale(1) rotate(-1deg); opacity: 0.9; }
+            100% { transform: scale(1.08) rotate(2deg); opacity: 1; }
+        }
+
+        /* —— Мягкая текстура с лепестками —— */
+        .romantic-texture {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background-image:
+                    radial-gradient(circle at 12% 20%, rgba(255, 182, 193, 0.25) 8px, transparent 8px),
+                    radial-gradient(circle at 88% 55%, rgba(244, 143, 177, 0.2) 12px, transparent 12px),
+                    radial-gradient(circle at 40% 88%, rgba(240, 98, 146, 0.15) 16px, transparent 16px),
+                    radial-gradient(circle at 75% 10%, rgba(236, 64, 122, 0.15) 10px, transparent 10px);
+            background-size: 100px 100px, 140px 140px, 180px 180px, 120px 120px;
+            background-blend-mode: overlay;
+            opacity: 0.3;
+        }
+
+        /* —— Падающие вещи: сердечки, ключики, звёздочки —— */
+        .falling-items {
+            position: fixed;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .falling-item {
+            position: absolute;
+            top: -60px;
+            font-size: 1.8rem;
+            opacity: 0.7;
+            animation: fallLinear linear infinite;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.05));
+            user-select: none;
+        }
+
+        @keyframes fallLinear {
+            0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.9; }
+            100% { transform: translateY(110vh) rotate(720deg) scale(0.4); opacity: 0.1; }
+        }
+
+        /* —— Сердечки (парящие) —— */
+        .floating-hearts {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background-image:
+                    radial-gradient(circle at 8% 22%, rgba(255, 80, 120, 0.2) 6px, transparent 6px),
+                    radial-gradient(circle at 92% 68%, rgba(255, 60, 100, 0.18) 9px, transparent 9px),
+                    radial-gradient(circle at 45% 12%, rgba(255, 70, 110, 0.15) 12px, transparent 12px),
+                    radial-gradient(circle at 78% 82%, rgba(255, 50, 90, 0.2) 7px, transparent 7px),
+                    radial-gradient(circle at 20% 90%, rgba(255, 90, 130, 0.15) 10px, transparent 10px);
+            background-size: 180px 180px, 220px 220px, 200px 200px, 160px 160px, 240px 240px;
+            animation: heartFloat 18s ease-in-out infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes heartFloat {
+            0% { transform: translate(0,0) rotate(0deg) scale(1); }
+            33% { transform: translate(15px, -12px) rotate(4deg) scale(1.04); }
+            66% { transform: translate(-12px, 18px) rotate(-6deg) scale(0.96); }
+            100% { transform: translate(0,0) rotate(0deg) scale(1); }
+        }
+
+        /* —— Ключики (декор) —— */
+        .key-decoration {
+            position: fixed;
+            z-index: 1;
+            pointer-events: none;
+            font-size: 2.4rem;
+            opacity: 0.15;
+            animation: keySway 14s ease-in-out infinite;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.03));
+        }
+        .key-1 { bottom: 15%; left: 6%; animation-delay: 0s; font-size: 3rem; }
+        .key-2 { top: 18%; right: 8%; animation-delay: 4s; font-size: 2.6rem; }
+        .key-3 { bottom: 30%; right: 4%; animation-delay: 8s; font-size: 2.2rem; }
+        .key-4 { top: 55%; left: 3%; animation-delay: 2s; font-size: 2.8rem; }
+
+        @keyframes keySway {
+            0%, 100% { transform: translate(0,0) rotate(0deg) scale(1); }
+            30% { transform: translate(14px, -10px) rotate(12deg) scale(1.06); }
+            60% { transform: translate(-10px, 16px) rotate(-10deg) scale(0.94); }
+            85% { transform: translate(8px, -6px) rotate(6deg) scale(1.02); }
+        }
+
+        /* —— Основной контейнер (светлый, романтичный) —— */
+        .container {
+            position: relative;
+            z-index: 20;
+            backdrop-filter: blur(16px) saturate(1.8);
+            -webkit-backdrop-filter: blur(16px) saturate(1.8);
+            background: rgba(255, 245, 247, 0.65);
+            border-radius: 48px 48px 32px 32px;
+            padding: 28px 24px 26px;
+            max-width: 460px;
+            width: 100%;
+            box-shadow:
+                    0 20px 0 rgba(0, 0, 0, 0.04),
+                    0 30px 60px rgba(0, 0, 0, 0.06),
+                    inset 0 -4px 0 rgba(0, 0, 0, 0.03),
+                    inset 0 0 0 3px #fcccd9,
+                    inset 0 0 0 6px #fbb1c2;
+            border: 4px solid #f598b0;
+            transition: all 0.3s ease;
+        }
+
+        /* —— Уголки с сердечками —— */
+        .corner-decor {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.5;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.04));
+            user-select: none;
+            pointer-events: none;
+            animation: decorBounce 8s ease-in-out infinite;
+            color: #d6336c;
+        }
+        .corner-decor:nth-child(1) { top: 10px; left: 14px; animation-delay: 0s; font-size: 2.2rem; }
+        .corner-decor:nth-child(2) { top: 10px; right: 14px; animation-delay: 2s; font-size: 2.4rem; }
+        .corner-decor:nth-child(3) { bottom: 10px; left: 14px; animation-delay: 1s; font-size: 2rem; }
+        .corner-decor:nth-child(4) { bottom: 10px; right: 14px; animation-delay: 3s; font-size: 2.2rem; }
+
+        @keyframes decorBounce {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            30% { transform: translateY(-12px) rotate(8deg) scale(1.08); }
+            60% { transform: translateY(6px) rotate(-6deg) scale(0.95); }
+            85% { transform: translateY(-8px) rotate(4deg) scale(1.04); }
+        }
+
+        /* —— Контент —— */
+        .content-screen {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: center;
+            animation: fadeIn 1s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px) scale(0.92) rotate(-1deg); }
+            100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+        }
+
+        .content-title {
+            font-family: 'Pacifico', sans-serif;
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: #880e4f;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #880e4f, #d6336c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 4px 16px rgba(0,0,0,0.04));
+        }
+
+        .message-text {
+            font-size: 2rem;
+            color: #4a1a2e;
+            line-height: 1.6;
+            max-width: 360px;
+            margin: 0 auto;
+            text-align: left;
+            font-weight: 400;
+            background: rgba(255, 240, 243, 0.7);
+            border-radius: 30px;
+            padding: 18px 22px 16px;
+            box-shadow: inset 0 -4px 0 rgba(0,0,0,0.03), 0 8px 0 rgba(0,0,0,0.03);
+            backdrop-filter: blur(6px);
+        }
+
+        .message-text p {
+            margin-bottom: 12px;
+            font-weight: 400;
+            color: #4a1a2e;
+            font-size: 1.3rem;
+        }
+        .message-text p:first-of-type {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: #880e4f;
+            padding: 6px 16px;
+            border-radius: 40px;
+            display: inline-block;
+            margin-bottom: 14px;
+            background: rgba(214, 51, 108, 0.08);
+        }
+
+        .message-text ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 6px;
+        }
+
+        .message-text ul li {
+            padding: 12px 0 12px 48px;
+            margin-bottom: 6px;
+            color: #4a1a2e;
+            font-weight: 400;
+            position: relative;
+            border-bottom: 2px solid rgba(214, 51, 108, 0.12);
+            transition: all 0.2s;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(2px);
+        }
+
+        .message-text ul li::before {
+            content: "🍫";
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            font-size: 1.6rem;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.05));
+        }
+        .message-text ul li:nth-child(2)::before { content: "🍓"; }
+        .message-text ul li:nth-child(3)::before { content: "🍌"; }
+        .message-text ul li:nth-child(4)::before { content: "🍇"; }
+
+        .message-text ul li:last-child {
+            border-bottom: none;
+        }
+
+        .message-text ul li:hover {
+            background: rgba(214, 51, 108, 0.06);
+            transform: scale(1.01);
+        }
+
+        /* —— Пригласительный футер —— */
+        .invite-footer {
+            margin-top: 12px;
+            padding: 14px 16px 10px;
+            border-top: 2px solid rgba(214, 51, 108, 0.15);
+            font-family: 'Pacifico', sans-serif;
+            font-size: 1.5rem;
+            color: #880e4f;
+            text-align: center;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 16px rgba(0,0,0,0.02);
+            line-height: 1.4;
+            background: rgba(255, 240, 243, 0.3);
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+        }
+
+        .invite-footer .small-line {
+            display: block;
+            font-family: 'Pacifico', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 300;
+            color: #ad1457;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 6px;
+            opacity: 0.7;
+        }
+
+        /* —— НОВАЯ КНОПКА С СЕРДЕЧКОМ —— */
+        .photo-button {
+            margin-top: 18px;
+            padding: 14px 24px;
+            background: linear-gradient(135deg, #f598b0, #d6336c);
+            border: none;
+            border-radius: 60px;
+            font-family: 'Pacifico', sans-serif;
+            font-size: 1.6rem;
+            color: #fff;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 0 rgba(0,0,0,0.08), 0 12px 28px rgba(214, 51, 108, 0.25);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border: 2px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(4px);
+            width: 100%;
+            max-width: 280px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .photo-button::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .photo-button:hover {
+            transform: scale(1.02) translateY(-2px);
+            box-shadow: 0 12px 0 rgba(0,0,0,0.06), 0 20px 40px rgba(214, 51, 108, 0.3);
+        }
+
+        .photo-button:hover::after {
+            opacity: 1;
+        }
+
+        .photo-button:active {
+            transform: scale(0.96) translateY(4px);
+            box-shadow: 0 4px 0 rgba(0,0,0,0.08);
+        }
+
+        .photo-button .heart-icon {
+            display: inline-block;
+            animation: heartBeat 1.4s ease-in-out infinite;
+            font-size: 2rem;
+            line-height: 1;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            30% { transform: scale(1.2); }
+            50% { transform: scale(0.95); }
+            70% { transform: scale(1.1); }
+        }
+
+        /* —— Фото-модальное окно —— */
+        .photo-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            animation: modalFade 0.3s ease;
+        }
+
+        .photo-modal.open {
+            display: flex;
+        }
+
+        @keyframes modalFade {
+            0% { opacity: 0; transform: scale(0.92); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .photo-modal-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 40px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+            border: 6px solid #fbb1c2;
+            background: #fff;
+            padding: 10px;
+            position: relative;
+            animation: photoPop 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        @keyframes photoPop {
+            0% { transform: scale(0.6) rotate(-4deg); opacity: 0; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .photo-modal-content img {
+            width: 100%;
+            height: auto;
+            max-height: 80vh;
+            border-radius: 32px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .photo-modal-close {
+            position: absolute;
+            top: -16px;
+            right: -16px;
+            background: #d6336c;
+            border: 3px solid #fff;
+            color: #fff;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            transition: all 0.15s;
+            font-family: 'Pacifico', sans-serif;
+            line-height: 1;
+        }
+
+        .photo-modal-close:hover {
+            transform: scale(1.1);
+            background: #880e4f;
+        }
+
+        /* —— Котики (оставлены для уюта) —— */
+        .cat-wrapper {
+            position: fixed;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 30;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: catSway 3s ease-in-out infinite;
+            cursor: default;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .cat-wrapper-2 {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 30;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: catSway 3s ease-in-out infinite;
+            cursor: default;
+            user-select: none;
+            pointer-events: none;
+        }
+        @keyframes catSway {
+            0%, 100% { transform: translateX(-50%) rotate(-2deg) scale(1); }
+            50% { transform: translateX(-50%) rotate(3deg) scale(1.04); }
+        }
+
+        .cat-gif {
+            width: 72px;
+            height: 72px;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 3px solid #fbb1c2;
+            animation: catBounce 1.2s ease-in-out infinite;
+            background: #fce4ec;
+        }
+
+        @keyframes catBounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            30% { transform: translateY(-8px) scale(1.06); }
+            60% { transform: translateY(2px) scale(0.98); }
+            80% { transform: translateY(-4px) scale(1.02); }
+        }
+
+        .meow-bubble {
+            font-family: 'Pacifico', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #880e4f;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(6px);
+            padding: 4px 18px;
+            border-radius: 30px;
+            margin-top: 4px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            border: 2px solid #fbb1c2;
+            animation: meowPulse 1.8s ease-in-out infinite;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        @keyframes meowPulse {
+            0%, 100% { opacity: 0.7; transform: scale(0.96); }
+            30% { opacity: 1; transform: scale(1.08); }
+            60% { opacity: 0.8; transform: scale(1); }
+            80% { opacity: 1; transform: scale(1.05); }
+        }
+
+        /* —— Адаптив —— */
+        @media (max-width: 420px) {
+            .container { padding: 20px 12px 18px; border-radius: 28px; }
+            .content-title { font-size: 2.0rem; }
+            .message-text ul li { padding: 10px 0 10px 40px; font-size: 0.8rem; }
+            .corner-decor { font-size: 1.6rem; }
+            .invite-footer { font-size: 1.2rem; padding: 12px 12px 8px; }
+            .cat-gif { width: 56px; height: 56px; }
+            .meow-bubble { font-size: 0.8rem; padding: 2px 12px; }
+            .photo-button { font-size: 1.3rem; padding: 12px 18px; max-width: 220px; }
+            .falling-item { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Фон -->
+<div class="romantic-bg"></div>
+<div class="romantic-texture"></div>
+<div class="floating-hearts"></div>
+
+<!-- Ключики декоративные -->
+<div class="key-decoration key-1">🔑</div>
+<div class="key-decoration key-2">🔑</div>
+<div class="key-decoration key-3">🔑</div>
+<div class="key-decoration key-4">🔑</div>
+
+<!-- Падающие вещи (сердечки, ключики, звёзды) -->
+<div class="falling-items" id="fallingContainer">
+    <!-- генерируем скриптом -->
+</div>
+
+<!-- Котик верхний -->
+<div class="cat-wrapper-2">
+    <img class="cat-gif" src="./1.gif" alt="милый котик" loading="lazy">
+</div>
+
+<!-- ОСНОВНОЙ КОНТЕЙНЕР -->
+<div class="container" id="appContainer">
+    <span class="corner-decor">❤️</span>
+    <span class="corner-decor">🔑</span>
+    <span class="corner-decor">❤️</span>
+    <span class="corner-decor">🔑</span>
+
+    <div id="mainScreen" class="content-screen">
+        <div class="message-text">
+            <p style="text-align: center;">Софья Эдуардовна,<br>ключи от сердца моего уже у вас, пора забирать и другие.</p>
+        </div>
+        <!-- НОВАЯ КНОПКА -->
+        <button class="photo-button" id="openPhotoBtn">
+            <span class="heart-icon">❤️</span> Открыть <span class="heart-icon">❤️</span>
+        </button>
+        <div class="invite-footer">
+            <span class="small-line">Ваша улыбка меня заряжает как солнышко!</span>
+        </div>
+    </div>
+</div>
+
+<!-- Фото-модальное окно -->
+<div class="photo-modal" id="photoModal">
+    <div class="photo-modal-content">
+        <button class="photo-modal-close" id="closePhotoBtn">✕</button>
+        <p style="text-align: center; margin-bottom: 15px;">Чтобы вы всегда знали, что вас тут всегда ждут и вас счастливы видеть! Ждут вас в коридоре, на тумбочке.</p>
+        <img src="./ke.jpg" alt="фотография" id="modalImage" width="320">
+    </div>
+</div>
+
+<!-- Котик нижний -->
+<div class="cat-wrapper">
+    <img class="cat-gif" src="./1.gif" alt="милый котик" loading="lazy">
+    <div class="meow-bubble">💕 мур-мур 💕</div>
+</div>
+
+<script>
+    (function() {
+        // ----- Падающие элементы (сердечки, ключики, звёзды) -----
+        const container = document.getElementById('fallingContainer');
+        const emojis = ['❤️', '🔑', '💖', '✨', '💕', '🔐', '🌸', '💗'];
+        const count = 28;
+
+        for (let i = 0; i < count; i++) {
+            const span = document.createElement('span');
+            span.className = 'falling-item';
+            span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            span.style.left = Math.random() * 100 + '%';
+            span.style.fontSize = (1.2 + Math.random() * 1.8) + 'rem';
+            span.style.animationDuration = (12 + Math.random() * 20) + 's';
+            span.style.animationDelay = (Math.random() * 25) + 's';
+            span.style.opacity = 0.3 + Math.random() * 0.5;
+            container.appendChild(span);
+        }
+
+        // ----- Кнопка открытия фото -----
+        const openBtn = document.getElementById('openPhotoBtn');
+        const modal = document.getElementById('photoModal');
+        const closeBtn = document.getElementById('closePhotoBtn');
+
+        function openModal() {
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        openBtn.addEventListener('click', openModal);
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) closeModal();
+        });
+
+        // Закрытие по Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Если фото не загрузится – покажем заглушку (уже есть onerror)
+    })();
+</script>
+
+</body>
+</html>
