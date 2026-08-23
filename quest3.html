@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>25.07.2026 🤍</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        /* ——— Сброс и база ——— */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Pacifico', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            margin: 0;
+            padding: 16px;
+            position: relative;
+            overflow-x: hidden;
+            background: linear-gradient(145deg, #9ac8f5 0%, #b3d9ff 40%, #d4eaff 100%);
+        }
+
+        /* ——— Летающие воздушные шары (общий контейнер) ——— */
+        .balloons-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        /* ——— Базовый стиль шара ——— */
+        .balloon {
+            position: absolute;
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            width: 60px;
+            height: 72px;
+            opacity: 0.7;
+            animation: floatBalloon linear infinite;
+            transform-origin: bottom center;
+        }
+        .balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 20px;
+            background: rgba(80, 60, 40, 0.3);
+            border-radius: 2px;
+        }
+        .balloon::before {
+            content: '✧';
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.6);
+            color: rgba(255, 215, 0, 0.2);
+            font-size: 14px;
+        }
+
+        /* ——— Большие шары с корзинами ——— */
+        .balloon-big {
+            width: 100px;
+            height: 120px;
+            opacity: 0.9;
+            animation-duration: 22s;
+        }
+        .balloon-big::after {
+            height: 28px;
+            width: 3px;
+            bottom: -28px;
+            background: rgba(60, 40, 20, 0.4);
+        }
+        .balloon-big .basket {
+            position: absolute;
+            bottom: -48px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 34px;
+            height: 18px;
+            background: rgba(120, 80, 40, 0.5);
+            border-radius: 4px 4px 8px 8px;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            color: #2d1f0f;
+            font-weight: bold;
+            letter-spacing: 1px;
+            backdrop-filter: blur(2px);
+        }
+        .balloon-big .basket::before {
+            content: '👤';
+            font-size: 14px;
+            filter: drop-shadow(0 0 4px rgba(255,255,200,0.3));
+        }
+        /* вариации для корзин */
+        .balloon-big .basket.two::before {
+            content: '👤👤';
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+        .balloon-big .basket.three::before {
+            content: '👤👤👤';
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        /* ——— Анимации полёта ——— */
+        @keyframes floatBalloon {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+            25% {
+                transform: translate(30px, -120px) rotate(3deg) scale(1.02);
+            }
+            50% {
+                transform: translate(-20px, -240px) rotate(-3deg) scale(0.98);
+            }
+            75% {
+                transform: translate(20px, -360px) rotate(2deg) scale(1.01);
+            }
+            100% {
+                transform: translate(-10px, -480px) rotate(0deg) scale(1);
+            }
+        }
+
+        /* разные скорости для естественности */
+        .balloon:nth-child(1) { animation-duration: 18s; left: 5%; bottom: -80px; width: 55px; height: 66px; background: radial-gradient(circle at 30% 30%, #ff9a9e, #fad0c4); }
+        .balloon:nth-child(2) { animation-duration: 22s; left: 15%; bottom: -120px; width: 70px; height: 84px; background: radial-gradient(circle at 30% 30%, #a18cd1, #fbc2eb); animation-delay: -3s; }
+        .balloon:nth-child(3) { animation-duration: 20s; left: 25%; bottom: -50px; width: 45px; height: 54px; background: radial-gradient(circle at 30% 30%, #fbc2eb, #a6c1ee); animation-delay: -7s; }
+        .balloon:nth-child(4) { animation-duration: 25s; left: 35%; bottom: -160px; width: 80px; height: 96px; background: radial-gradient(circle at 30% 30%, #84fab0, #8fd3f4); animation-delay: -2s; }
+        .balloon:nth-child(5) { animation-duration: 19s; left: 45%; bottom: -90px; width: 60px; height: 72px; background: radial-gradient(circle at 30% 30%, #f6d365, #fda085); animation-delay: -11s; }
+        .balloon:nth-child(6) { animation-duration: 23s; left: 55%; bottom: -70px; width: 50px; height: 60px; background: radial-gradient(circle at 30% 30%, #a1c4fd, #c2e9fb); animation-delay: -5s; }
+        .balloon:nth-child(7) { animation-duration: 21s; left: 65%; bottom: -130px; width: 75px; height: 90px; background: radial-gradient(circle at 30% 30%, #fccb90, #d57eeb); animation-delay: -9s; }
+        .balloon:nth-child(8) { animation-duration: 24s; left: 75%; bottom: -100px; width: 65px; height: 78px; background: radial-gradient(circle at 30% 30%, #89f7fe, #66a6ff); animation-delay: -14s; }
+        .balloon:nth-child(9) { animation-duration: 17s; left: 85%; bottom: -60px; width: 50px; height: 60px; background: radial-gradient(circle at 30% 30%, #fddb92, #d1fdff); animation-delay: -4s; }
+        .balloon:nth-child(10) { animation-duration: 26s; left: 92%; bottom: -180px; width: 90px; height: 108px; background: radial-gradient(circle at 30% 30%, #ffecd2, #fcb69f); animation-delay: -8s; }
+
+        /* ——— Большие шары с корзинами и людьми ——— */
+        .balloon-big:nth-child(11) { left: 8%; bottom: -200px; background: radial-gradient(circle at 30% 30%, #f093fb, #f5576c); animation-duration: 28s; animation-delay: -6s; }
+        .balloon-big:nth-child(12) { left: 28%; bottom: -250px; background: radial-gradient(circle at 30% 30%, #4facfe, #00f2fe); animation-duration: 30s; animation-delay: -12s; }
+        .balloon-big:nth-child(13) { left: 48%; bottom: -180px; background: radial-gradient(circle at 30% 30%, #43e97b, #38f9d7); animation-duration: 26s; animation-delay: -18s; }
+        .balloon-big:nth-child(14) { left: 68%; bottom: -220px; background: radial-gradient(circle at 30% 30%, #fa709a, #fee140); animation-duration: 32s; animation-delay: -3s; }
+        .balloon-big:nth-child(15) { left: 88%; bottom: -280px; background: radial-gradient(circle at 30% 30%, #a8edea, #fed6e3); animation-duration: 29s; animation-delay: -15s; }
+
+        /* ——— Небольшие облака ——— */
+        .cloud {
+            position: fixed;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 80px;
+            filter: blur(1px);
+            pointer-events: none;
+            z-index: 0;
+            animation: driftCloud linear infinite;
+        }
+        .cloud::before, .cloud::after {
+            content: '';
+            position: absolute;
+            background: inherit;
+            border-radius: 50%;
+        }
+        .cloud-1 { width: 160px; height: 40px; top: 10%; left: -80px; animation-duration: 40s; animation-delay: 0s; }
+        .cloud-1::before { width: 70px; height: 70px; top: -30px; left: 20px; }
+        .cloud-1::after { width: 90px; height: 90px; top: -40px; left: 60px; }
+
+        .cloud-2 { width: 200px; height: 50px; top: 30%; left: -100px; animation-duration: 50s; animation-delay: -12s; }
+        .cloud-2::before { width: 80px; height: 80px; top: -35px; left: 30px; }
+        .cloud-2::after { width: 100px; height: 100px; top: -45px; left: 80px; }
+
+        .cloud-3 { width: 140px; height: 35px; top: 55%; left: -70px; animation-duration: 45s; animation-delay: -25s; }
+        .cloud-3::before { width: 60px; height: 60px; top: -25px; left: 15px; }
+        .cloud-3::after { width: 75px; height: 75px; top: -30px; left: 50px; }
+
+        @keyframes driftCloud {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(100vw + 200px)); }
+        }
+
+        /* ——— Контейнер (стекло) ——— */
+        .container {
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(10px) saturate(1.2);
+            -webkit-backdrop-filter: blur(10px) saturate(1.2);
+            background: rgba(20, 10, 40, 0.35);
+            border-radius: 48px;
+            padding: 0 20px 10px;
+            max-width: 460px;
+            width: 100%;
+            box-shadow:
+                    0 30px 80px rgba(0, 0, 0, 0.5),
+                    0 0 0 1px rgba(255, 200, 255, 0.08),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 200, 255, 0.06);
+            transition: all 0.4s ease;
+            margin-bottom: 20px;
+        }
+
+        /* ——— Декоративные уголки ——— */
+        .corner-moon {
+            position: absolute;
+            font-size: 18px;
+            opacity: 0.25;
+            color: #f0e6ff;
+            filter: drop-shadow(0 0 6px #b39ddb);
+            user-select: none;
+            pointer-events: none;
+        }
+        .corner-moon:nth-child(1) { top: 18px; left: 22px; }
+        .corner-moon:nth-child(2) { top: 18px; right: 22px; }
+        .corner-moon:nth-child(3) { bottom: 18px; left: 22px; }
+        .corner-moon:nth-child(4) { bottom: 18px; right: 22px; }
+
+        /* ——— Основной экран ——— */
+        .content-screen {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            text-align: center;
+            padding: 6px 0 2px;
+            animation: fadeUp 0.7s ease forwards;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .emoji-big {
+            font-size: 4.2rem;
+            display: block;
+            margin-bottom: 2px;
+            filter: drop-shadow(0 0 30px rgba(180, 130, 255, 0.3));
+            animation: gentleFloat 4s ease-in-out infinite;
+        }
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.02); }
+        }
+
+        .content-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(180, 130, 255, 0.2);
+            letter-spacing: 1px;
+        }
+
+        .message-text {
+            font-size: 1.05rem;
+            color: #d4c8e8;
+            line-height: 1.8;
+            max-width: 340px;
+            margin: 0 auto;
+            text-align: left;
+            padding: 0 6px;
+            font-weight: 400;
+        }
+        .message-text p {
+            margin-bottom: 12px;
+        }
+        .message-text .highlight {
+            color: #d9b3ff;
+            font-weight: 600;
+            background: rgba(180, 130, 255, 0.08);
+            padding: 2px 14px;
+            border-radius: 30px;
+            display: inline-block;
+            border: 1px solid rgba(180, 130, 255, 0.1);
+        }
+        .message-text .romantic-line {
+            border-left: 3px solid #b380ff;
+            padding-left: 16px;
+            color: #e0d0f0;
+            font-style: italic;
+            margin-top: 6px;
+        }
+        .message-text ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+        .message-text ul li {
+            padding-bottom: 5px;
+            margin-bottom: 4px;
+            color: #4971e6;
+        }
+        h3 {
+            margin-bottom: 20px;
+        }
+
+        /* ——— Адаптив ——— */
+        @media (max-width: 420px) {
+            .container { padding: 32px 20px 28px; }
+            .content-title { font-size: 1.6rem; }
+            .message-text { font-size: 0.95rem; }
+            .emoji-big { font-size: 3.4rem; }
+            .balloon-big { width: 70px; height: 84px; }
+            .balloon-big .basket { width: 26px; height: 14px; bottom: -38px; font-size: 10px; }
+            .balloon-big .basket::before { font-size: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Контейнер для всех шаров и облаков -->
+<div class="balloons-container">
+    <!-- маленькие и средние шары -->
+    <span class="balloon"></span>
+    <span class="balloon"></span>
+    <span class="balloon"></span>
+    <span class="balloon"></span>
+    <span class="balloon"></span>
+    <span class="balloon"></span>
+    <span class="balloon"></span>
+    <span class="balloon"></span>
+    <span class="balloon"></span>
+    <span class="balloon"></span>
+
+    <!-- большие шары с корзинами и людьми -->
+    <span class="balloon balloon-big">
+        <span class="basket"></span>
+    </span>
+    <span class="balloon balloon-big">
+        <span class="basket two"></span>
+    </span>
+    <span class="balloon balloon-big">
+        <span class="basket three"></span>
+    </span>
+    <span class="balloon balloon-big">
+        <span class="basket"></span>
+    </span>
+    <span class="balloon balloon-big">
+        <span class="basket two"></span>
+    </span>
+
+    <!-- облака -->
+    <span class="cloud cloud-1"></span>
+    <span class="cloud cloud-2"></span>
+    <span class="cloud cloud-3"></span>
+</div>
+
+<div class="container" id="appContainer">
+    <!-- Декоративные уголки -->
+    <span class="corner-moon">🤍</span>
+    <span class="corner-moon">🤍</span>
+    <span class="corner-moon">🤍</span>
+    <span class="corner-moon">🤍</span>
+
+    <!-- ====== Единственный экран ====== -->
+    <div id="mainScreen" class="content-screen">
+        <div class="content-title">Загадка</div>
+        <div class="message-text">
+            <p style="text-align: center;">Софья Эдуардовна, отгадайте загадку, там что-то есть.</p>
+            <p style="text-align: center;">
+                Я — край земли у пропасти стеклянной,<br>
+                Где небо падает, но не разбиться.<br>
+                Я принимаю свет в часы обманные,<br>
+                Чтоб тень моя могла в полдень укрыться.<br>
+                <br>
+                Мне снятся сны о том, что было снаружи,<br>
+                Но я не пуст — я занят тишиной.<br>
+                Мой век — пока сквозь воздух ходят стужи,<br>
+                И я стою, согнувшись под луной.<br>
+                <br>
+                Я — мост, где нет ни первой, ни последней,<br>
+                Где время застывает на краю.<br>
+                Назови имя это во мгле вечерней —<br>
+                То, что не движется, но ловит струю.<br>
+            </p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
