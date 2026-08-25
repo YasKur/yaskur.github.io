@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>12.08.26 · Океан</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        /* ——— Сбросы ——— */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: #0b1a2a;
+            font-family: 'Pacifico', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ——— ГЛУБОКИЙ ОКЕАН ——— */
+        .ocean-bg {
+            position: fixed;
+            inset: 0;
+            background:
+                    radial-gradient(ellipse at 20% 30%, #0d3b4f 0%, #05212b 70%, #010b10 100%);
+            z-index: 0;
+        }
+
+        /* ——— ВОЛНЫ (световые слои) ——— */
+        .wave-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: -10%;
+            left: -10%;
+            width: 130%;
+            height: 130%;
+            background: repeating-radial-gradient(circle at 30% 40%, rgba(30, 144, 200, 0.03) 0%, transparent 15%),
+            repeating-linear-gradient(45deg, rgba(0, 180, 255, 0.02) 0%, rgba(0, 200, 255, 0.01) 10%, transparent 20%);
+            border-radius: 50% 50% 30% 30%;
+            animation: waveDrift 18s cubic-bezier(0.3, 0.7, 0.5, 1) infinite alternate;
+            transform-origin: center bottom;
+            filter: blur(8px);
+        }
+        .wave:nth-child(2) {
+            width: 150%;
+            height: 140%;
+            bottom: -15%;
+            left: -20%;
+            background: repeating-radial-gradient(circle at 70% 60%, rgba(0, 200, 255, 0.04) 0%, transparent 20%);
+            animation-duration: 25s;
+            animation-delay: -4s;
+            filter: blur(12px);
+            opacity: 0.6;
+        }
+        .wave:nth-child(3) {
+            width: 110%;
+            height: 120%;
+            bottom: -5%;
+            left: 5%;
+            background: repeating-linear-gradient(120deg, rgba(0, 150, 200, 0.02) 0%, rgba(0, 200, 220, 0.01) 20%, transparent 30%);
+            animation-duration: 22s;
+            animation-delay: -9s;
+            filter: blur(20px);
+            opacity: 0.5;
+        }
+
+        @keyframes waveDrift {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            25% { transform: translate(4%, -3%) rotate(2deg) scale(1.02); }
+            50% { transform: translate(-3%, 5%) rotate(-1deg) scale(0.98); }
+            75% { transform: translate(6%, 2%) rotate(3deg) scale(1.01); }
+            100% { transform: translate(-2%, -4%) rotate(-2deg) scale(1.03); }
+        }
+
+        /* ——— ПЛАНКТОН / СВЕТЯЩИЕСЯ ЧАСТИЦЫ (эффект "глубины") ——— */
+        .plankton-particles {
+            position: fixed;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(100, 220, 255, 0.7), rgba(20, 100, 200, 0.1));
+            box-shadow: 0 0 20px rgba(0, 200, 255, 0.2);
+            animation: floatParticle calc(12s + var(--delay, 0s)) ease-in-out infinite alternate;
+            opacity: 0.3;
+        }
+
+        @keyframes floatParticle {
+            0% { transform: translate(0, 0) scale(0.8); opacity: 0.1; }
+            100% { transform: translate(var(--dx, 40px), var(--dy, -30px)) scale(1.3); opacity: 0.6; }
+        }
+
+        /* ——— ОСНОВНОЙ КОНТЕЙНЕР — МАТОВОЕ СТЕКЛО (как пузырь) ——— */
+        .container {
+            position: relative;
+            z-index: 20;
+            backdrop-filter: blur(20px) saturate(1.3);
+            -webkit-backdrop-filter: blur(20px) saturate(1.3);
+            background: rgba(2, 25, 40, 0.55);
+            border-radius: 60px 60px 40px 40px;
+            padding: 28px 30px 24px;
+            max-width: 440px;
+            width: 100%;
+            box-shadow:
+                    0 30px 70px rgba(0, 0, 0, 0.8),
+                    0 0 0 1px rgba(80, 200, 255, 0.08),
+                    inset 0 1px 0 rgba(150, 220, 255, 0.1);
+            border: 1px solid rgba(60, 200, 255, 0.06);
+            transition: all 0.3s ease;
+        }
+
+        /* ——— Уголки-декор (морские символы) ——— */
+        .corner-decor {
+            position: absolute;
+            font-size: 1.3rem;
+            opacity: 0.4;
+            filter: drop-shadow(0 0 30px rgba(0, 200, 255, 0.2));
+            user-select: none;
+            pointer-events: none;
+            animation: decorFloatOcean 10s ease-in-out infinite;
+            color: #8cd4ff;
+        }
+        .corner-decor:nth-child(1) { top: 18px; left: 20px; animation-delay: 0s; }
+        .corner-decor:nth-child(2) { top: 18px; right: 20px; animation-delay: 2.2s; }
+        .corner-decor:nth-child(3) { bottom: 18px; left: 20px; animation-delay: 4.5s; }
+        .corner-decor:nth-child(4) { bottom: 18px; right: 20px; animation-delay: 1.3s; }
+
+        @keyframes decorFloatOcean {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.25; }
+            30% { transform: translateY(-14px) rotate(8deg) scale(1.1); opacity: 0.7; }
+            70% { transform: translateY(6px) rotate(-6deg) scale(0.9); opacity: 0.4; }
+            90% { transform: translateY(-8px) rotate(12deg) scale(1.05); opacity: 0.6; }
+        }
+
+        /* ——— Содержимое ——— */
+        .content-screen {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: center;
+            animation: fadeOcean 1.2s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeOcean {
+            0% { opacity: 0; transform: translateY(30px) scale(0.92); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .emoji-big {
+            font-size: 2.8rem;
+            display: block;
+            margin-bottom: 2px;
+            filter: drop-shadow(0 0 40px rgba(0, 180, 255, 0.2));
+            animation: gentleFloatOcean 8s ease-in-out infinite;
+            letter-spacing: 6px;
+        }
+
+        @keyframes gentleFloatOcean {
+            0%, 100% { transform: translateY(0) scale(1) rotate(-1deg); }
+            50% { transform: translateY(-14px) scale(1.05) rotate(1deg); }
+        }
+
+        .content-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8rem;
+            font-weight: 400;
+            background: linear-gradient(135deg, #a0e0ff, #3aa8ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 80px rgba(0, 160, 255, 0.15);
+            letter-spacing: 2px;
+            margin-top: 0px;
+        }
+
+        .message-text {
+            font-size: 1rem;
+            color: #d4edff;
+            line-height: 1.7;
+            max-width: 340px;
+            margin: 0 auto;
+            text-align: left;
+            font-weight: 300;
+            backdrop-filter: blur(8px);
+            background: rgba(4, 30, 50, 0.5);
+            border-radius: 40px;
+            padding: 20px 24px 18px;
+            border: 1px solid rgba(60, 200, 255, 0.06);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+        }
+
+        .message-text p {
+            margin-bottom: 14px;
+            font-weight: 300;
+            color: #d4edff;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+            font-size: 0.95rem;
+        }
+        .message-text p:first-of-type {
+            color: #ecf8ff;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .message-text .highlight {
+            color: #8ac8ff;
+            font-weight: 500;
+            background: rgba(0, 180, 255, 0.08);
+            padding: 2px 16px;
+            border-radius: 40px;
+            display: inline-block;
+            border: 1px solid rgba(60, 200, 255, 0.06);
+        }
+
+        .message-text ul, .message-text ol {
+            list-style: none;
+            padding: 0;
+            margin-top: 4px;
+        }
+
+        .message-text ol li {
+            padding: 12px 0 12px 46px;
+            margin-bottom: 4px;
+            color: #d4edff;
+            font-weight: 300;
+            position: relative;
+            border-bottom: 1px solid rgba(60, 200, 255, 0.04);
+            transition: all 0.2s;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+        }
+
+        .message-text ol li::before {
+            content: "🌊";
+            position: absolute;
+            left: 6px;
+            top: 10px;
+            font-size: 1.4rem;
+            filter: drop-shadow(0 0 20px rgba(0, 200, 255, 0.3));
+        }
+
+        .message-text ol li:last-child {
+            border-bottom: none;
+        }
+
+        .message-text ol li:hover {
+            background: rgba(0, 180, 255, 0.03);
+        }
+
+        .signature {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.5rem;
+            color: #7ab8e0;
+            text-align: right;
+            margin-top: 2px;
+            padding-right: 12px;
+            opacity: 0.5;
+            text-shadow: 0 0 40px rgba(0, 160, 255, 0.05);
+        }
+
+        @media (max-width: 420px) {
+            .container { padding: 24px 16px 20px; border-radius: 44px; }
+            .content-title { font-size: 2.3rem; }
+            .message-text { font-size: 0.85rem; padding: 16px 18px; }
+            .emoji-big { font-size: 2.2rem; }
+            .message-text ol li { padding: 10px 0 10px 42px; font-size: 0.85rem; }
+            .signature { font-size: 1.2rem; }
+            .corner-decor { font-size: 1.0rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Глубокий океан -->
+<div class="ocean-bg"></div>
+
+<!-- Волны (движущиеся световые слои) -->
+<div class="wave-layer">
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+</div>
+
+<!-- Светящийся планктон / частицы (эффект глубины) -->
+<div class="plankton-particles" id="planktonLayer"></div>
+
+<!-- ОСНОВНОЙ КОНТЕЙНЕР -->
+<div class="container" id="appContainer">
+    <span class="corner-decor">🐚</span>
+    <span class="corner-decor">⚓</span>
+    <span class="corner-decor">🐠</span>
+    <span class="corner-decor">🌟</span>
+
+    <div id="mainScreen" class="content-screen">
+        <div class="content-title">25.08.26</div>
+        <div class="message-text">
+            <p style="text-align: center">Софья Эдуардовна, приглашаю вас:</p>
+            <ol>
+                <li>Покушать хотдоги</li>
+                <li>Обсудим насущие дела</li>
+                <li>Сделаем вам массаж</li>
+                <li>Проведем приятно время</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ——— Светящиеся частицы (планктон) ———
+        const layer = document.getElementById('planktonLayer');
+        const count = 80;
+
+        for (let i = 0; i < count; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+
+            const size = 4 + Math.random() * 16;
+            p.style.width = size + 'px';
+            p.style.height = size + 'px';
+
+            // Позиция по всему экрану
+            p.style.left = Math.random() * 100 + '%';
+            p.style.top = Math.random() * 100 + '%';
+
+            // Случайное смещение для анимации
+            const dx = (Math.random() - 0.5) * 120;
+            const dy = (Math.random() - 0.5) * 120;
+            p.style.setProperty('--dx', dx + 'px');
+            p.style.setProperty('--dy', dy + 'px');
+
+            // Длительность и задержка
+            const duration = 14 + Math.random() * 20;
+            const delay = Math.random() * 15;
+            p.style.animationDuration = duration + 's';
+            p.style.animationDelay = delay + 's';
+
+            // Оттенки синего / бирюзового
+            const hue = 180 + Math.random() * 40;
+            const light = 60 + Math.random() * 35;
+            p.style.background = `radial-gradient(circle at 30% 30%, rgba(${120 + Math.random()*60}, ${200 + Math.random()*55}, 255, 0.7), rgba(0, 80, 160, 0.2))`;
+            p.style.boxShadow = `0 0 ${20 + Math.random() * 40}px rgba(0, 200, 255, 0.15)`;
+
+            layer.appendChild(p);
+        }
+
+        // ——— Добавим несколько крупных "медуз" (эффектных пятен) ———
+        for (let i = 0; i < 12; i++) {
+            const big = document.createElement('div');
+            big.className = 'particle';
+            const size = 30 + Math.random() * 50;
+            big.style.width = size + 'px';
+            big.style.height = size + 'px';
+            big.style.left = Math.random() * 100 + '%';
+            big.style.top = Math.random() * 100 + '%';
+            big.style.setProperty('--dx', (Math.random() - 0.5) * 200 + 'px');
+            big.style.setProperty('--dy', (Math.random() - 0.5) * 200 + 'px');
+            big.style.animationDuration = (25 + Math.random() * 30) + 's';
+            big.style.animationDelay = (Math.random() * 20) + 's';
+            big.style.background = `radial-gradient(circle at 40% 40%, rgba(100, 220, 255, 0.2), rgba(0, 100, 200, 0.02))`;
+            big.style.boxShadow = `0 0 80px rgba(0, 180, 255, 0.08)`;
+            big.style.filter = 'blur(12px)';
+            big.style.opacity = '0.2';
+            layer.appendChild(big);
+        }
+    })();
+</script>
+</body>
+</html>
