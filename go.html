@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>🎈🎈🎈</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-family: 'Pacifico', sans-serif;
+            position: relative;
+            overflow: hidden;
+            background: #0b1a2a;
+        }
+
+        /* ——— НЕБО ——— */
+        .sky-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: linear-gradient(180deg, #2b6a9e 0%, #5b9bd5 35%, #87CEEB 65%, #b5dffa 85%, #d4ecf7 100%);
+        }
+
+        /* ——— ОБЛАКА ——— */
+        .cloud {
+            position: fixed;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.12);
+            filter: blur(60px);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .cloud-1 { width: 70%; height: 30%; top: -5%; left: -15%; }
+        .cloud-2 { width: 55%; height: 25%; bottom: 5%; right: -10%; background: rgba(255, 255, 255, 0.08); }
+        .cloud-3 { width: 45%; height: 20%; top: 30%; left: 25%; background: rgba(255, 255, 255, 0.06); }
+        .cloud-4 { width: 50%; height: 15%; top: 10%; right: 10%; background: rgba(255, 255, 255, 0.05); }
+
+        /* ——— СЛОЙ С ВОЗДУШНЫМИ ШАРАМИ ——— */
+        .balloons-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        /* ——— БАЛЛОН С КОРЗИНОЙ И ЛЮДЬМИ ——— */
+        .balloon-group {
+            position: absolute;
+            animation: floatBalloon var(--duration, 20s) ease-in-out infinite alternate;
+            transform-origin: center bottom;
+            will-change: transform;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.10));
+        }
+
+        .balloon {
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            width: var(--size, 120px);
+            height: calc(var(--size, 120px) * 1.15);
+            background: radial-gradient(circle at 30% 25%, var(--light-color, #ff9f43), var(--color, #ff6b6b));
+            box-shadow: inset -8px -8px 30px rgba(0,0,0,0.08), 0 8px 30px rgba(0,0,0,0.08);
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .balloon::before {
+            content: '';
+            position: absolute;
+            top: 12%;
+            left: 18%;
+            width: 22%;
+            height: 18%;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.5), transparent 70%);
+            border-radius: 50%;
+            opacity: 0.7;
+            transform: rotate(-20deg);
+        }
+
+        .balloon-strings {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: -2px;
+            height: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .balloon-strings span {
+            display: block;
+            width: 1.5px;
+            height: 100%;
+            background: rgba(200, 180, 160, 0.4);
+            border-radius: 2px;
+            transform: rotate(2deg);
+        }
+        .balloon-strings span:nth-child(2) { transform: rotate(-3deg); }
+        .balloon-strings span:nth-child(3) { transform: rotate(1deg); }
+
+        .basket {
+            width: calc(var(--size, 120px) * 0.45);
+            height: calc(var(--size, 120px) * 0.18);
+            background: linear-gradient(180deg, #8B6B4D, #6D4F2F);
+            border-radius: 0 0 8px 8px;
+            border-top: 2px solid #a8845a;
+            box-shadow: inset 0 -4px 10px rgba(0,0,0,0.2), 0 4px 10px rgba(0,0,0,0.1);
+            position: relative;
+            margin-top: -2px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            padding: 0 4px;
+            flex-shrink: 0;
+        }
+
+        .person {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            margin-top: -2px;
+        }
+
+        .person .head {
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle at 35% 30%, #f5d0b8, #e0b89a);
+            border-radius: 50%;
+            border: 1px solid rgba(0,0,0,0.05);
+            flex-shrink: 0;
+        }
+
+        .person .body {
+            width: 12px;
+            height: 14px;
+            background: var(--cloth-color, #e74c6f);
+            border-radius: 4px 4px 2px 2px;
+            margin-top: -2px;
+            position: relative;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .person .body::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 4px;
+            background: var(--cloth-color, #e74c6f);
+            border-radius: 2px 2px 0 0;
+        }
+
+        .person .arm-left,
+        .person .arm-right {
+            position: absolute;
+            width: 3px;
+            height: 8px;
+            background: #e0b89a;
+            border-radius: 2px;
+            top: 2px;
+        }
+        .person .arm-left { left: -3px; transform: rotate(15deg); }
+        .person .arm-right { right: -3px; transform: rotate(-15deg); }
+
+        .balloon-group .person:nth-child(2) .body { --cloth-color: #3498db; }
+        .balloon-group .person:nth-child(3) .body { --cloth-color: #2ecc71; }
+        .balloon-group .person:nth-child(4) .body { --cloth-color: #f39c12; }
+
+        @keyframes floatBalloon {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            25% { transform: translate(20px, -35px) rotate(1.5deg) scale(1.02); }
+            50% { transform: translate(-18px, -70px) rotate(-2deg) scale(0.98); }
+            75% { transform: translate(30px, -25px) rotate(2.5deg) scale(1.01); }
+            100% { transform: translate(-15px, -90px) rotate(-1.5deg) scale(1.03); }
+        }
+
+        /* ——— ОСНОВНОЙ КОНТЕЙНЕР ——— */
+        .container {
+            position: relative;
+            z-index: 20;
+            backdrop-filter: blur(16px) saturate(1.1);
+            -webkit-backdrop-filter: blur(16px) saturate(1.1);
+            background: rgba(255, 255, 255, 0.10);
+            border-radius: 60px 60px 40px 40px;
+            padding: 28px 30px 24px;
+            max-width: 440px;
+            width: 100%;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.10);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        /* ——— Уголки-декор ——— */
+        .corner-decor {
+            position: absolute;
+            font-size: 1.3rem;
+            opacity: 0.5;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.05));
+            user-select: none;
+            pointer-events: none;
+            animation: decorFloat 12s ease-in-out infinite;
+            color: #fff9e6;
+        }
+        .corner-decor:nth-child(1) { top: 18px; left: 20px; animation-delay: 0s; }
+        .corner-decor:nth-child(2) { top: 18px; right: 20px; animation-delay: 2.5s; }
+        .corner-decor:nth-child(3) { bottom: 18px; left: 20px; animation-delay: 4.2s; }
+        .corner-decor:nth-child(4) { bottom: 18px; right: 20px; animation-delay: 1.8s; }
+
+        @keyframes decorFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.3; }
+            30% { transform: translateY(-12px) rotate(6deg) scale(1.1); opacity: 0.8; }
+            70% { transform: translateY(8px) rotate(-4deg) scale(0.9); opacity: 0.5; }
+            90% { transform: translateY(-6px) rotate(10deg) scale(1.05); opacity: 0.7; }
+        }
+
+        /* ——— Содержимое ——— */
+        .content-screen {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: center;
+            animation: fadeCozy 1.2s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeCozy {
+            0% { opacity: 0; transform: translateY(30px) scale(0.92); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .content-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8rem;
+            font-weight: 400;
+            background: linear-gradient(135deg, #fff9e6, #ffd7a8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 80px rgba(255, 215, 150, 0.05);
+            letter-spacing: 2px;
+        }
+
+        .message-text {
+            font-size: 1rem;
+            color: #fff5e6;
+            line-height: 1.7;
+            max-width: 340px;
+            margin: 0 auto;
+            text-align: left;
+            font-weight: 300;
+            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.12);
+            border-radius: 40px;
+            padding: 20px 24px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+        }
+
+        .message-text p {
+            margin-bottom: 14px;
+            font-weight: 300;
+            color: #fff5e6;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+            font-size: 0.95rem;
+        }
+        .message-text p:first-of-type {
+            color: #ffffff;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .message-text ol {
+            list-style: none;
+            padding: 0;
+            margin-top: 4px;
+        }
+
+        .message-text ol li {
+            padding: 12px 0 12px 46px;
+            margin-bottom: 4px;
+            color: #fff5e6;
+            font-weight: 300;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.2s;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+        }
+
+        .message-text ol li::before {
+            content: "🎈";
+            position: absolute;
+            left: 6px;
+            top: 10px;
+            font-size: 1.4rem;
+            filter: drop-shadow(0 0 20px rgba(255, 200, 100, 0.15));
+        }
+
+        .message-text ol li:last-child {
+            border-bottom: none;
+        }
+
+        .wish-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.5rem;
+            color: #ffe8d0;
+            text-align: center;
+            margin-top: 10px;
+            padding: 8px 10px;
+            background: rgba(0, 0, 0, 0.08);
+            border-radius: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(4px);
+            letter-spacing: 1px;
+            opacity: 0.95;
+        }
+
+        .signature {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.5rem;
+            color: #e8d5b8;
+            text-align: right;
+            margin-top: 2px;
+            padding-right: 12px;
+            opacity: 0.5;
+            text-shadow: 0 0 40px rgba(255, 200, 150, 0.03);
+        }
+
+        /* ——— КНОПКА ——— */
+        .btn-support {
+            margin-top: 16px;
+            padding: 14px 24px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #fff;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(245, 87, 108, 0.35);
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            width: 100%;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-support:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(245, 87, 108, 0.45);
+        }
+
+        .btn-support:active {
+            transform: scale(0.97);
+        }
+
+        /* ——— ПОПАП (модальное окно) ——— */
+        .popup-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            animation: fadeInPopup 0.4s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+            padding: 30px;
+        }
+
+        .popup-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeInPopup {
+            0% { opacity: 0; transform: scale(0.92) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .popup {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: 50px;
+            padding: 40px 36px 32px;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4);
+            position: relative;
+            animation: popupBounce 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2) forwards;
+        }
+
+        @keyframes popupBounce {
+            0% { opacity: 0; transform: scale(0.8) translateY(30px); }
+            60% { transform: scale(1.03) translateY(-5px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .popup-icon {
+            font-size: 4rem;
+            display: block;
+            margin-bottom: 10px;
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.05); }
+        }
+
+        .popup-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.2rem;
+            color: #fff9e6;
+            margin-bottom: 12px;
+            text-shadow: 0 0 40px rgba(255, 200, 150, 0.1);
+        }
+
+        .popup-message {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 300;
+            color: #f0e8dc;
+            line-height: 1.7;
+            margin-bottom: 24px;
+            padding: 0 8px;
+        }
+
+        .popup-message strong {
+            color: #ffd7a8;
+            font-weight: 600;
+        }
+
+        .popup-btn-close {
+            padding: 12px 40px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #fff;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 25px rgba(245, 87, 108, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+
+        .popup-btn-close:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 35px rgba(245, 87, 108, 0.4);
+        }
+
+        .popup-btn-close:active {
+            transform: scale(0.95);
+        }
+
+        @media (max-width: 420px) {
+            .container { padding: 24px 16px 20px; border-radius: 44px; }
+            .content-title { font-size: 2.3rem; }
+            .message-text { font-size: 0.85rem; padding: 16px 18px; }
+            .message-text ol li { padding: 10px 0 10px 42px; font-size: 0.85rem; }
+            .signature { font-size: 1.2rem; }
+            .corner-decor { font-size: 1.0rem; }
+            .wish-text { font-size: 1.2rem; }
+            .popup { padding: 30px 24px 28px; }
+            .popup-title { font-size: 1.8rem; }
+            .popup-message { font-size: 1rem; }
+            .btn-support { font-size: 1rem; padding: 12px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- НЕБО -->
+<div class="sky-bg"></div>
+
+<!-- ОБЛАКА -->
+<div class="cloud cloud-1"></div>
+<div class="cloud cloud-2"></div>
+<div class="cloud cloud-3"></div>
+<div class="cloud cloud-4"></div>
+
+<!-- СЛОЙ С ВОЗДУШНЫМИ ШАРАМИ -->
+<div class="balloons-layer" id="balloonsLayer"></div>
+
+<!-- ОСНОВНОЙ КОНТЕЙНЕР -->
+<div class="container" id="appContainer">
+    <span class="corner-decor">🎈</span>
+    <span class="corner-decor">☁️</span>
+    <span class="corner-decor">🕊️</span>
+    <span class="corner-decor">✨</span>
+
+    <div id="mainScreen" class="content-screen">
+        <div class="content-title">28-30.08.26</div>
+        <div class="message-text">
+            <p style="text-align: center">Софья Эдуардовна, желаю вам ясной, солнечной погоды и полного порядка на всех фронтах! Пусть мелкие недочёты случаются как можно реже, а если и возникают — исправляются в мгновение ока. Чтобы водители не ошибались с топливом, команда работала как единый механизм, а гости не просто оставались довольны, а искренне поражались тому, как всё здорово слажено. Пусть дни праздника пройдут на одном дыхании, без сюрпризов, и оставит после себя только приятные эмоции!</p>
+        </div>
+        <div class="wish-text">
+            🌤️ Пусть эти выходные<br>будут лёгкими и радостными! 🎈
+        </div>
+        <!-- КНОПКА -->
+        <button class="btn-support" id="supportBtn">💪 Я в вас верю!</button>
+    </div>
+</div>
+
+<!-- ПОПАП -->
+<div class="popup-overlay" id="popupOverlay">
+    <div class="popup">
+        <span class="popup-icon">🌟</span>
+        <div class="popup-title">Всё получится!</div>
+        <div class="popup-message">
+            <strong>У вас всё получится</strong>, потому что вы <strong>самая лучшая</strong>!<br>
+            Я <strong>верю в вас</strong>! 💫
+        </div>
+        <button class="popup-btn-close" id="popupCloseBtn">✨ Спасибо!</button>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ===== БАЛЛОНЫ С ЛЮДЬМИ =====
+        const layer = document.getElementById('balloonsLayer');
+
+        const colors = [
+            { color: '#FF6B6B', light: '#ff9a9a' },
+            { color: '#FF9F43', light: '#ffbe76' },
+            { color: '#FECA57', light: '#ffdd87' },
+            { color: '#48DBFB', light: '#7ae4fc' },
+            { color: '#0ABDE3', light: '#4acdf0' },
+            { color: '#A29BFE', light: '#c4bfff' },
+            { color: '#FD79A8', light: '#fe9ec1' },
+            { color: '#00B894', light: '#2eccb0' },
+            { color: '#E17055', light: '#ed8a74' },
+            { color: '#74B9FF', light: '#a3d0ff' },
+            { color: '#FDCB6E', light: '#fee08a' },
+            { color: '#E84393', light: '#f06bb0' },
+            { color: '#00CEC9', light: '#3dddd9' },
+            { color: '#6C5CE7', light: '#9b8cf5' },
+            { color: '#FF7675', light: '#ffa3a2' }
+        ];
+
+        const clothColors = ['#e74c6f', '#3498db', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c', '#e67e22'];
+
+        function createPerson(clothColor) {
+            const person = document.createElement('div');
+            person.className = 'person';
+            const head = document.createElement('div');
+            head.className = 'head';
+            const body = document.createElement('div');
+            body.className = 'body';
+            body.style.setProperty('--cloth-color', clothColor);
+            const armL = document.createElement('div');
+            armL.className = 'arm-left';
+            const armR = document.createElement('div');
+            armR.className = 'arm-right';
+            body.appendChild(armL);
+            body.appendChild(armR);
+            person.appendChild(head);
+            person.appendChild(body);
+            return person;
+        }
+
+        const groupCount = 20;
+        for (let i = 0; i < groupCount; i++) {
+            const group = document.createElement('div');
+            group.className = 'balloon-group';
+            const size = 90 + Math.random() * 110;
+            group.style.setProperty('--size', size + 'px');
+            const colorPair = colors[Math.floor(Math.random() * colors.length)];
+            group.style.setProperty('--color', colorPair.color);
+            group.style.setProperty('--light-color', colorPair.light);
+            group.style.left = (Math.random() * 92) + '%';
+            group.style.top = (Math.random() * 92) + '%';
+            const duration = 18 + Math.random() * 18;
+            const delay = Math.random() * 14;
+            group.style.setProperty('--duration', duration + 's');
+            group.style.animationDelay = delay + 's';
+            group.style.opacity = 0.6 + Math.random() * 0.35;
+
+            const balloon = document.createElement('div');
+            balloon.className = 'balloon';
+            balloon.style.width = size + 'px';
+            balloon.style.height = (size * 1.15) + 'px';
+            balloon.style.background = `radial-gradient(circle at 30% 25%, ${colorPair.light}, ${colorPair.color})`;
+            balloon.style.boxShadow = `inset -8px -8px 30px rgba(0,0,0,0.06), 0 8px 30px rgba(0,0,0,0.06)`;
+
+            const strings = document.createElement('div');
+            strings.className = 'balloon-strings';
+            for (let s = 0; s < 3; s++) {
+                const str = document.createElement('span');
+                strings.appendChild(str);
+            }
+
+            const basket = document.createElement('div');
+            basket.className = 'basket';
+            basket.style.width = (size * 0.45) + 'px';
+            basket.style.height = (size * 0.18) + 'px';
+
+            const peopleCount = 1 + Math.floor(Math.random() * 3);
+            for (let p = 0; p < peopleCount; p++) {
+                const cloth = clothColors[Math.floor(Math.random() * clothColors.length)];
+                const person = createPerson(cloth);
+                const scale = size / 120;
+                person.style.transform = `scale(${scale})`;
+                person.style.transformOrigin = 'bottom center';
+                basket.appendChild(person);
+            }
+
+            group.appendChild(balloon);
+            group.appendChild(strings);
+            group.appendChild(basket);
+            const rot = (Math.random() - 0.5) * 12;
+            group.style.transform = `rotate(${rot}deg)`;
+            layer.appendChild(group);
+        }
+
+        // Большие шары на заднем плане
+        for (let i = 0; i < 8; i++) {
+            const group = document.createElement('div');
+            group.className = 'balloon-group';
+            const size = 160 + Math.random() * 120;
+            group.style.setProperty('--size', size + 'px');
+            const colorPair = colors[Math.floor(Math.random() * colors.length)];
+            group.style.setProperty('--color', colorPair.color);
+            group.style.setProperty('--light-color', colorPair.light);
+            group.style.left = (Math.random() * 85) + '%';
+            group.style.top = (Math.random() * 85) + '%';
+            group.style.setProperty('--duration', (22 + Math.random() * 16) + 's');
+            group.style.animationDelay = (Math.random() * 12) + 's';
+            group.style.opacity = 0.25 + Math.random() * 0.2;
+            group.style.filter = 'blur(1.5px)';
+
+            const balloon = document.createElement('div');
+            balloon.className = 'balloon';
+            balloon.style.width = size + 'px';
+            balloon.style.height = (size * 1.15) + 'px';
+            balloon.style.background = `radial-gradient(circle at 30% 25%, ${colorPair.light}, ${colorPair.color})`;
+            balloon.style.boxShadow = `inset -10px -10px 40px rgba(0,0,0,0.04), 0 12px 40px rgba(0,0,0,0.05)`;
+
+            const strings = document.createElement('div');
+            strings.className = 'balloon-strings';
+            for (let s = 0; s < 3; s++) {
+                const str = document.createElement('span');
+                strings.appendChild(str);
+            }
+
+            const basket = document.createElement('div');
+            basket.className = 'basket';
+            basket.style.width = (size * 0.45) + 'px';
+            basket.style.height = (size * 0.18) + 'px';
+
+            const peopleCount = 1 + Math.floor(Math.random() * 2);
+            for (let p = 0; p < peopleCount; p++) {
+                const cloth = clothColors[Math.floor(Math.random() * clothColors.length)];
+                const person = createPerson(cloth);
+                const scale = size / 120;
+                person.style.transform = `scale(${scale})`;
+                person.style.transformOrigin = 'bottom center';
+                basket.appendChild(person);
+            }
+
+            group.appendChild(balloon);
+            group.appendChild(strings);
+            group.appendChild(basket);
+            layer.appendChild(group);
+        }
+
+        // ===== КНОПКА И ПОПАП =====
+        const supportBtn = document.getElementById('supportBtn');
+        const popupOverlay = document.getElementById('popupOverlay');
+        const popupCloseBtn = document.getElementById('popupCloseBtn');
+
+        function openPopup() {
+            popupOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePopup() {
+            popupOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        supportBtn.addEventListener('click', openPopup);
+
+        popupCloseBtn.addEventListener('click', closePopup);
+
+        popupOverlay.addEventListener('click', function(e) {
+            if (e.target === popupOverlay) {
+                closePopup();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && popupOverlay.classList.contains('active')) {
+                closePopup();
+            }
+        });
+    })();
+</script>
+
+</body>
+</html>
