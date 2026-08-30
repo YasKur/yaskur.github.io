@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>🎉</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-family: 'Pacifico', sans-serif;
+            position: relative;
+            overflow: hidden;
+            background: #fce4d6;
+        }
+
+        /* ——— ФОН С КИНДЕР-СЮРПРИЗАМИ ——— */
+        .kinder-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: radial-gradient(ellipse at 20% 20%, #fff3e0, #fce4d6 50%, #f8d5c0);
+            overflow: hidden;
+        }
+
+        .kinder-egg {
+            position: absolute;
+            width: 70px;
+            height: 90px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            background: radial-gradient(ellipse at 30% 30%, #fff5c0, #f7c948);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1), inset 0 -4px 10px rgba(0,0,0,0.05);
+            transform-origin: center;
+            animation: floatEgg 12s ease-in-out infinite alternate;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .kinder-egg::before {
+            content: '';
+            position: absolute;
+            top: 12%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 55%;
+            height: 25%;
+            background: radial-gradient(ellipse at 50% 100%, #f5a623, #e08e0b);
+            border-radius: 50%;
+            box-shadow: inset 0 -3px 8px rgba(0,0,0,0.1);
+        }
+
+        .kinder-egg::after {
+            content: '🍫';
+            position: absolute;
+            bottom: 8%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 18px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .kinder-egg .egg-sparkle {
+            position: absolute;
+            top: 20%;
+            left: 20%;
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle, #fff9e0, transparent);
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: sparkle 3s ease-in-out infinite;
+        }
+
+        .kinder-egg .egg-sparkle:nth-child(2) {
+            top: 45%;
+            left: 65%;
+            animation-delay: 1.2s;
+            width: 8px;
+            height: 8px;
+        }
+
+        @keyframes floatEgg {
+            0% { transform: translate(0, 0) rotate(-3deg) scale(1); }
+            25% { transform: translate(30px, -20px) rotate(5deg) scale(1.05); }
+            50% { transform: translate(-20px, 15px) rotate(-2deg) scale(0.95); }
+            75% { transform: translate(15px, -30px) rotate(4deg) scale(1.08); }
+            100% { transform: translate(-10px, 10px) rotate(-5deg) scale(0.98); }
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.4); }
+        }
+
+        /* ——— КОНФЕТТИ ——— */
+        .confetti-container {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 14px;
+            top: -20px;
+            opacity: 0.8;
+            animation: confettiFall linear infinite;
+            border-radius: 2px;
+            transform-origin: center;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                opacity: 0.9;
+            }
+            80% { opacity: 0.9; }
+            100% {
+                transform: translateY(110vh) rotate(720deg) scale(0.3);
+                opacity: 0;
+            }
+        }
+
+        /* ——— САЛЮТ ——— */
+        .firework {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            animation: fireworkBurst 2s ease-out forwards;
+            box-shadow: 0 0 60px currentColor;
+        }
+
+        @keyframes fireworkBurst {
+            0% { transform: scale(0.1); opacity: 1; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+
+        /* ——— ОСНОВНОЙ КОНТЕЙНЕР ——— */
+        .container {
+            position: relative;
+            z-index: 20;
+            backdrop-filter: blur(18px) saturate(1.2);
+            -webkit-backdrop-filter: blur(18px) saturate(1.2);
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 60px 60px 40px 40px;
+            padding: 28px 30px 24px;
+            max-width: 480px;
+            width: 100%;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            animation: containerGlow 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes containerGlow {
+            0% { box-shadow: 0 30px 70px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 215, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2); }
+            100% { box-shadow: 0 30px 80px rgba(255, 200, 100, 0.25), 0 0 0 2px rgba(255, 215, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3); }
+        }
+
+        /* ——— Уголки-декор ——— */
+        .corner-decor {
+            position: absolute;
+            font-size: 1.6rem;
+            opacity: 0.6;
+            filter: drop-shadow(0 0 20px rgba(255, 200, 100, 0.2));
+            user-select: none;
+            pointer-events: none;
+            animation: decorFloat 12s ease-in-out infinite;
+            color: #d48a3a;
+        }
+        .corner-decor:nth-child(1) { top: 18px; left: 20px; animation-delay: 0s; }
+        .corner-decor:nth-child(2) { top: 18px; right: 20px; animation-delay: 2.5s; }
+        .corner-decor:nth-child(3) { bottom: 18px; left: 20px; animation-delay: 4.2s; }
+        .corner-decor:nth-child(4) { bottom: 18px; right: 20px; animation-delay: 1.8s; }
+
+        @keyframes decorFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1) opacity: 0.5; }
+            30% { transform: translateY(-15px) rotate(8deg) scale(1.15); opacity: 0.9; }
+            70% { transform: translateY(10px) rotate(-6deg) scale(0.9); opacity: 0.6; }
+            90% { transform: translateY(-8px) rotate(12deg) scale(1.1); opacity: 0.8; }
+        }
+
+        /* ——— GIF сверху и снизу ——— */
+        .gif-top, .gif-bottom {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 4px 0;
+        }
+
+        .gif-top img, .gif-bottom img {
+            max-width: 120px;
+            height: auto;
+            border-radius: 20px;
+            filter: drop-shadow(0 4px 20px rgba(255, 200, 100, 0.2));
+            animation: gifFloat 4s ease-in-out infinite;
+        }
+
+        .gif-bottom img {
+            animation-delay: 1.5s;
+        }
+
+        @keyframes gifFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-6px) scale(1.03); }
+        }
+
+        /* ——— Содержимое ——— */
+        .content-screen {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            text-align: center;
+            animation: fadeCozy 1.2s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeCozy {
+            0% { opacity: 0; transform: translateY(30px) scale(0.92); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .content-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8rem;
+            font-weight: 400;
+            background: linear-gradient(135deg, #f5a623, #e08e0b, #c47a0a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 80px rgba(255, 215, 150, 0.2);
+            letter-spacing: 2px;
+        }
+
+        .message-text {
+            font-size: 1rem;
+            color: #4a2c1a;
+            line-height: 1.7;
+            max-width: 340px;
+            margin: 0 auto;
+            text-align: left;
+            font-weight: 300;
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 40px;
+            padding: 20px 24px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .message-text p {
+            margin-bottom: 14px;
+            font-weight: 300;
+            color: #3d2415;
+            text-shadow: 0 2px 20px rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+        }
+        .message-text p:first-of-type {
+            color: #2d1a0e;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .message-text ol {
+            list-style: none;
+            padding: 0;
+            margin-top: 4px;
+        }
+
+        .message-text ol li {
+            padding: 12px 0 12px 46px;
+            margin-bottom: 4px;
+            color: #3d2415;
+            font-weight: 300;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.2s;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+        }
+
+        .message-text ol li::before {
+            content: "🥚";
+            position: absolute;
+            left: 6px;
+            top: 10px;
+            font-size: 1.4rem;
+            filter: drop-shadow(0 0 20px rgba(255, 200, 100, 0.15));
+        }
+
+        .message-text ol li:last-child {
+            border-bottom: none;
+        }
+
+        .wish-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.5rem;
+            color: #d48a3a;
+            text-align: center;
+            margin-top: 6px;
+            padding: 8px 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(4px);
+            letter-spacing: 1px;
+            opacity: 0.95;
+        }
+
+        /* ——— КНОПКА ——— */
+        .btn-support {
+            margin-top: 12px;
+            padding: 14px 24px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #fff;
+            background: linear-gradient(135deg, #f5a623, #e08e0b);
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(224, 142, 11, 0.4);
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            width: 100%;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: btnPulse 2.4s ease-in-out infinite;
+        }
+
+        @keyframes btnPulse {
+            0%, 100% { box-shadow: 0 8px 30px rgba(224, 142, 11, 0.4); }
+            50% { box-shadow: 0 8px 50px rgba(224, 142, 11, 0.7), 0 0 30px rgba(255, 200, 100, 0.2); }
+        }
+
+        .btn-support:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(224, 142, 11, 0.6);
+        }
+
+        .btn-support:active {
+            transform: scale(0.97);
+        }
+
+        /* ——— ПОПАП С ФОТОГРАФИЕЙ ——— */
+        .popup-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            animation: fadeInPopup 0.4s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+        }
+
+        .popup-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeInPopup {
+            0% { opacity: 0; transform: scale(0.92); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .popup {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-radius: 40px;
+            padding: 30px 30px 24px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+            position: relative;
+            animation: popupBounce 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2) forwards;
+        }
+
+        @keyframes popupBounce {
+            0% { opacity: 0; transform: scale(0.8) translateY(30px); }
+            60% { transform: scale(1.02) translateY(-5px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .popup-photo {
+            width: 100%;
+            max-height: 65vh;
+            object-fit: contain;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            display: block;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .popup-close-btn {
+            margin-top: 20px;
+            padding: 12px 40px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #fff;
+            background: linear-gradient(135deg, #f5a623, #e08e0b);
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 25px rgba(224, 142, 11, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .popup-close-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 35px rgba(224, 142, 11, 0.4);
+        }
+
+        .popup-close-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* ——— Адаптив ——— */
+        @media (max-width: 420px) {
+            .container { padding: 20px 14px 18px; border-radius: 44px; }
+            .content-title { font-size: 2.2rem; }
+            .message-text { font-size: 0.82rem; padding: 14px 16px; }
+            .message-text ol li { padding: 10px 0 10px 38px; font-size: 0.82rem; }
+            .wish-text { font-size: 1.2rem; }
+            .corner-decor { font-size: 1.2rem; }
+            .gif-top img, .gif-bottom img { max-width: 80px; }
+            .popup { padding: 20px 16px 18px; }
+            .popup-photo { max-height: 50vh; }
+            .btn-support { font-size: 1rem; padding: 12px 20px; }
+            .popup-close-btn { padding: 10px 30px; font-size: 0.9rem; }
+            .kinder-egg { width: 50px; height: 65px; }
+        }
+
+        @media (min-width: 600px) {
+            .gif-top img, .gif-bottom img { max-width: 150px; }
+            .kinder-egg { width: 90px; height: 115px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ФОН С КИНДЕР-СЮРПРИЗАМИ -->
+<div class="kinder-bg" id="kinderBg"></div>
+
+<!-- КОНФЕТТИ -->
+<div class="confetti-container" id="confettiContainer"></div>
+
+<!-- ОСНОВНОЙ КОНТЕЙНЕР -->
+<div class="container" id="appContainer">
+    <span class="corner-decor">🎉</span>
+    <span class="corner-decor">✨</span>
+    <span class="corner-decor">🌟</span>
+    <span class="corner-decor">🎊</span>
+
+    <div id="mainScreen" class="content-screen">
+
+        <div class="content-title">30.08.26</div>
+        <div class="message-text">
+            <p style="text-align: center">
+                Софья Эдуардовна, от всего сердца желаю вам сил — чтобы они приходили будто по волшебству, и вы с лёгкостью довели этот праздничный марафон до конца.
+                Вы — лучший директор, я абсолютно уверен: всё будет на высоте, у вас всё получится! Остался последний рывок, вы справитесь!
+            </p>
+        </div>
+        <button class="btn-support" id="supportBtn">Вы лучшая</button>
+
+        <!-- GIF снизу -->
+        <div class="gif-bottom">
+            <img src="./cute-staring-cat.gif" alt="Праздничная гифка" loading="lazy">
+        </div>
+    </div>
+</div>
+
+<!-- ПОПАП С ФОТОГРАФИЕЙ -->
+<div class="popup-overlay" id="popupOverlay">
+    <div class="popup">
+        <p style="margin-bottom: 10px; color: #fff;">Яички ждут вас</p>
+        <img class="popup-photo" id="popupPhoto" src="./kinder.jpg" alt="Фотография">
+        <button class="popup-close-btn" id="popupCloseBtn">✨ Закрыть</button>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ===== СОЗДАНИЕ ЯИЦ KINDER SURPRISE =====
+        const bg = document.getElementById('kinderBg');
+        const eggCount = window.innerWidth < 600 ? 12 : 20;
+
+        for (let i = 0; i < eggCount; i++) {
+            const egg = document.createElement('div');
+            egg.className = 'kinder-egg';
+
+            const sparkle1 = document.createElement('div');
+            sparkle1.className = 'egg-sparkle';
+            const sparkle2 = document.createElement('div');
+            sparkle2.className = 'egg-sparkle';
+
+            egg.appendChild(sparkle1);
+            egg.appendChild(sparkle2);
+
+            const size = 50 + Math.random() * 60;
+            egg.style.width = size + 'px';
+            egg.style.height = (size * 1.3) + 'px';
+            egg.style.left = Math.random() * 90 + '%';
+            egg.style.top = Math.random() * 90 + '%';
+            egg.style.animationDuration = (10 + Math.random() * 15) + 's';
+            egg.style.animationDelay = (Math.random() * 10) + 's';
+            egg.style.transform = `rotate(${Math.random() * 360}deg) scale(${0.6 + Math.random() * 0.6})`;
+
+            // Случайный оттенок желтого
+            const hue = 35 + Math.random() * 20;
+            egg.style.background = `radial-gradient(ellipse at 30% 30%, hsl(${hue}, 90%, 80%), hsl(${hue}, 80%, 50%))`;
+            egg.style.boxShadow = `0 8px 25px rgba(0,0,0,0.08), inset 0 -4px 10px rgba(0,0,0,0.05)`;
+
+            bg.appendChild(egg);
+        }
+
+        // ===== КОНФЕТТИ =====
+        const confettiContainer = document.getElementById('confettiContainer');
+        const confettiColors = ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6fb7', '#a66cff', '#ff9f43', '#00d2d3'];
+
+        function createConfetti() {
+            const piece = document.createElement('div');
+            piece.className = 'confetti-piece';
+            const size = 6 + Math.random() * 10;
+            const isCircle = Math.random() > 0.5;
+            piece.style.width = isCircle ? size + 'px' : size * 0.6 + 'px';
+            piece.style.height = isCircle ? size + 'px' : size * 1.6 + 'px';
+            piece.style.borderRadius = isCircle ? '50%' : '2px';
+            piece.style.background = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+            piece.style.left = Math.random() * 100 + '%';
+            piece.style.animationDuration = 4 + Math.random() * 6 + 's';
+            piece.style.animationDelay = Math.random() * 8 + 's';
+            piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+            piece.style.opacity = 0.5 + Math.random() * 0.4;
+            confettiContainer.appendChild(piece);
+        }
+
+        for (let i = 0; i < 80; i++) {
+            createConfetti();
+        }
+
+        setInterval(() => {
+            const oldPieces = confettiContainer.querySelectorAll('.confetti-piece');
+            if (oldPieces.length > 120) {
+                oldPieces[0].remove();
+            }
+            createConfetti();
+        }, 3000);
+
+        // ===== САЛЮТ =====
+        function createFirework(x, y) {
+            const el = document.createElement('div');
+            el.className = 'firework';
+            const size = 15 + Math.random() * 35;
+            const hue = Math.random() * 360;
+            el.style.width = size + 'px';
+            el.style.height = size + 'px';
+            el.style.left = (x - size/2) + 'px';
+            el.style.top = (y - size/2) + 'px';
+            el.style.color = `hsl(${hue}, 90%, 65%)`;
+            el.style.background = `radial-gradient(circle, hsl(${hue}, 90%, 75%), hsl(${hue + 30}, 90%, 55%))`;
+            el.style.boxShadow = `0 0 60px hsl(${hue}, 90%, 60%)`;
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 2200);
+        }
+
+        function launchFireworks() {
+            const count = 5 + Math.floor(Math.random() * 7);
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    const x = Math.random() * window.innerWidth;
+                    const y = Math.random() * window.innerHeight * 0.7;
+                    createFirework(x, y);
+                }, i * 150 + Math.random() * 200);
+            }
+        }
+
+        setInterval(launchFireworks, 5000 + Math.random() * 3000);
+        setTimeout(launchFireworks, 400);
+
+        // ===== ПОПАП С ФОТО =====
+        const supportBtn = document.getElementById('supportBtn');
+        const popupOverlay = document.getElementById('popupOverlay');
+        const popupCloseBtn = document.getElementById('popupCloseBtn');
+        const popupPhoto = document.getElementById('popupPhoto');
+
+        function openPopup() {
+            popupOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            setTimeout(launchFireworks, 200);
+            for (let i = 0; i < 12; i++) {
+                setTimeout(createConfetti, i * 80);
+            }
+        }
+
+        function closePopup() {
+            popupOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        supportBtn.addEventListener('click', openPopup);
+        popupCloseBtn.addEventListener('click', closePopup);
+
+        popupOverlay.addEventListener('click', function(e) {
+            if (e.target === popupOverlay) {
+                closePopup();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && popupOverlay.classList.contains('active')) {
+                closePopup();
+            }
+        });
+    })();
+</script>
+
+</body>
+</html>
