@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>31.08.26</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: #1a1a1a;
+            font-family: 'Pacifico', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ——— ФОНДЮ + ЛЕГО БЭКГРАУНД ——— */
+        .fondue-lego-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: radial-gradient(circle at 20% 30%, #4a2c1a, #2a1a0e 70%, #0f0a06);
+            overflow: hidden;
+        }
+
+        /* ——— Сырная река / фондю-волны ——— */
+        .cheese-wave {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 40%, #f7d44a, #c28a2c);
+            opacity: 0.15;
+            filter: blur(24px);
+            animation: cheeseFlow 16s ease-in-out infinite alternate;
+        }
+        .cheese-wave:nth-child(1) {
+            width: 80%;
+            height: 70%;
+            bottom: -20%;
+            left: -20%;
+            animation-duration: 20s;
+            background: radial-gradient(circle at 60% 70%, #f7c55a, #a76f1a);
+        }
+        .cheese-wave:nth-child(2) {
+            width: 60%;
+            height: 50%;
+            top: -10%;
+            right: -10%;
+            animation-duration: 18s;
+            animation-delay: -4s;
+            background: radial-gradient(circle at 20% 40%, #f5d76e, #b87d2b);
+            opacity: 0.12;
+        }
+        .cheese-wave:nth-child(3) {
+            width: 90%;
+            height: 60%;
+            bottom: 10%;
+            left: 10%;
+            animation-duration: 24s;
+            animation-delay: -9s;
+            background: radial-gradient(circle at 70% 50%, #f7d44a, #b87d2b);
+            opacity: 0.10;
+        }
+
+        @keyframes cheeseFlow {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            33% { transform: translate(6%, -4%) scale(1.1) rotate(4deg); }
+            66% { transform: translate(-5%, 8%) scale(0.9) rotate(-3deg); }
+            100% { transform: translate(4%, -6%) scale(1.05) rotate(2deg); }
+        }
+
+        /* ——— КУБИКИ LEGO (плавающие блоки) ——— */
+        .lego-block {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: #e53e3e;
+            border-radius: 6px 6px 2px 2px;
+            box-shadow:
+                    inset 0 -6px 0 #b91c1c,
+                    inset 0 0 0 2px #fcd34d,
+                    0 8px 20px rgba(0,0,0,0.5);
+            transform: rotate(var(--rot, 0deg));
+            opacity: 0.25;
+            animation: legoFloat calc(10s + var(--d, 0s)) ease-in-out infinite alternate;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .lego-block::after {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            width: 12px;
+            height: 12px;
+            background: #fcd34d;
+            border-radius: 2px;
+            opacity: 0.3;
+            box-shadow: 18px 0 0 #fcd34d, 0 18px 0 #fcd34d, 18px 18px 0 #fcd34d;
+        }
+        /* разные цвета */
+        .lego-block:nth-child(4) { background: #3b82f6; box-shadow: inset 0 -6px 0 #1d4ed8, inset 0 0 0 2px #93c5fd, 0 8px 20px rgba(0,0,0,0.5); }
+        .lego-block:nth-child(5) { background: #22c55e; box-shadow: inset 0 -6px 0 #15803d, inset 0 0 0 2px #86efac, 0 8px 20px rgba(0,0,0,0.5); }
+        .lego-block:nth-child(6) { background: #eab308; box-shadow: inset 0 -6px 0 #a16207, inset 0 0 0 2px #fde047, 0 8px 20px rgba(0,0,0,0.5); }
+        .lego-block:nth-child(7) { background: #ec4899; box-shadow: inset 0 -6px 0 #be185d, inset 0 0 0 2px #f9a8d4, 0 8px 20px rgba(0,0,0,0.5); }
+        .lego-block:nth-child(8) { background: #8b5cf6; box-shadow: inset 0 -6px 0 #6d28d9, inset 0 0 0 2px #c4b5fd, 0 8px 20px rgba(0,0,0,0.5); }
+        .lego-block:nth-child(9) { background: #f97316; box-shadow: inset 0 -6px 0 #c2410c, inset 0 0 0 2px #fdba74, 0 8px 20px rgba(0,0,0,0.5); }
+
+        @keyframes legoFloat {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            100% { transform: translate(var(--tx, 60px), var(--ty, -40px)) rotate(360deg) scale(1.2); }
+        }
+
+        /* ——— СЫРНЫЕ ПУЗЫРЬКИ (фондю) ——— */
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #f7e05e, #c28a2c);
+            opacity: 0.08;
+            filter: blur(6px);
+            animation: bubbleRise calc(8s + var(--d, 0s)) ease-in-out infinite alternate;
+            pointer-events: none;
+            z-index: 1;
+        }
+        @keyframes bubbleRise {
+            0% { transform: translate(0, 0) scale(0.8); opacity: 0.05; }
+            100% { transform: translate(var(--bx, 30px), var(--by, -50px)) scale(1.6); opacity: 0.2; }
+        }
+
+        /* ——— МАТОВОЕ СТЕКЛО (контейнер) ——— */
+        .container {
+            position: relative;
+            z-index: 20;
+            backdrop-filter: blur(18px) saturate(1.4);
+            -webkit-backdrop-filter: blur(18px) saturate(1.4);
+            background: rgba(20, 12, 6, 0.55);
+            border-radius: 60px 60px 40px 40px;
+            padding: 28px 30px 24px;
+            max-width: 440px;
+            width: 100%;
+            box-shadow:
+                    0 30px 70px rgba(0, 0, 0, 0.8),
+                    0 0 0 1px rgba(255, 215, 100, 0.15),
+                    inset 0 1px 0 rgba(255, 215, 100, 0.08);
+            border: 1px solid rgba(255, 200, 70, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        /* ——— Декор (сыр и кубики) ——— */
+        .corner-decor {
+            position: absolute;
+            font-size: 1.6rem;
+            opacity: 0.5;
+            filter: drop-shadow(0 0 20px rgba(255, 200, 50, 0.2));
+            user-select: none;
+            pointer-events: none;
+            animation: decorFloat 9s ease-in-out infinite;
+            color: #f7d44a;
+        }
+        .corner-decor:nth-child(1) { top: 18px; left: 20px; animation-delay: 0s; }
+        .corner-decor:nth-child(2) { top: 18px; right: 20px; animation-delay: 2.5s; }
+        .corner-decor:nth-child(3) { bottom: 18px; left: 20px; animation-delay: 4.8s; }
+        .corner-decor:nth-child(4) { bottom: 18px; right: 20px; animation-delay: 1.6s; }
+
+        @keyframes decorFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.3; }
+            30% { transform: translateY(-16px) rotate(12deg) scale(1.2); opacity: 0.8; }
+            70% { transform: translateY(8px) rotate(-8deg) scale(0.9); opacity: 0.5; }
+            90% { transform: translateY(-10px) rotate(16deg) scale(1.1); opacity: 0.7; }
+        }
+
+        /* ——— Содержимое ——— */
+        .content-screen {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: center;
+            animation: fadeIn 1.0s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(30px) scale(0.92); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .emoji-big {
+            font-size: 2.8rem;
+            display: block;
+            margin-bottom: 2px;
+            filter: drop-shadow(0 0 40px rgba(255, 200, 50, 0.25));
+            animation: gentleFloat 7s ease-in-out infinite;
+            letter-spacing: 6px;
+        }
+
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0) scale(1) rotate(-1deg); }
+            50% { transform: translateY(-14px) scale(1.05) rotate(1deg); }
+        }
+
+        .content-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8rem;
+            font-weight: 400;
+            background: linear-gradient(135deg, #f7d44a, #eab308);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 80px rgba(255, 200, 50, 0.2);
+            letter-spacing: 2px;
+            margin-top: 0px;
+        }
+
+        .message-text {
+            font-size: 1rem;
+            color: #fdf0d5;
+            line-height: 1.7;
+            max-width: 340px;
+            margin: 0 auto;
+            text-align: left;
+            font-weight: 300;
+            backdrop-filter: blur(8px);
+            background: rgba(30, 18, 8, 0.6);
+            border-radius: 40px;
+            padding: 20px 24px 18px;
+            border: 1px solid rgba(255, 215, 100, 0.08);
+            box-shadow: inset 0 1px 0 rgba(255, 215, 100, 0.04);
+        }
+
+        .message-text p {
+            margin-bottom: 14px;
+            font-weight: 300;
+            color: #fdf0d5;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+            font-size: 0.95rem;
+        }
+        .message-text p:first-of-type {
+            color: #ffedc9;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .message-text .highlight {
+            color: #f7d44a;
+            font-weight: 500;
+            background: rgba(255, 200, 50, 0.08);
+            padding: 2px 16px;
+            border-radius: 40px;
+            display: inline-block;
+            border: 1px solid rgba(255, 215, 100, 0.1);
+        }
+
+        .message-text ol {
+            list-style: none;
+            padding: 0;
+            margin-top: 4px;
+        }
+
+        .message-text ol li {
+            padding: 12px 0 12px 46px;
+            margin-bottom: 4px;
+            color: #fdf0d5;
+            font-weight: 300;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 215, 100, 0.04);
+            transition: all 0.2s;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+        }
+
+        .message-text ol li::before {
+            content: "🧀";
+            position: absolute;
+            left: 6px;
+            top: 10px;
+            font-size: 1.4rem;
+            filter: drop-shadow(0 0 20px rgba(255, 200, 50, 0.3));
+        }
+
+        .message-text ol li:last-child {
+            border-bottom: none;
+        }
+
+        .message-text ol li:hover {
+            background: rgba(255, 200, 50, 0.03);
+        }
+
+        .signature {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.5rem;
+            color: #d4a84a;
+            text-align: right;
+            margin-top: 2px;
+            padding-right: 12px;
+            opacity: 0.6;
+            text-shadow: 0 0 40px rgba(255, 200, 50, 0.05);
+        }
+
+        @media (max-width: 420px) {
+            .container { padding: 24px 16px 20px; border-radius: 44px; }
+            .content-title { font-size: 2.3rem; }
+            .message-text { font-size: 0.85rem; padding: 16px 18px; }
+            .emoji-big { font-size: 2.2rem; }
+            .message-text ol li { padding: 10px 0 10px 42px; font-size: 0.85rem; }
+            .signature { font-size: 1.2rem; }
+            .corner-decor { font-size: 1.2rem; }
+            .lego-block { width: 28px; height: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ФОНДЮ + ЛЕГО БЭКГРАУНД -->
+<div class="fondue-lego-bg">
+    <!-- сырные волны -->
+    <div class="cheese-wave"></div>
+    <div class="cheese-wave"></div>
+    <div class="cheese-wave"></div>
+
+    <!-- кубики LEGO (динамические) -->
+    <div class="lego-block" style="--rot:12deg; --tx:70px; --ty:-50px; --d:0s; left:8%; top:15%;"></div>
+    <div class="lego-block" style="--rot:-8deg; --tx:-60px; --ty:40px; --d:2s; left:75%; top:10%;"></div>
+    <div class="lego-block" style="--rot:25deg; --tx:40px; --ty:-70px; --d:4s; left:15%; top:70%;"></div>
+    <div class="lego-block" style="--rot:-15deg; --tx:-80px; --ty:30px; --d:1.5s; left:82%; top:65%;"></div>
+    <div class="lego-block" style="--rot:5deg; --tx:90px; --ty:-20px; --d:3.2s; left:45%; top:5%;"></div>
+    <div class="lego-block" style="--rot:-20deg; --tx:-40px; --ty:60px; --d:5.5s; left:55%; top:85%;"></div>
+    <div class="lego-block" style="--rot:18deg; --tx:50px; --ty:-40px; --d:1.8s; left:5%; top:45%;"></div>
+    <div class="lego-block" style="--rot:-6deg; --tx:-70px; --ty:20px; --d:3.8s; left:92%; top:40%;"></div>
+
+    <!-- сырные пузыри -->
+    <div class="bubble" style="width:60px;height:60px;left:10%;top:30%;--d:0s;--bx:40px;--by:-60px;"></div>
+    <div class="bubble" style="width:80px;height:80px;left:70%;top:60%;--d:2.2s;--bx:-30px;--by:-80px;"></div>
+    <div class="bubble" style="width:50px;height:50px;left:85%;top:20%;--d:4.5s;--bx:50px;--by:-40px;"></div>
+    <div class="bubble" style="width:70px;height:70px;left:20%;top:80%;--d:1.3s;--bx:-40px;--by:-70px;"></div>
+    <div class="bubble" style="width:90px;height:90px;left:50%;top:45%;--d:3.0s;--bx:30px;--by:-90px;"></div>
+</div>
+
+<!-- ОСНОВНОЙ КОНТЕЙНЕР -->
+<div class="container" id="appContainer">
+    <span class="corner-decor">🧀</span>
+    <span class="corner-decor">🧱</span>
+    <span class="corner-decor">🍫</span>
+    <span class="corner-decor">✨</span>
+
+    <div id="mainScreen" class="content-screen">
+        <div class="content-title">31.08.26</div>
+        <div class="message-text">
+            <p style="text-align: center">Софья Эдуардовна, приглашаю вас в гости:</p>
+            <ol>
+                <li>Обсуждаем что и как у кого произошло за день</li>
+                <li>Кушаем клубничку с шоколадом</li>
+                <li>Собираем лего</li>
+                <li>Наслаждаемся присутствием друг друга</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
