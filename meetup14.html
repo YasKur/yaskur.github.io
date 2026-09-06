@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>06.09.26</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@300;400;600&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-family: 'Pacifico', cursive;
+            position: relative;
+            overflow-x: hidden;
+            background: #d4f0f7;
+        }
+
+        /* ——— НЕБО С ОБЛАКАМИ (прогулочный фон) ——— */
+        .sky-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: linear-gradient(170deg, #b3e5f0 0%, #d7f0f5 45%, #f9e9cf 85%, #fce3c7 100%);
+            overflow: hidden;
+        }
+
+        /* ——— ОБЛАКА (плывут) ——— */
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.75);
+            border-radius: 1000px;
+            box-shadow: 0 20px 40px rgba(255, 255, 255, 0.2);
+            animation: cloudDrift calc(25s + var(--d, 0s)) linear infinite;
+            z-index: 1;
+            pointer-events: none;
+            backdrop-filter: blur(4px);
+        }
+        .cloud::before,
+        .cloud::after {
+            content: '';
+            position: absolute;
+            background: inherit;
+            border-radius: 50%;
+            box-shadow: inherit;
+        }
+        .cloud-1 {
+            width: 220px; height: 70px;
+            top: 8%; left: -10%;
+            --d: 0s;
+            animation-duration: 32s;
+        }
+        .cloud-1::before {
+            width: 100px; height: 100px;
+            top: -50px; left: 20px;
+        }
+        .cloud-1::after {
+            width: 140px; height: 120px;
+            top: -60px; left: 80px;
+        }
+
+        .cloud-2 {
+            width: 280px; height: 80px;
+            top: 18%; left: 20%;
+            --d: -6s;
+            animation-duration: 40s;
+            opacity: 0.6;
+        }
+        .cloud-2::before {
+            width: 130px; height: 130px;
+            top: -70px; left: 30px;
+        }
+        .cloud-2::after {
+            width: 170px; height: 140px;
+            top: -80px; left: 100px;
+        }
+
+        .cloud-3 {
+            width: 180px; height: 60px;
+            top: 5%; left: 60%;
+            --d: -12s;
+            animation-duration: 28s;
+            opacity: 0.5;
+        }
+        .cloud-3::before {
+            width: 90px; height: 90px;
+            top: -45px; left: 15px;
+        }
+        .cloud-3::after {
+            width: 120px; height: 110px;
+            top: -55px; left: 65px;
+        }
+
+        .cloud-4 {
+            width: 300px; height: 85px;
+            top: 30%; left: -20%;
+            --d: -9s;
+            animation-duration: 45s;
+            opacity: 0.5;
+        }
+        .cloud-4::before {
+            width: 150px; height: 140px;
+            top: -80px; left: 40px;
+        }
+        .cloud-4::after {
+            width: 190px; height: 160px;
+            top: -90px; left: 120px;
+        }
+
+        @keyframes cloudDrift {
+            0% { transform: translateX(0) scale(0.95); }
+            50% { transform: translateX(calc(100vw + 300px)) scale(1.02); }
+            100% { transform: translateX(calc(200vw + 400px)) scale(0.95); }
+        }
+
+        /* ——— ВОЗДУШНЫЕ ШАРЫ (анимированные) ——— */
+        .balloon {
+            position: absolute;
+            font-size: 3.4rem;
+            z-index: 2;
+            pointer-events: none;
+            animation: balloonFloat calc(12s + var(--d, 0s)) ease-in-out infinite;
+            filter: drop-shadow(0 12px 25px rgba(255, 120, 150, 0.25));
+            text-shadow: 0 0 30px rgba(255, 200, 220, 0.3);
+        }
+        .balloon-1 { left: 5%; top: 40%; --d: 0s; animation-duration: 14s; font-size: 4rem; }
+        .balloon-2 { left: 18%; top: 20%; --d: -3s; animation-duration: 11s; font-size: 3rem; }
+        .balloon-3 { left: 78%; top: 15%; --d: -6s; animation-duration: 16s; font-size: 4.2rem; }
+        .balloon-4 { left: 88%; top: 50%; --d: -9s; animation-duration: 13s; font-size: 3.6rem; }
+        .balloon-5 { left: 45%; top: 10%; --d: -2s; animation-duration: 15s; font-size: 3.8rem; }
+        .balloon-6 { left: 65%; top: 60%; --d: -7s; animation-duration: 12s; font-size: 3.2rem; }
+
+        @keyframes balloonFloat {
+            0% { transform: translateY(0px) rotate(0deg) scale(0.9); }
+            25% { transform: translateY(-45px) rotate(3deg) scale(1.05); }
+            50% { transform: translateY(10px) rotate(-3deg) scale(0.95); }
+            75% { transform: translateY(-35px) rotate(4deg) scale(1.02); }
+            100% { transform: translateY(0px) rotate(0deg) scale(0.9); }
+        }
+
+        /* ——— БАБОЧКИ (порхают) ——— */
+        .butterfly {
+            position: absolute;
+            font-size: 2.2rem;
+            z-index: 3;
+            pointer-events: none;
+            animation: flutter calc(8s + var(--d, 0s)) ease-in-out infinite;
+            opacity: 0.8;
+            filter: drop-shadow(0 0 20px rgba(255, 180, 200, 0.4));
+        }
+        .butterfly-1 { left: 12%; top: 55%; --d: 0s; animation-duration: 9s; }
+        .butterfly-2 { left: 30%; top: 70%; --d: -2.5s; animation-duration: 7.5s; font-size: 2.6rem; }
+        .butterfly-3 { left: 55%; top: 45%; --d: -5s; animation-duration: 10s; }
+        .butterfly-4 { left: 75%; top: 75%; --d: -7.2s; animation-duration: 8.3s; font-size: 2rem; }
+        .butterfly-5 { left: 92%; top: 30%; --d: -3.8s; animation-duration: 9.6s; font-size: 2.8rem; }
+        .butterfly-6 { left: 45%; top: 85%; --d: -1.2s; animation-duration: 7.8s; }
+
+        @keyframes flutter {
+            0% { transform: translate(0, 0) rotate(0deg) scale(0.8); }
+            20% { transform: translate(30px, -40px) rotate(12deg) scale(1.1); }
+            40% { transform: translate(-20px, -20px) rotate(-8deg) scale(0.9); }
+            60% { transform: translate(40px, 20px) rotate(15deg) scale(1.0); }
+            80% { transform: translate(-30px, 10px) rotate(-10deg) scale(0.85); }
+            100% { transform: translate(0, 0) rotate(0deg) scale(0.8); }
+        }
+
+        /* ——— МАТОВОЕ СТЕКЛО (контейнер) ——— */
+        .container {
+            position: relative;
+            z-index: 30;
+            backdrop-filter: blur(16px) saturate(1.3);
+            -webkit-backdrop-filter: blur(16px) saturate(1.3);
+            background: rgba(235, 248, 250, 0.40);
+            border-radius: 60px 60px 40px 40px;
+            padding: 28px 30px 24px;
+            max-width: 440px;
+            width: 100%;
+            box-shadow:
+                    0 30px 60px rgba(100, 150, 180, 0.25),
+                    0 0 0 1px rgba(200, 230, 240, 0.5),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        /* ——— Декор (листики / ягодки) ——— */
+        .corner-decor {
+            position: absolute;
+            font-size: 1.8rem;
+            opacity: 0.6;
+            filter: drop-shadow(0 0 20px rgba(120, 200, 150, 0.3));
+            user-select: none;
+            pointer-events: none;
+            animation: decorFloat 9s ease-in-out infinite;
+            color: #6fb3a0;
+        }
+        .corner-decor:nth-child(1) { top: 16px; left: 18px; animation-delay: 0s; }
+        .corner-decor:nth-child(2) { top: 16px; right: 18px; animation-delay: 2.5s; color: #f7b28c; }
+        .corner-decor:nth-child(3) { bottom: 16px; left: 18px; animation-delay: 4.8s; color: #a8c9b0; }
+        .corner-decor:nth-child(4) { bottom: 16px; right: 18px; animation-delay: 1.6s; color: #e8b4b8; }
+
+        @keyframes decorFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.5; }
+            30% { transform: translateY(-18px) rotate(10deg) scale(1.2); opacity: 0.9; }
+            70% { transform: translateY(8px) rotate(-6deg) scale(0.9); opacity: 0.6; }
+            90% { transform: translateY(-12px) rotate(14deg) scale(1.05); opacity: 0.8; }
+        }
+
+        /* ——— Содержимое ——— */
+        .content-screen {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: center;
+            animation: fadeIn 1.0s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(30px) scale(0.92); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .content-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8rem;
+            font-weight: 400;
+            background: linear-gradient(135deg, #4f9a8a, #2a7a6b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 60px rgba(70, 160, 140, 0.25);
+            letter-spacing: 2px;
+            margin-top: 0px;
+        }
+
+        .message-text {
+            font-size: 1rem;
+            color: #1f4a44;
+            line-height: 1.7;
+            max-width: 340px;
+            margin: 0 auto;
+            text-align: left;
+            font-weight: 300;
+            backdrop-filter: blur(10px);
+            background: rgba(215, 240, 240, 0.45);
+            border-radius: 40px;
+            padding: 20px 24px 18px;
+            border: 1px solid rgba(180, 220, 210, 0.4);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        }
+
+        .message-text p {
+            margin-bottom: 14px;
+            font-weight: 400;
+            color: #1f4a44;
+            text-shadow: 0 2px 12px rgba(180, 220, 210, 0.2);
+            font-size: 0.95rem;
+        }
+        .message-text p:first-of-type {
+            color: #2a6b5e;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .message-text ol {
+            list-style: none;
+            padding: 0;
+            margin-top: 4px;
+        }
+
+        .message-text ol li {
+            padding: 12px 0 12px 46px;
+            margin-bottom: 4px;
+            color: #1f4a44;
+            font-weight: 400;
+            position: relative;
+            border-bottom: 1px solid rgba(70, 140, 120, 0.12);
+            transition: all 0.2s;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+        }
+
+        .message-text ol li::before {
+            content: "🌿";
+            position: absolute;
+            left: 6px;
+            top: 10px;
+            font-size: 1.5rem;
+            filter: drop-shadow(0 0 20px rgba(100, 200, 150, 0.25));
+        }
+
+        .message-text ol li:last-child {
+            border-bottom: none;
+        }
+
+        .message-text ol li:hover {
+            background: rgba(80, 180, 160, 0.08);
+        }
+
+        /* ——— ЗОНА С КАРТИНКОЙ (прогулка) ——— */
+        .image-zone {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 2px dashed rgba(80, 170, 150, 0.25);
+            text-align: center;
+        }
+
+        .image-zone .image-wrapper {
+            border-radius: 30px;
+            overflow: hidden;
+            background: rgba(200, 235, 225, 0.25);
+            border: 2px solid rgba(140, 200, 180, 0.2);
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 30px rgba(60, 140, 120, 0.1);
+        }
+
+        .image-zone .image-wrapper img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-height: 300px;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+
+        .image-zone .image-wrapper:hover {
+            border-color: rgba(80, 180, 160, 0.5);
+            box-shadow: 0 8px 40px rgba(60, 150, 130, 0.2);
+        }
+
+        .image-zone .image-caption {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.75rem;
+            color: #4f8a7a;
+            opacity: 0.5;
+            margin-top: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        /* ——— Адаптив ——— */
+        @media (max-width: 420px) {
+            .container { padding: 24px 16px 20px; border-radius: 44px; }
+            .content-title { font-size: 2.3rem; }
+            .message-text { font-size: 0.85rem; padding: 16px 18px; }
+            .message-text ol li { padding: 10px 0 10px 42px; font-size: 0.85rem; }
+            .corner-decor { font-size: 1.4rem; }
+            .balloon { font-size: 2.4rem !important; }
+            .butterfly { font-size: 1.8rem !important; }
+            .cloud-1, .cloud-2, .cloud-3, .cloud-4 { transform: scale(0.7); }
+            .image-zone .image-wrapper img { max-height: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- НЕБО + ОБЛАКА + ШАРЫ + БАБОЧКИ -->
+<div class="sky-bg">
+    <!-- облака -->
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+    <div class="cloud cloud-3"></div>
+    <div class="cloud cloud-4"></div>
+
+    <!-- воздушные шары -->
+    <div class="balloon balloon-1">🎈</div>
+    <div class="balloon balloon-2">🎈</div>
+    <div class="balloon balloon-3">🎈</div>
+    <div class="balloon balloon-4">🎈</div>
+    <div class="balloon balloon-5">🎈</div>
+    <div class="balloon balloon-6">🎈</div>
+
+    <!-- бабочки -->
+    <div class="butterfly butterfly-1">🦋</div>
+    <div class="butterfly butterfly-2">🦋</div>
+    <div class="butterfly butterfly-3">🦋</div>
+    <div class="butterfly butterfly-4">🦋</div>
+    <div class="butterfly butterfly-5">🦋</div>
+    <div class="butterfly butterfly-6">🦋</div>
+</div>
+
+<!-- ОСНОВНОЙ КОНТЕЙНЕР -->
+<div class="container" id="appContainer">
+    <span class="corner-decor">🍃</span>
+    <span class="corner-decor">🌸</span>
+    <span class="corner-decor">🌼</span>
+    <span class="corner-decor">☀️</span>
+
+    <div id="mainScreen" class="content-screen">
+        <div class="content-title">06.09.26</div>
+        <div class="message-text">
+            <p style="text-align: center">Софья Эдуардовна, приглашаю вас прогуляться</p>
+            <ol>
+                <li>Прогуляемся</li>
+                <li>Сделаем покушать и поедеим</li>
+                <li>Поговорим</li>
+                <li>Сделаем массаж</li>
+                <li>Досмотрим фильм</li>
+                <li>Будем балдеть</li>
+                <li>Вы самая самая лучшая!</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
