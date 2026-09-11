@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Романтический вечер</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@300;400;600&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-family: 'Pacifico', cursive;
+            position: relative;
+            overflow-x: hidden;
+            background: #1a0e1e; /* fallback – deep wine */
+        }
+
+        /* ——— РОМАНТИЧЕСКИЙ ВЕЧЕР: тёплый бордовый градиент, мерцающие огни, лёгкая дымка ——— */
+        .romantic-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: radial-gradient(ellipse at 40% 30%, #4b1e2b, #2a1220 60%, #150b14 95%);
+            overflow: hidden;
+        }
+
+        /* ——— Мерцающие огоньки (вместо листьев) ——— */
+        .glow {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 220, 150, 0.9) 0%, rgba(255, 180, 80, 0.2) 70%, transparent 100%);
+            z-index: 1;
+            pointer-events: none;
+            filter: blur(2px) drop-shadow(0 0 18px #fbbf5e);
+            animation: glowFloat calc(14s + var(--d, 0s)) ease-in-out infinite alternate;
+        }
+        .glow:nth-child(1) { left: 5%; top: 8%; width: 12px; height: 12px; --d: 0s; animation-duration: 12s; }
+        .glow:nth-child(2) { left: 18%; top: 22%; width: 8px; height: 8px; --d: -3s; animation-duration: 16s; opacity: 0.8; }
+        .glow:nth-child(3) { left: 32%; top: 12%; width: 18px; height: 18px; --d: -7s; animation-duration: 14s; }
+        .glow:nth-child(4) { left: 48%; top: 5%; width: 10px; height: 10px; --d: -2s; animation-duration: 18s; }
+        .glow:nth-child(5) { left: 65%; top: 18%; width: 16px; height: 16px; --d: -8s; animation-duration: 13s; }
+        .glow:nth-child(6) { left: 82%; top: 10%; width: 9px; height: 9px; --d: -5s; animation-duration: 20s; }
+        .glow:nth-child(7) { left: 92%; top: 30%; width: 14px; height: 14px; --d: -10s; animation-duration: 15s; }
+        .glow:nth-child(8) { left: 10%; top: 55%; width: 20px; height: 20px; --d: -4s; animation-duration: 22s; }
+        .glow:nth-child(9) { left: 78%; top: 65%; width: 11px; height: 11px; --d: -6s; animation-duration: 17s; }
+        .glow:nth-child(10) { left: 45%; top: 80%; width: 15px; height: 15px; --d: -9s; animation-duration: 19s; }
+
+        @keyframes glowFloat {
+            0% { transform: translate(0, 0) scale(0.9); opacity: 0.6; }
+            50% { transform: translate(30px, -20px) scale(1.4); opacity: 1; }
+            100% { transform: translate(-20px, 15px) scale(0.8); opacity: 0.5; }
+        }
+
+        /* ——— Лёгкие романтические «облака» / дымка — тёплые, полупрозрачные ——— */
+        .mist {
+            position: absolute;
+            background: rgba(220, 180, 150, 0.08);
+            border-radius: 1000px;
+            box-shadow: 0 20px 60px rgba(180, 120, 80, 0.15);
+            animation: mistDrift calc(45s + var(--d, 0s)) linear infinite;
+            z-index: 1;
+            pointer-events: none;
+            backdrop-filter: blur(12px);
+        }
+        .mist::before,
+        .mist::after {
+            content: '';
+            position: absolute;
+            background: inherit;
+            border-radius: 50%;
+            box-shadow: inherit;
+        }
+        .mist-1 {
+            width: 340px; height: 90px;
+            top: 4%; left: -20%;
+            --d: 0s;
+            animation-duration: 52s;
+        }
+        .mist-1::before {
+            width: 140px; height: 140px;
+            top: -70px; left: 30px;
+        }
+        .mist-1::after {
+            width: 180px; height: 160px;
+            top: -80px; left: 120px;
+        }
+
+        .mist-2 {
+            width: 400px; height: 100px;
+            top: 25%; left: -10%;
+            --d: -14s;
+            animation-duration: 60s;
+            opacity: 0.6;
+        }
+        .mist-2::before {
+            width: 180px; height: 180px;
+            top: -95px; left: 40px;
+        }
+        .mist-2::after {
+            width: 220px; height: 200px;
+            top: -110px; left: 140px;
+        }
+
+        .mist-3 {
+            width: 280px; height: 80px;
+            top: 50%; left: -15%;
+            --d: -22s;
+            animation-duration: 48s;
+            opacity: 0.5;
+        }
+        .mist-3::before {
+            width: 130px; height: 130px;
+            top: -65px; left: 25px;
+        }
+        .mist-3::after {
+            width: 160px; height: 150px;
+            top: -75px; left: 100px;
+        }
+
+        .mist-4 {
+            width: 380px; height: 95px;
+            top: 68%; left: -25%;
+            --d: -8s;
+            animation-duration: 55s;
+            opacity: 0.4;
+        }
+        .mist-4::before {
+            width: 170px; height: 170px;
+            top: -90px; left: 50px;
+        }
+        .mist-4::after {
+            width: 210px; height: 190px;
+            top: -105px; left: 140px;
+        }
+
+        @keyframes mistDrift {
+            0% { transform: translateX(0) scale(0.95); }
+            50% { transform: translateX(calc(100vw + 200px)) scale(1.02); }
+            100% { transform: translateX(calc(200vw + 300px)) scale(0.95); }
+        }
+
+        /* ——— Романтические декоративные элементы (свечи, сердечки, розы) ——— */
+        .romantic-decor {
+            position: absolute;
+            font-size: 2.6rem;
+            z-index: 2;
+            pointer-events: none;
+            animation: floatDecor calc(10s + var(--d, 0s)) ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(255, 180, 100, 0.6));
+            text-shadow: 0 0 40px rgba(255, 200, 100, 0.5);
+            opacity: 0.85;
+        }
+        .romantic-decor-1 { left: 3%; top: 12%; --d: 0s; animation-duration: 12s; }
+        .romantic-decor-2 { left: 22%; top: 40%; --d: -3s; animation-duration: 10s; font-size: 2rem; }
+        .romantic-decor-3 { left: 78%; top: 8%; --d: -6s; animation-duration: 14s; font-size: 3.2rem; }
+        .romantic-decor-4 { left: 88%; top: 62%; --d: -9s; animation-duration: 11s; font-size: 2.4rem; }
+        .romantic-decor-5 { left: 40%; top: 75%; --d: -2s; animation-duration: 13s; font-size: 2.2rem; }
+        .romantic-decor-6 { left: 65%; top: 45%; --d: -7s; animation-duration: 9s; font-size: 2.8rem; }
+        .romantic-decor-7 { left: 12%; top: 82%; --d: -5s; animation-duration: 15s; font-size: 2.5rem; }
+
+        @keyframes floatDecor {
+            0% { transform: translateY(0) rotate(0deg) scale(0.9); opacity: 0.7; }
+            30% { transform: translateY(-25px) rotate(6deg) scale(1.2); opacity: 1; }
+            60% { transform: translateY(12px) rotate(-4deg) scale(0.95); opacity: 0.8; }
+            85% { transform: translateY(-18px) rotate(5deg) scale(1.1); opacity: 0.95; }
+            100% { transform: translateY(0) rotate(0deg) scale(0.9); opacity: 0.7; }
+        }
+
+        /* ——— СТЕКЛЯННЫЙ КОНТЕЙНЕР — тёплый, романтичный, с золотистым отливом ——— */
+        .container {
+            position: relative;
+            z-index: 30;
+            backdrop-filter: blur(18px) saturate(1.4);
+            -webkit-backdrop-filter: blur(18px) saturate(1.4);
+            background: rgba(80, 35, 50, 0.35);
+            border-radius: 60px 60px 40px 40px;
+            padding: 28px 30px 24px;
+            max-width: 440px;
+            width: 100%;
+            box-shadow:
+                    0 30px 70px rgba(120, 40, 60, 0.6),
+                    0 0 0 1px rgba(255, 200, 150, 0.25),
+                    inset 0 1px 0 rgba(255, 220, 180, 0.4);
+            border: 1px solid rgba(255, 190, 140, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        /* ——— Уголки: романтические символы ——— */
+        .corner-decor {
+            position: absolute;
+            font-size: 1.9rem;
+            opacity: 0.8;
+            filter: drop-shadow(0 0 30px rgba(255, 180, 100, 0.7));
+            user-select: none;
+            pointer-events: none;
+            animation: decorFloat 10s ease-in-out infinite;
+            color: #f7d9aa;
+        }
+        .corner-decor:nth-child(1) { top: 16px; left: 18px; animation-delay: 0s; }
+        .corner-decor:nth-child(2) { top: 16px; right: 18px; animation-delay: 2.8s; color: #f0c8a0; }
+        .corner-decor:nth-child(3) { bottom: 16px; left: 18px; animation-delay: 5.2s; color: #e8b88a; }
+        .corner-decor:nth-child(4) { bottom: 16px; right: 18px; animation-delay: 1.8s; color: #f5d5b0; }
+
+        @keyframes decorFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.6; }
+            30% { transform: translateY(-18px) rotate(10deg) scale(1.25); opacity: 1; }
+            70% { transform: translateY(8px) rotate(-6deg) scale(0.95); opacity: 0.7; }
+            90% { transform: translateY(-12px) rotate(12deg) scale(1.1); opacity: 0.9; }
+        }
+
+        /* ——— Содержимое ——— */
+        .content-screen {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: center;
+            animation: fadeIn 1.0s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(30px) scale(0.92); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .content-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8rem;
+            font-weight: 400;
+            background: linear-gradient(135deg, #f5cf9e, #e8a87c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 40px rgba(255, 180, 100, 0.5);
+            letter-spacing: 2px;
+            margin-top: 0px;
+        }
+
+        .message-text {
+            font-size: 1rem;
+            color: #f5e0d0;
+            line-height: 1.7;
+            max-width: 340px;
+            margin: 0 auto;
+            text-align: left;
+            font-weight: 300;
+            backdrop-filter: blur(10px);
+            background: rgba(100, 45, 55, 0.45);
+            border-radius: 40px;
+            padding: 20px 24px 18px;
+            border: 1px solid rgba(255, 190, 150, 0.3);
+            box-shadow: inset 0 1px 0 rgba(255, 220, 180, 0.3);
+        }
+
+        .message-text p {
+            margin-bottom: 14px;
+            font-weight: 400;
+            color: #fae6d6;
+            text-shadow: 0 2px 12px rgba(200, 120, 80, 0.5);
+            font-size: 0.95rem;
+        }
+        .message-text p:first-of-type {
+            color: #f7dbb0;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .message-text ol {
+            list-style: none;
+            padding: 0;
+            margin-top: 4px;
+        }
+
+        .message-text ol li {
+            padding: 12px 0 12px 46px;
+            margin-bottom: 4px;
+            color: #fae6d6;
+            font-weight: 400;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 180, 140, 0.2);
+            transition: all 0.2s;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+        }
+
+        .message-text ol li::before {
+            content: "🕯️";
+            position: absolute;
+            left: 6px;
+            top: 10px;
+            font-size: 1.5rem;
+            filter: drop-shadow(0 0 25px rgba(255, 200, 100, 0.7));
+        }
+
+        .message-text ol li:last-child {
+            border-bottom: none;
+        }
+
+        .message-text ol li:hover {
+            background: rgba(255, 190, 140, 0.12);
+        }
+
+        /* ——— ЗОНА С КАРТИНКОЙ — романтическая рамка ——— */
+        .image-zone {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 2px dashed rgba(255, 190, 140, 0.3);
+            text-align: center;
+        }
+
+        .image-zone .image-wrapper {
+            border-radius: 30px;
+            overflow: hidden;
+            background: rgba(100, 45, 55, 0.4);
+            border: 2px solid rgba(255, 190, 140, 0.35);
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 40px rgba(80, 30, 40, 0.6);
+        }
+
+        .image-zone .image-wrapper img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-height: 300px;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+
+        .image-zone .image-wrapper:hover {
+            border-color: rgba(255, 200, 150, 0.8);
+            box-shadow: 0 8px 50px rgba(255, 160, 100, 0.4);
+        }
+
+        .image-zone .image-caption {
+            font-size: 0.75rem;
+            color: #e8c8a8;
+            opacity: 0.8;
+            margin-top: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        /* ——— Романтический футер ——— */
+        .romantic-footer {
+            font-size: 0.9rem;
+            color: #f7dbb0;
+            margin-top: 18px;
+            text-shadow: 0 0 30px rgba(255, 180, 100, 0.7);
+            letter-spacing: 1px;
+            font-weight: 400;
+        }
+
+        /* ——— Адаптив ——— */
+        @media (max-width: 420px) {
+            .container { padding: 24px 16px 20px; border-radius: 44px; }
+            .content-title { font-size: 2.3rem; }
+            .message-text { font-size: 0.85rem; padding: 16px 18px; }
+            .message-text ol li { padding: 10px 0 10px 42px; font-size: 0.85rem; }
+            .corner-decor { font-size: 1.5rem; }
+            .glow { display: none; }
+            .romantic-decor { font-size: 2rem !important; }
+            .mist-1, .mist-2, .mist-3, .mist-4 { transform: scale(0.7); }
+            .image-zone .image-wrapper img { max-height: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- РОМАНТИЧЕСКИЙ ВЕЧЕР: огоньки, дымка, свечи, сердечки -->
+<div class="romantic-bg">
+    <!-- мерцающие огоньки (вместо листьев) -->
+    <div class="glow"></div>
+    <div class="glow"></div>
+    <div class="glow"></div>
+    <div class="glow"></div>
+    <div class="glow"></div>
+    <div class="glow"></div>
+    <div class="glow"></div>
+    <div class="glow"></div>
+    <div class="glow"></div>
+    <div class="glow"></div>
+
+    <!-- лёгкая романтическая дымка (вместо облаков) -->
+    <div class="mist mist-1"></div>
+    <div class="mist mist-2"></div>
+    <div class="mist mist-3"></div>
+    <div class="mist mist-4"></div>
+
+    <!-- романтический декор: свечи, розы, сердечки, звёзды -->
+    <div class="romantic-decor romantic-decor-1">🕯️</div>
+    <div class="romantic-decor romantic-decor-2">🌹</div>
+    <div class="romantic-decor romantic-decor-3">❤️</div>
+    <div class="romantic-decor romantic-decor-4">✨</div>
+    <div class="romantic-decor romantic-decor-5">🥂</div>
+    <div class="romantic-decor romantic-decor-6">🌙</div>
+    <div class="romantic-decor romantic-decor-7">💖</div>
+</div>
+
+<!-- ОСНОВНОЙ КОНТЕЙНЕР -->
+<div class="container" id="appContainer">
+    <span class="corner-decor">🕯️</span>
+    <span class="corner-decor">🌹</span>
+    <span class="corner-decor">✨</span>
+    <span class="corner-decor">❤️</span>
+
+    <div id="mainScreen" class="content-screen">
+        <div class="content-title">11.09.26</div>
+        <div class="message-text">
+            <p style="text-align: center">Софья Эдуардовна, ваше приглашине</p>
+            <ol>
+                <li>Едем/идем кушать в руф;</li>
+                <li>Кушаем, общаемся;</li>
+                <li>Прогуливаемся домой если будет хорошая погода;</li>
+                <li>Массаж после прогулки</li>
+            </ol>
+        </div>
+        <div class="romantic-footer">✨ Вы самая самая прекрасная! ✨</div>
+    </div>
+</div>
+
+</body>
+</html>
