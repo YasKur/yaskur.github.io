@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>14.09.26</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@300;400;600&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-family: 'Pacifico', cursive;
+            position: relative;
+            overflow-x: hidden;
+            background: #050510;
+        }
+
+        /* ===== КОСМИЧЕСКИЙ ФОН ===== */
+        .space-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: radial-gradient(ellipse at 30% 40%, #1a1a3e, #0b0b1a 50%, #030308 100%);
+            overflow: hidden;
+        }
+
+        /* ——— Далёкие звёзды ——— */
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: twinkle var(--twinkle-dur, 3s) infinite alternate ease-in-out;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.3); }
+        }
+
+        /* ——— Галактики ——— */
+        .galaxy {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.5;
+            z-index: 0;
+            pointer-events: none;
+            animation: galaxyFloat var(--galaxy-dur, 30s) infinite alternate ease-in-out;
+        }
+
+        .galaxy-1 {
+            width: 600px; height: 400px;
+            top: -10%; left: -15%;
+            background: radial-gradient(ellipse, rgba(120, 80, 255, 0.6) 0%, rgba(40, 20, 120, 0.2) 50%, transparent 80%);
+            --galaxy-dur: 28s;
+        }
+        .galaxy-2 {
+            width: 500px; height: 350px;
+            bottom: -10%; right: -10%;
+            background: radial-gradient(ellipse, rgba(255, 80, 180, 0.5) 0%, rgba(120, 20, 80, 0.2) 50%, transparent 80%);
+            --galaxy-dur: 35s;
+            animation-delay: -10s;
+        }
+        .galaxy-3 {
+            width: 400px; height: 300px;
+            top: 40%; left: 50%;
+            background: radial-gradient(ellipse, rgba(80, 200, 255, 0.4) 0%, rgba(20, 80, 160, 0.15) 50%, transparent 80%);
+            --galaxy-dur: 42s;
+            animation-delay: -18s;
+        }
+
+        @keyframes galaxyFloat {
+            0%   { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.4; }
+            50%  { transform: translate(40px, -30px) scale(1.1) rotate(8deg); opacity: 0.7; }
+            100% { transform: translate(-30px, 25px) scale(0.95) rotate(-5deg); opacity: 0.5; }
+        }
+
+        /* ——— ПАДАЮЩИЕ ЗВЁЗДЫ (КОМЕТЫ) ——— */
+        .comet {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 15px 4px rgba(255, 255, 200, 0.9), 0 0 30px 10px rgba(200, 180, 255, 0.5);
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .comet::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 120px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.95), rgba(200,180,255,0.5), transparent);
+            transform: translateY(-50%) rotate(-45deg);
+            transform-origin: left center;
+            filter: blur(1px);
+            border-radius: 50%;
+        }
+
+        /* Разные траектории и скорости */
+        .comet-1  { top: 5%;  left: 95%;  animation: cometFall1 6s infinite linear; animation-delay: 0s; }
+        .comet-2  { top: 15%; left: 80%;  animation: cometFall1 7.5s infinite linear; animation-delay: 2.5s; }
+        .comet-3  { top: 25%; left: 70%;  animation: cometFall2 8s infinite linear; animation-delay: 1s; }
+        .comet-4  { top: 40%; left: 90%;  animation: cometFall1 6.5s infinite linear; animation-delay: 4s; }
+        .comet-5  { top: 55%; left: 85%;  animation: cometFall2 9s infinite linear; animation-delay: 0.5s; }
+        .comet-6  { top: 70%; left: 75%;  animation: cometFall1 7s infinite linear; animation-delay: 3.5s; }
+        .comet-7  { top: 10%; left: 60%;  animation: cometFall2 8.5s infinite linear; animation-delay: 5s; }
+        .comet-8  { top: 35%; left: 50%;  animation: cometFall1 6.8s infinite linear; animation-delay: 2s; }
+        .comet-9  { top: 60%; left: 40%;  animation: cometFall2 7.2s infinite linear; animation-delay: 6s; }
+        .comet-10 { top: 80%; left: 30%;  animation: cometFall1 9.5s infinite linear; animation-delay: 1.5s; }
+        .comet-11 { top: 20%; left: 45%;  animation: cometFall2 6.3s infinite linear; animation-delay: 7s; }
+        .comet-12 { top: 50%; left: 25%;  animation: cometFall1 8.2s infinite linear; animation-delay: 3s; }
+        .comet-13 { top: 65%; left: 95%;  animation: cometFall2 7.8s infinite linear; animation-delay: 8s; }
+        .comet-14 { top: 5%;  left: 35%;  animation: cometFall1 6.6s infinite linear; animation-delay: 9s; }
+        .comet-15 { top: 85%; left: 60%;  animation: cometFall2 9.2s infinite linear; animation-delay: 4.5s; }
+        .comet-16 { top: 30%; left: 15%;  animation: cometFall1 7.4s infinite linear; animation-delay: 10s; }
+        .comet-17 { top: 75%; left: 10%;  animation: cometFall2 8.8s infinite linear; animation-delay: 5.5s; }
+        .comet-18 { top: 45%; left: 5%;   animation: cometFall1 6.9s infinite linear; animation-delay: 11s; }
+
+        /* Траектория 1: влево-вниз */
+        @keyframes cometFall1 {
+            0%   { transform: translate(0, 0) rotate(-45deg); opacity: 0; }
+            10%  { opacity: 1; }
+            85%  { opacity: 1; }
+            100% { transform: translate(-400px, 400px) rotate(-45deg); opacity: 0; }
+        }
+
+        /* Траектория 2: влево-вниз, но более пологая */
+        @keyframes cometFall2 {
+            0%   { transform: translate(0, 0) rotate(-30deg); opacity: 0; }
+            10%  { opacity: 1; }
+            85%  { opacity: 1; }
+            100% { transform: translate(-500px, 250px) rotate(-30deg); opacity: 0; }
+        }
+
+        /* ——— Туманности ——— */
+        .nebula {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.15;
+            z-index: 1;
+            pointer-events: none;
+            animation: nebulaDrift var(--nebula-dur, 50s) linear infinite;
+        }
+
+        .nebula-1 {
+            width: 300px; height: 300px;
+            top: 10%; left: -5%;
+            background: radial-gradient(circle, rgba(180, 120, 255, 0.8), transparent 70%);
+            --nebula-dur: 60s;
+        }
+        .nebula-2 {
+            width: 400px; height: 400px;
+            bottom: 5%; right: -8%;
+            background: radial-gradient(circle, rgba(255, 140, 200, 0.7), transparent 70%);
+            --nebula-dur: 75s;
+            animation-delay: -20s;
+        }
+        .nebula-3 {
+            width: 250px; height: 250px;
+            top: 60%; left: 40%;
+            background: radial-gradient(circle, rgba(100, 200, 255, 0.6), transparent 70%);
+            --nebula-dur: 55s;
+            animation-delay: -35s;
+        }
+
+        @keyframes nebulaDrift {
+            0%   { transform: translate(0, 0) scale(1); }
+            25%  { transform: translate(80px, -40px) scale(1.2); }
+            50%  { transform: translate(30px, 60px) scale(0.9); }
+            75%  { transform: translate(-50px, 20px) scale(1.1); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        /* ===== СТЕКЛЯННЫЙ КОНТЕЙНЕР ===== */
+        .container {
+            position: relative;
+            z-index: 30;
+            backdrop-filter: blur(18px) saturate(1.6);
+            -webkit-backdrop-filter: blur(18px) saturate(1.6);
+            background: rgba(20, 18, 50, 0.45);
+            border-radius: 50px 50px 40px 40px;
+            padding: 28px 30px 24px;
+            max-width: 460px;
+            width: 100%;
+            box-shadow:
+                    0 30px 80px rgba(40, 20, 100, 0.7),
+                    0 0 0 1px rgba(180, 160, 255, 0.3),
+                    inset 0 1px 0 rgba(220, 210, 255, 0.3);
+            border: 1px solid rgba(160, 140, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .corner-decor {
+            position: absolute;
+            font-size: 1.9rem;
+            opacity: 0.9;
+            filter: drop-shadow(0 0 30px rgba(180, 150, 255, 0.9));
+            user-select: none;
+            pointer-events: none;
+            animation: decorFloat 10s ease-in-out infinite;
+        }
+        .corner-decor:nth-child(1) { top: 16px; left: 18px; animation-delay: 0s; color: #d4c8ff; }
+        .corner-decor:nth-child(2) { top: 16px; right: 18px; animation-delay: 2.8s; color: #e0d0ff; }
+        .corner-decor:nth-child(3) { bottom: 16px; left: 18px; animation-delay: 5.2s; color: #c8b8ff; }
+        .corner-decor:nth-child(4) { bottom: 16px; right: 18px; animation-delay: 1.8s; color: #f0e0ff; }
+
+        @keyframes decorFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.6; }
+            30%      { transform: translateY(-18px) rotate(10deg) scale(1.25); opacity: 1; }
+            70%      { transform: translateY(8px) rotate(-6deg) scale(0.95); opacity: 0.7; }
+            90%      { transform: translateY(-12px) rotate(12deg) scale(1.1); opacity: 0.9; }
+        }
+
+        .content-screen {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: center;
+            animation: fadeIn 1.0s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            0%   { opacity: 0; transform: translateY(30px) scale(0.92); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .content-title {
+            font-size: 2.8rem;
+            font-weight: 400;
+            background: linear-gradient(135deg, #e0d0ff, #b8a0ff, #88c0ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 50px rgba(160, 140, 255, 0.7);
+            letter-spacing: 2px;
+            margin-top: 0px;
+        }
+
+        .message-text {
+            font-size: 1rem;
+            color: #e8e0ff;
+            line-height: 1.7;
+            max-width: 360px;
+            margin: 0 auto;
+            text-align: left;
+            font-weight: 300;
+            backdrop-filter: blur(10px);
+            background: rgba(35, 30, 70, 0.5);
+            border-radius: 40px;
+            padding: 20px 24px 18px;
+            border: 1px solid rgba(160, 140, 255, 0.35);
+            box-shadow: inset 0 1px 0 rgba(200, 190, 255, 0.3);
+        }
+
+        .message-text p {
+            margin-bottom: 14px;
+            font-weight: 400;
+            color: #ede6ff;
+            text-shadow: 0 2px 12px rgba(100, 80, 200, 0.5);
+            font-size: 0.95rem;
+        }
+        .message-text p:first-of-type {
+            color: #d8ccff;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .message-text ol {
+            list-style: none;
+            padding: 0;
+            margin-top: 4px;
+        }
+
+        .message-text ol li {
+            padding: 12px 0 12px 46px;
+            margin-bottom: 4px;
+            color: #ede6ff;
+            font-weight: 400;
+            position: relative;
+            border-bottom: 1px solid rgba(140, 120, 255, 0.2);
+            transition: all 0.2s;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+        }
+
+        .message-text ol li::before {
+            content: "✨";
+            position: absolute;
+            left: 6px;
+            top: 10px;
+            font-size: 1.5rem;
+            filter: drop-shadow(0 0 25px rgba(180, 150, 255, 0.9));
+        }
+
+        .message-text ol li:last-child {
+            border-bottom: none;
+        }
+
+        .message-text ol li:hover {
+            background: rgba(160, 140, 255, 0.12);
+        }
+
+        .romantic-footer {
+            font-size: 0.9rem;
+            color: #d8ccff;
+            margin-top: 18px;
+            text-shadow: 0 0 30px rgba(160, 140, 255, 0.9);
+            letter-spacing: 1px;
+            font-weight: 400;
+        }
+
+        @media (max-width: 420px) {
+            .container { padding: 24px 16px 20px; border-radius: 44px; }
+            .content-title { font-size: 2.3rem; }
+            .message-text { font-size: 0.85rem; padding: 16px 18px; }
+            .message-text ol li { padding: 10px 0 10px 42px; font-size: 0.85rem; }
+            .corner-decor { font-size: 1.5rem; }
+            .comet { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- КОСМИЧЕСКИЙ ФОН -->
+<div class="space-bg">
+    <!-- Галактики -->
+    <div class="galaxy galaxy-1"></div>
+    <div class="galaxy galaxy-2"></div>
+    <div class="galaxy galaxy-3"></div>
+
+    <!-- Туманности -->
+    <div class="nebula nebula-1"></div>
+    <div class="nebula nebula-2"></div>
+    <div class="nebula nebula-3"></div>
+
+    <!-- Падающие звёзды (18 штук) -->
+    <div class="comet comet-1"></div>
+    <div class="comet comet-2"></div>
+    <div class="comet comet-3"></div>
+    <div class="comet comet-4"></div>
+    <div class="comet comet-5"></div>
+    <div class="comet comet-6"></div>
+    <div class="comet comet-7"></div>
+    <div class="comet comet-8"></div>
+    <div class="comet comet-9"></div>
+    <div class="comet comet-10"></div>
+    <div class="comet comet-11"></div>
+    <div class="comet comet-12"></div>
+    <div class="comet comet-13"></div>
+    <div class="comet comet-14"></div>
+    <div class="comet comet-15"></div>
+    <div class="comet comet-16"></div>
+    <div class="comet comet-17"></div>
+    <div class="comet comet-18"></div>
+
+    <!-- Звёздное небо (генерируется JS) -->
+    <div id="starfield"></div>
+</div>
+
+<!-- ОСНОВНОЙ КОНТЕЙНЕР -->
+<div class="container" id="appContainer">
+    <span class="corner-decor">✨</span>
+    <span class="corner-decor">🌌</span>
+    <span class="corner-decor">⭐</span>
+    <span class="corner-decor">💫</span>
+
+    <div id="mainScreen" class="content-screen">
+        <div class="content-title">14.09.26</div>
+        <div class="message-text">
+            <p style="text-align: center">Софья Эдуардовна, желаю вам</p>
+            <ol>
+                <li>Продуктивной работы, чтоб все задачки закрывались и все получалось</li>
+                <li>Чтоб поиграли хорошо в падел и получили максимальное удовольствие</li>
+                <li>Чтоб кушали вкусно</li>
+                <li>Чтоб настроение было на высоте</li>
+                <li>Чтоб день прошел прекрасно!</li>
+            </ol>
+        </div>
+        <div class="romantic-footer">✨ Вы самая самая лучшая, верю в вас, а вы верьте в себя! ✨</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const starfield = document.getElementById('starfield');
+        const starCount = 220;
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+
+            const left = Math.random() * 100;
+            const top = Math.random() * 100;
+            const size = Math.random() * 3.2 + 1.2;
+
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            star.style.opacity = Math.random() * 0.7 + 0.3;
+            star.style.setProperty('--twinkle-dur', (Math.random() * 4 + 2) + 's');
+            star.style.left = left + '%';
+            star.style.top = top + '%';
+            star.style.animationDelay = (Math.random() * 5) + 's';
+
+            // Цветовые вариации
+            const r = Math.random();
+            if (r > 0.75) {
+                const hue = Math.random() * 60 + 200;
+                star.style.background = `hsl(${hue}, 80%, 85%)`;
+                star.style.boxShadow = `0 0 8px hsla(${hue}, 80%, 80%, 0.9)`;
+            } else if (r > 0.6) {
+                star.style.background = `hsl(40, 80%, 85%)`;
+                star.style.boxShadow = `0 0 8px rgba(255, 240, 180, 0.9)`;
+            }
+
+            starfield.appendChild(star);
+        }
+
+        // Крупные яркие звёзды
+        for (let i = 0; i < 15; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const size = Math.random() * 5 + 4;
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.background = '#fff';
+            star.style.boxShadow = '0 0 20px 6px rgba(255,255,255,0.9), 0 0 40px 12px rgba(180,160,255,0.5)';
+            star.style.setProperty('--twinkle-dur', (Math.random() * 3 + 2) + 's');
+            star.style.animationDelay = (Math.random() * 4) + 's';
+            starfield.appendChild(star);
+        }
+    })();
+</script>
+
+</body>
+</html>
