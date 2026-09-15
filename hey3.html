@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>✨</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            /* ——— Тёплый солнечный фон ——— */
+            background: linear-gradient(160deg, #ffb347 0%, #ffcc70 20%, #ff9a76 45%, #ff7e9d 70%, #ffb347 100%);
+            background-size: 300% 300%;
+            animation: warmGradient 18s ease infinite;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Pacifico', sans-serif;
+        }
+
+        @keyframes warmGradient {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ——— Мягкое тёплое свечение ——— */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                    radial-gradient(ellipse at 50% 90%, rgba(255, 220, 150, 0.45) 0%, transparent 60%),
+                    radial-gradient(ellipse at 20% 15%, rgba(255, 180, 120, 0.35) 0%, transparent 55%),
+                    radial-gradient(ellipse at 80% 30%, rgba(255, 150, 180, 0.30) 0%, transparent 50%),
+                    radial-gradient(ellipse at 50% 50%, rgba(255, 255, 200, 0.15) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+            animation: glowBreath 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes glowBreath {
+            0%   { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        /* ——— Тёплые мерцающие огоньки ——— */
+        .candle-glow {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(70px);
+            pointer-events: none;
+            z-index: 0;
+            animation: flickerGlow 5s ease-in-out infinite alternate;
+        }
+        .candle-glow:nth-child(1) {
+            width: 380px;
+            height: 380px;
+            background: radial-gradient(circle, rgba(255, 210, 130, 0.45), transparent 70%);
+            bottom: -100px;
+            left: -120px;
+            animation-delay: 0s;
+        }
+        .candle-glow:nth-child(2) {
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(255, 170, 150, 0.40), transparent 70%);
+            top: 0px;
+            right: -100px;
+            animation-delay: 2.5s;
+        }
+        .candle-glow:nth-child(3) {
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, rgba(255, 190, 210, 0.35), transparent 70%);
+            bottom: 30px;
+            right: 30px;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes flickerGlow {
+            0%   { opacity: 0.5; transform: scale(1); }
+            100% { opacity: 1;   transform: scale(1.35); }
+        }
+
+        /* ——— Летающие бабочки ——— */
+        .butterfly {
+            position: fixed;
+            font-size: 1.6rem;
+            pointer-events: none;
+            z-index: 1;
+            filter: drop-shadow(0 0 12px rgba(255, 200, 120, 0.6));
+            animation: flutter 16s ease-in-out infinite;
+        }
+        .butterfly:nth-child(4)  { left: 8%;  top: 70%; animation-delay: 0s;   font-size: 1.8rem; }
+        .butterfly:nth-child(5)  { left: 25%; top: 40%; animation-delay: 3s;   font-size: 1.4rem; }
+        .butterfly:nth-child(6)  { left: 60%; top: 75%; animation-delay: 6s;   font-size: 1.9rem; }
+        .butterfly:nth-child(7)  { left: 82%; top: 30%; animation-delay: 9s;   font-size: 1.5rem; }
+        .butterfly:nth-child(8)  { left: 45%; top: 15%; animation-delay: 12s;  font-size: 1.7rem; }
+
+        @keyframes flutter {
+            0%   { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0; }
+            10%  { opacity: 0.9; }
+            25%  { transform: translate(40px, -60px) rotate(15deg) scale(1.1); }
+            50%  { transform: translate(-30px, -120px) rotate(-10deg) scale(0.95); opacity: 0.8; }
+            75%  { transform: translate(50px, -50px) rotate(20deg) scale(1.05); }
+            90%  { opacity: 0.6; }
+            100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0; }
+        }
+
+        /* ——— Летающие пузырьки ——— */
+        .bubble {
+            position: fixed;
+            bottom: -60px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(255, 220, 180, 0.15) 60%, transparent 70%);
+            box-shadow: 0 0 18px rgba(255, 230, 180, 0.5), inset 0 0 12px rgba(255, 255, 255, 0.4);
+            animation: riseBubble linear infinite;
+        }
+        .bubble:nth-child(9)  { left: 5%;  width: 18px; height: 18px; animation-duration: 11s; animation-delay: 0s; }
+        .bubble:nth-child(10) { left: 15%; width: 26px; height: 26px; animation-duration: 14s; animation-delay: 2s; }
+        .bubble:nth-child(11) { left: 30%; width: 14px; height: 14px; animation-duration: 10s; animation-delay: 4s; }
+        .bubble:nth-child(12) { left: 45%; width: 22px; height: 22px; animation-duration: 13s; animation-delay: 1s; }
+        .bubble:nth-child(13) { left: 58%; width: 16px; height: 16px; animation-duration: 12s; animation-delay: 5s; }
+        .bubble:nth-child(14) { left: 70%; width: 28px; height: 28px; animation-duration: 15s; animation-delay: 3s; }
+        .bubble:nth-child(15) { left: 85%; width: 20px; height: 20px; animation-duration: 11s; animation-delay: 6s; }
+        .bubble:nth-child(16) { left: 93%; width: 12px; height: 12px; animation-duration: 9s;  animation-delay: 2.5s; }
+
+        @keyframes riseBubble {
+            0%   { transform: translateY(0) translateX(0) scale(0.6); opacity: 0; }
+            10%  { opacity: 0.9; }
+            50%  { transform: translateY(-55vh) translateX(20px) scale(1); opacity: 0.8; }
+            90%  { opacity: 0.4; }
+            100% { transform: translateY(-115vh) translateX(-15px) scale(1.1); opacity: 0; }
+        }
+
+        /* ——— Порхающие звёздочки ——— */
+        .sparkle {
+            position: fixed;
+            font-size: 1.2rem;
+            pointer-events: none;
+            z-index: 1;
+            filter: drop-shadow(0 0 10px rgba(255, 240, 180, 0.9));
+            animation: twinkle 4s ease-in-out infinite;
+        }
+        .sparkle:nth-child(17) { left: 10%; top: 20%; animation-delay: 0s; }
+        .sparkle:nth-child(18) { left: 35%; top: 80%; animation-delay: 0.8s; }
+        .sparkle:nth-child(19) { left: 55%; top: 25%; animation-delay: 1.6s; }
+        .sparkle:nth-child(20) { left: 78%; top: 65%; animation-delay: 2.4s; }
+        .sparkle:nth-child(21) { left: 90%; top: 15%; animation-delay: 3.2s; }
+        .sparkle:nth-child(22) { left: 22%; top: 55%; animation-delay: 1.2s; }
+
+        @keyframes twinkle {
+            0%, 100% { transform: scale(0.7) rotate(0deg); opacity: 0.3; }
+            50%      { transform: scale(1.3) rotate(180deg); opacity: 1; }
+        }
+
+        /* ——— Всплывающие сердечки ——— */
+        .heart-float {
+            position: fixed;
+            bottom: -40px;
+            font-size: 1.5rem;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.7;
+            filter: drop-shadow(0 0 14px rgba(255, 100, 130, 0.6));
+            animation: floatHeart linear infinite;
+        }
+        .heart-float:nth-child(23) { left: 12%; animation-duration: 12s; animation-delay: 0s;   font-size: 1.4rem; }
+        .heart-float:nth-child(24) { left: 38%; animation-duration: 15s; animation-delay: 3s;   font-size: 1.8rem; }
+        .heart-float:nth-child(25) { left: 65%; animation-duration: 11s; animation-delay: 6s;   font-size: 1.3rem; }
+        .heart-float:nth-child(26) { left: 88%; animation-duration: 14s; animation-delay: 1.5s; font-size: 1.6rem; }
+
+        @keyframes floatHeart {
+            0%   { transform: translateY(0) rotate(-10deg) scale(0.8); opacity: 0; }
+            15%  { opacity: 0.9; }
+            50%  { transform: translateY(-50vh) rotate(15deg) scale(1.1); opacity: 0.8; }
+            85%  { opacity: 0.4; }
+            100% { transform: translateY(-110vh) rotate(-15deg) scale(0.9); opacity: 0; }
+        }
+
+        /* ——— Контейнер — тёплое стекло ——— */
+        .container {
+            position: relative;
+            z-index: 10;
+            backdrop-filter: blur(24px) saturate(1.5);
+            -webkit-backdrop-filter: blur(24px) saturate(1.5);
+            background: rgba(255, 240, 220, 0.22);
+            border-radius: 70px 70px 60px 60px;
+            padding: 28px 24px 26px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow:
+                    0 50px 90px rgba(180, 90, 60, 0.35),
+                    0 0 0 1px rgba(255, 220, 180, 0.35),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+                    inset 0 -1px 0 rgba(180, 90, 60, 0.15);
+            border: 1px solid rgba(255, 220, 180, 0.30);
+            transition: all 0.4s ease;
+            text-align: center;
+            animation: containerFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes containerFloat {
+            0%, 100% { transform: translateY(0); }
+            50%      { transform: translateY(-8px); }
+        }
+
+        /* ——— Декоративные элементы ——— */
+        .corner-moon {
+            position: absolute;
+            font-size: 1.4rem;
+            opacity: 0.35;
+            color: #ffeedd;
+            filter: drop-shadow(0 0 20px rgba(255, 200, 120, 0.7));
+            user-select: none;
+            pointer-events: none;
+            animation: softPulse 5s ease-in-out infinite;
+        }
+        .corner-moon:nth-child(1) { top: 12px; left: 16px; animation-delay: 0s; }
+        .corner-moon:nth-child(2) { top: 12px; right: 16px; animation-delay: 1.2s; }
+        .corner-moon:nth-child(3) { bottom: 12px; left: 16px; animation-delay: 0.6s; }
+        .corner-moon:nth-child(4) { bottom: 12px; right: 16px; animation-delay: 2s; }
+
+        @keyframes softPulse {
+            0%, 100% { transform: scale(0.9) rotate(0deg); opacity: 0.2; }
+            50%      { transform: scale(1.25) rotate(10deg); opacity: 0.55; }
+        }
+
+        /* ——— Бьющееся сердце ——— */
+        .beating-heart {
+            font-size: 3.2rem;
+            display: inline-block;
+            animation: heartbeat 1.2s ease-in-out infinite;
+            filter: drop-shadow(0 0 40px rgba(255, 80, 130, 0.7));
+            margin-bottom: 8px;
+        }
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            14% { transform: scale(1.2); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.15); }
+            56% { transform: scale(1); }
+        }
+
+        /* ——— Основной контент ——— */
+        .content-screen {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            text-align: center;
+            animation: fadeRomance 1.2s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+        }
+
+        .content-screen.hidden {
+            display: none;
+        }
+
+        @keyframes fadeRomance {
+            0%   { opacity: 0; transform: translateY(40px) scale(0.92); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .content-title {
+            font-family: 'Pacifico', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 400;
+            background: linear-gradient(135deg, #fff4d6, #ffb37a, #ff8fa3);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 60px rgba(255, 200, 120, 0.4);
+            letter-spacing: 2px;
+            animation: titleShimmer 4s ease-in-out infinite;
+        }
+
+        @keyframes titleShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50%      { background-position: 100% 50%; }
+        }
+
+        .message-text {
+            font-size: 1.1rem;
+            color: #5a2a1a;
+            line-height: 1.8;
+            max-width: 340px;
+            margin: 0 auto;
+            font-weight: 300;
+            backdrop-filter: blur(4px);
+            background: rgba(255, 255, 255, 0.35);
+            border-radius: 28px;
+            padding: 20px 22px 18px;
+            border: 1px solid rgba(255, 220, 180, 0.6);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 8px 30px rgba(200, 100, 60, 0.15);
+        }
+
+        .message-text p {
+            font-family: 'Pacifico', sans-serif;
+            font-weight: 300;
+            font-size: 1rem;
+            color: #6b2a1a;
+            text-shadow: 0 1px 8px rgba(255, 255, 255, 0.6);
+            margin-bottom: 6px;
+        }
+
+        .message-text p:last-of-type {
+            margin-bottom: 0;
+        }
+
+        /* ——— Стили для экрана входа ——— */
+        .password-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 0 4px;
+        }
+
+        .password-screen.hidden {
+            display: none;
+        }
+
+        .password-input {
+            background: rgba(255, 255, 255, 0.45);
+            border: 1px solid rgba(255, 200, 150, 0.7);
+            border-radius: 50px;
+            padding: 12px 20px;
+            width: 100%;
+            max-width: 220px;
+            font-size: 1.1rem;
+            text-align: center;
+            color: #6b2a1a;
+            backdrop-filter: blur(8px);
+            outline: none;
+            transition: 0.3s;
+            font-family: 'Quicksand', sans-serif;
+            letter-spacing: 4px;
+        }
+        .password-input:focus {
+            border-color: #ff9a76;
+            box-shadow: 0 0 30px rgba(255, 180, 120, 0.5);
+            background: rgba(255, 255, 255, 0.65);
+        }
+        .password-input::placeholder {
+            color: rgba(150, 80, 50, 0.35);
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            font-weight: 300;
+        }
+
+        .password-btn {
+            background: linear-gradient(135deg, #ffb347, #ff7e9d);
+            background-size: 200% 200%;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50px;
+            padding: 10px 40px;
+            font-size: 1.1rem;
+            font-family: 'Great Vibes', cursive;
+            color: #fff;
+            backdrop-filter: blur(8px);
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 6px 25px rgba(255, 130, 100, 0.4);
+            letter-spacing: 2px;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+        .password-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 40px rgba(255, 130, 100, 0.6);
+        }
+        .password-btn:active {
+            transform: scale(0.96);
+        }
+
+        @keyframes shimmer {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .password-error {
+            color: #b84a2a;
+            font-size: 0.75rem;
+            font-family: 'Quicksand', sans-serif;
+            opacity: 0.8;
+            min-height: 1.2em;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        /* ——— Адаптив ——— */
+        @media (max-width: 420px) {
+            .container { padding: 20px 16px 18px; border-radius: 44px; }
+            .content-title { font-size: 1.8rem; }
+            .message-text { font-size: 0.95rem; padding: 16px 18px; }
+            .corner-moon { font-size: 1rem; }
+            .password-input { max-width: 180px; font-size: 1rem; padding: 10px 14px; }
+            .beating-heart { font-size: 2.4rem; }
+            .bubble { display: none; }
+        }
+        @media (max-height: 700px) {
+            .container { padding: 16px 16px 14px; }
+            .message-text { padding: 14px 16px; }
+            .beating-heart { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Тёплое свечение -->
+<div class="candle-glow"></div>
+<div class="candle-glow"></div>
+<div class="candle-glow"></div>
+
+<!-- Летающие бабочки -->
+<span class="butterfly">🦋</span>
+<span class="butterfly">🦋</span>
+<span class="butterfly">🦋</span>
+<span class="butterfly">🦋</span>
+<span class="butterfly">🦋</span>
+
+<!-- Всплывающие пузырьки -->
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+
+<!-- Порхающие звёздочки -->
+<span class="sparkle">✨</span>
+<span class="sparkle">⭐</span>
+<span class="sparkle">✨</span>
+<span class="sparkle">🌟</span>
+<span class="sparkle">✨</span>
+<span class="sparkle">⭐</span>
+
+<!-- Всплывающие сердечки -->
+<span class="heart-float">❤️</span>
+<span class="heart-float">💖</span>
+<span class="heart-float">❤️</span>
+<span class="heart-float">💕</span>
+
+<div class="container" id="appContainer">
+    <!-- Декоративные элементы -->
+    <span class="corner-moon">🌻</span>
+    <span class="corner-moon">☀️</span>
+    <span class="corner-moon">🌷</span>
+    <span class="corner-moon">✨</span>
+
+    <!-- ====== ЭКРАН ВВОДА ПАРОЛЯ ====== -->
+    <div id="passwordScreen" class="content-screen password-screen">
+        <div class="content-title" style="font-size:2rem;">Введите пароль</div>
+        <input type="password" id="passwordInput" class="password-input" placeholder="••••" maxlength="10" autofocus>
+        <button id="unlockBtn" class="password-btn">Открыть</button>
+        <div id="errorMsg" class="password-error"></div>
+    </div>
+
+    <!-- ====== ОСНОВНОЙ ЭКРАН ====== -->
+    <div id="mainScreen" class="content-screen hidden">
+        <!-- Бьющееся сердце -->
+        <div class="beating-heart">❤️</div>
+        <div class="message-text">
+            <p>Софья Эдуардовна</p>
+            <p>Желаю вам улыбаться</p>
+            <p>Желаю вам чтоб все проблемы уходили</p>
+            <p>Желаю вам чтобы вы сияли</p>
+            <p>Желаю вам просто прекрасного настроения</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const passwordScreen = document.getElementById('passwordScreen');
+        const mainScreen = document.getElementById('mainScreen');
+        const passwordInput = document.getElementById('passwordInput');
+        const unlockBtn = document.getElementById('unlockBtn');
+        const errorMsg = document.getElementById('errorMsg');
+
+        const CORRECT_PASSWORD = '1509';
+
+        function showMainScreen() {
+            passwordScreen.classList.add('hidden');
+            mainScreen.classList.remove('hidden');
+            mainScreen.style.animation = 'none';
+            requestAnimationFrame(() => {
+                mainScreen.style.animation = 'fadeRomance 1.2s cubic-bezier(0.2, 0.9, 0.3, 1) forwards';
+            });
+            errorMsg.textContent = '';
+            passwordInput.value = '';
+        }
+
+        function handleUnlock() {
+            const entered = passwordInput.value.trim();
+            if (entered === CORRECT_PASSWORD) {
+                showMainScreen();
+            } else {
+                errorMsg.textContent = '❀ Неверный пароль, попробуйте снова ❀';
+                passwordInput.value = '';
+                passwordInput.focus();
+                passwordInput.style.transform = 'scale(0.96)';
+                setTimeout(() => { passwordInput.style.transform = ''; }, 200);
+            }
+        }
+
+        unlockBtn.addEventListener('click', handleUnlock);
+
+        passwordInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleUnlock();
+            }
+        });
+
+        window.addEventListener('load', () => {
+            passwordInput.focus();
+        });
+    })();
+</script>
+
+</body>
+</html>
