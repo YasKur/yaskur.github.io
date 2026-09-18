@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Приглашение на кино-вечер 🍔🍟🍿</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Comfortaa:wght@400;600;700&family=Lobster&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-family: 'Comfortaa', cursive;
+            position: relative;
+            overflow-x: hidden;
+            background: #1a0b2e;
+        }
+
+        /* ===== КИНОТЕАТРАЛЬНЫЙ ФОН ===== */
+        .cinema-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background:
+                    radial-gradient(ellipse at 50% 0%, #3d1a5c 0%, #1a0b2e 45%, #0d0518 100%);
+            overflow: hidden;
+        }
+
+        /* ——— Мягкое свечение экрана ——— */
+        .screen-glow {
+            position: absolute;
+            top: -20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120%;
+            height: 70%;
+            background: radial-gradient(ellipse at 50% 0%, rgba(255, 220, 150, 0.12), rgba(255, 180, 100, 0.04) 40%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+            animation: screenPulse 6s ease-in-out infinite;
+        }
+
+        @keyframes screenPulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* ——— Плавающие попкорны ——— */
+        .popcorn {
+            position: absolute;
+            font-size: 1.6rem;
+            opacity: 0.5;
+            z-index: 2;
+            pointer-events: none;
+            animation: popcornFloat var(--pop-dur, 14s) linear infinite;
+            filter: drop-shadow(0 0 10px rgba(255, 220, 150, 0.5));
+        }
+
+        .popcorn:nth-child(1)  { left: 5%;  animation-delay: 0s;   --pop-dur: 16s; font-size: 1.4rem; }
+        .popcorn:nth-child(2)  { left: 18%; animation-delay: 3s;   --pop-dur: 20s; font-size: 1.8rem; }
+        .popcorn:nth-child(3)  { left: 32%; animation-delay: 7s;   --pop-dur: 18s; font-size: 1.2rem; }
+        .popcorn:nth-child(4)  { left: 48%; animation-delay: 1.5s; --pop-dur: 22s; font-size: 2rem; }
+        .popcorn:nth-child(5)  { left: 62%; animation-delay: 9s;   --pop-dur: 15s; font-size: 1.5rem; }
+        .popcorn:nth-child(6)  { left: 76%; animation-delay: 5s;   --pop-dur: 19s; font-size: 1.7rem; }
+        .popcorn:nth-child(7)  { left: 88%; animation-delay: 11s;  --pop-dur: 17s; font-size: 1.3rem; }
+        .popcorn:nth-child(8)  { left: 42%; animation-delay: 13s;  --pop-dur: 21s; font-size: 1.6rem; }
+        .popcorn:nth-child(9)  { left: 70%; animation-delay: 4s;   --pop-dur: 23s; font-size: 1.1rem; }
+        .popcorn:nth-child(10) { left: 25%; animation-delay: 15s;  --pop-dur: 16s; font-size: 1.9rem; }
+
+        @keyframes popcornFloat {
+            0%   { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; }
+            10%  { opacity: 0.6; }
+            90%  { opacity: 0.6; }
+            100% { transform: translateY(-15vh) rotate(360deg) scale(1.2); opacity: 0; }
+        }
+
+        /* ——— Звёздочки-лампочки по краям ——— */
+        .fairy-light {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #ffd27a;
+            box-shadow: 0 0 12px 3px rgba(255, 210, 120, 0.8), 0 0 25px 8px rgba(255, 180, 80, 0.4);
+            z-index: 2;
+            pointer-events: none;
+            animation: lightBlink var(--blink-dur, 3s) ease-in-out infinite alternate;
+        }
+
+        @keyframes lightBlink {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* ——— Лучи от кинопроектора ——— */
+        .projector-beam {
+            position: absolute;
+            top: 0;
+            width: 200px;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(255, 230, 170, 0.06) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 1;
+            transform-origin: top center;
+            animation: beamSway 10s ease-in-out infinite;
+        }
+
+        .beam-1 { left: 15%; transform: rotate(8deg); animation-delay: 0s; }
+        .beam-2 { left: 50%; transform: rotate(-3deg) translateX(-50%); animation-delay: -4s; width: 260px; }
+        .beam-3 { right: 15%; transform: rotate(-8deg); animation-delay: -7s; }
+
+        @keyframes beamSway {
+            0%, 100% { opacity: 0.5; transform: rotate(var(--rot, 8deg)) scaleX(1); }
+            50% { opacity: 0.9; transform: rotate(calc(var(--rot, 8deg) * 0.5)) scaleX(1.3); }
+        }
+
+        /* ===== КОНТЕЙНЕР-БИЛЕТ ===== */
+        .ticket {
+            position: relative;
+            z-index: 30;
+            backdrop-filter: blur(20px) saturate(1.4);
+            -webkit-backdrop-filter: blur(20px) saturate(1.4);
+            background: rgba(45, 25, 70, 0.75);
+            border-radius: 30px;
+            padding: 34px 30px 28px;
+            max-width: 470px;
+            width: 100%;
+            box-shadow:
+                    0 30px 90px rgba(0, 0, 0, 0.8),
+                    0 0 0 1px rgba(255, 210, 120, 0.35),
+                    inset 0 1px 0 rgba(255, 240, 200, 0.25);
+            border: 2px dashed rgba(255, 210, 120, 0.45);
+            transition: all 0.3s ease;
+            animation: ticketIn 0.9s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+        }
+
+        @keyframes ticketIn {
+            0%   { opacity: 0; transform: translateY(40px) scale(0.9) rotate(-2deg); }
+            100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+        }
+
+        /* Зубчики билета */
+        .ticket::before,
+        .ticket::after {
+            content: '';
+            position: absolute;
+            width: 34px;
+            height: 34px;
+            background: #1a0b2e;
+            border-radius: 50%;
+            border: 2px dashed rgba(255, 210, 120, 0.45);
+            z-index: 31;
+        }
+
+        .ticket::before {
+            top: 50%;
+            left: -18px;
+            transform: translateY(-50%);
+        }
+
+        .ticket::after {
+            top: 50%;
+            right: -18px;
+            transform: translateY(-50%);
+        }
+
+        /* ===== УГОЛКИ-ЭМОДЗИ ===== */
+        .corner-decor {
+            position: absolute;
+            font-size: 1.7rem;
+            opacity: 0.9;
+            filter: drop-shadow(0 0 20px rgba(255, 200, 100, 0.8));
+            user-select: none;
+            pointer-events: none;
+            animation: decorFloat 8s ease-in-out infinite;
+            z-index: 32;
+        }
+        .corner-decor:nth-child(1) { top: 14px; left: 16px; animation-delay: 0s; }
+        .corner-decor:nth-child(2) { top: 14px; right: 16px; animation-delay: 2s; }
+        .corner-decor:nth-child(3) { bottom: 14px; left: 16px; animation-delay: 4s; }
+        .corner-decor:nth-child(4) { bottom: 14px; right: 16px; animation-delay: 1s; }
+
+        @keyframes decorFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.7; }
+            50%      { transform: translateY(-10px) rotate(8deg) scale(1.15); opacity: 1; }
+        }
+
+        /* ===== КОНТЕНТ ===== */
+        .content-screen {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: center;
+        }
+
+        /* ——— Заголовок ——— */
+        .movie-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.6rem;
+            letter-spacing: 4px;
+            background: linear-gradient(180deg, #ffe9b0, #ffb347, #ff7e2e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 40px rgba(255, 180, 80, 0.6);
+            line-height: 1.1;
+            margin-bottom: 2px;
+        }
+
+        .movie-subtitle {
+            font-family: 'Lobster', cursive;
+            font-size: 1.5rem;
+            color: #ffd27a;
+            text-shadow: 0 0 25px rgba(255, 200, 100, 0.8);
+            margin-bottom: 6px;
+            transform: rotate(-2deg);
+        }
+
+        /* ——— Разделитель ——— */
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 6px 0;
+            color: #ffc857;
+            font-size: 0.95rem;
+            letter-spacing: 3px;
+            font-weight: 600;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 200, 100, 0.6), transparent);
+            max-width: 80px;
+        }
+
+        /* ——— Основной текст ——— */
+        .message-text {
+            font-size: 0.95rem;
+            color: #f5e9d6;
+            line-height: 1.75;
+            max-width: 370px;
+            margin: 0 auto;
+            text-align: left;
+            font-weight: 400;
+            background: rgba(30, 15, 50, 0.55);
+            border-radius: 22px;
+            padding: 20px 22px 18px;
+            border: 1px solid rgba(255, 200, 100, 0.25);
+            box-shadow: inset 0 1px 0 rgba(255, 240, 200, 0.15);
+        }
+
+        .message-text p {
+            margin-bottom: 12px;
+            font-weight: 400;
+            color: #f5e9d6;
+        }
+
+        .message-text p:first-of-type {
+            color: #ffd27a;
+            font-weight: 700;
+            text-align: center;
+            font-size: 1rem;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        .message-text ol {
+            list-style: none;
+            padding: 0;
+            margin-top: 4px;
+        }
+
+        .message-text ol li {
+            padding: 11px 0 11px 44px;
+            margin-bottom: 4px;
+            color: #f5e9d6;
+            font-weight: 400;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 200, 100, 0.15);
+            transition: all 0.25s;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            letter-spacing: 0.2px;
+            cursor: default;
+        }
+
+        .message-text ol li::before {
+            content: attr(data-icon);
+            position: absolute;
+            left: 4px;
+            top: 8px;
+            font-size: 1.5rem;
+            filter: drop-shadow(0 0 12px rgba(255, 200, 100, 0.7));
+            transition: transform 0.25s;
+        }
+
+        .message-text ol li:last-child {
+            border-bottom: none;
+        }
+
+        .message-text ol li:hover {
+            background: rgba(255, 200, 100, 0.1);
+            transform: translateX(4px);
+        }
+
+        .message-text ol li:hover::before {
+            transform: scale(1.25) rotate(-8deg);
+        }
+
+        /* ——— Финальная строка ——— */
+        .romantic-footer {
+            font-size: 0.88rem;
+            color: #ffd27a;
+            margin-top: 16px;
+            text-shadow: 0 0 25px rgba(255, 200, 100, 0.7);
+            letter-spacing: 0.8px;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        /* ——— Штрих-код ——— */
+        .barcode {
+            display: flex;
+            justify-content: center;
+            gap: 3px;
+            margin-top: 18px;
+            opacity: 0.5;
+        }
+
+        .barcode span {
+            display: block;
+            height: 26px;
+            background: #ffd27a;
+            border-radius: 1px;
+        }
+
+        /* ——— Номер билета ——— */
+        .ticket-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 6px;
+            color: rgba(255, 210, 120, 0.6);
+            margin-top: 8px;
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 420px) {
+            .ticket { padding: 28px 16px 22px; border-radius: 24px; }
+            .ticket::before, .ticket::after { width: 26px; height: 26px; }
+            .ticket::before { left: -14px; }
+            .ticket::after { right: -14px; }
+            .movie-title { font-size: 2rem; letter-spacing: 3px; }
+            .movie-subtitle { font-size: 1.2rem; }
+            .message-text { font-size: 0.82rem; padding: 16px 14px; }
+            .message-text ol li { padding: 9px 0 9px 38px; font-size: 0.82rem; }
+            .message-text ol li::before { font-size: 1.2rem; left: 4px; top: 7px; }
+            .corner-decor { font-size: 1.3rem; }
+            .popcorn { display: none; }
+            .projector-beam { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- КИНОТЕАТРАЛЬНЫЙ ФОН -->
+<div class="cinema-bg">
+    <!-- Свечение экрана -->
+    <div class="screen-glow"></div>
+
+    <!-- Лучи проектора -->
+    <div class="projector-beam beam-1" style="--rot: 8deg;"></div>
+    <div class="projector-beam beam-2" style="--rot: -3deg;"></div>
+    <div class="projector-beam beam-3" style="--rot: -8deg;"></div>
+
+    <!-- Плавающий попкорн -->
+    <div class="popcorn">🍿</div>
+    <div class="popcorn">🍿</div>
+    <div class="popcorn">🍿</div>
+    <div class="popcorn">🍿</div>
+    <div class="popcorn">🍿</div>
+    <div class="popcorn">🍿</div>
+    <div class="popcorn">🍿</div>
+    <div class="popcorn">🍿</div>
+    <div class="popcorn">🍿</div>
+    <div class="popcorn">🍿</div>
+</div>
+
+<!-- БИЛЕТ-ПРИГЛАШЕНИЕ -->
+<div class="ticket" id="appContainer">
+    <span class="corner-decor">🍔</span>
+    <span class="corner-decor">🍟</span>
+    <span class="corner-decor">🍿</span>
+    <span class="corner-decor">🎬</span>
+
+    <div id="mainScreen" class="content-screen">
+        <div class="movie-title">КИНО-ВЕЧЕР</div>
+        <div class="movie-subtitle">Приглашение 🎟️</div>
+
+        <div class="divider">✦ СЕАНС ✦</div>
+
+        <div class="message-text">
+            <p>Дорогая Софья Эдуардовна!</p>
+            <p>Приглашаю вас на уютный кино-вечер.</p>
+            <ol>
+                <li data-icon="🍔">Сочные бургеры</li>
+                <li data-icon="🍟">Хрустящий картофель фри</li>
+                <li data-icon="🍿">Огромный попкорн</li>
+                <li data-icon="🎬">Хороший фильм</li>
+                <li data-icon="🛋️">Уютная атмосфера и отличное настроение</li>
+            </ol>
+            <p style="text-align:center; color:#ffd27a; font-weight:700; margin-top:14px; margin-bottom:0;">
+                Жду вас с нетерпением! ✨
+            </p>
+        </div>
+        <!-- Штрих-код -->
+        <div class="barcode">
+            <span style="width:3px;"></span>
+            <span style="width:2px;"></span>
+            <span style="width:5px;"></span>
+            <span style="width:2px;"></span>
+            <span style="width:3px;"></span>
+            <span style="width:6px;"></span>
+            <span style="width:2px;"></span>
+            <span style="width:4px;"></span>
+            <span style="width:2px;"></span>
+            <span style="width:3px;"></span>
+            <span style="width:5px;"></span>
+            <span style="width:2px;"></span>
+            <span style="width:3px;"></span>
+        </div>
+
+        <div class="ticket-number">№ 18 · 09 · 26 · ROW 7 · SEAT 14</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ===== ГЕНЕРАЦИЯ МЕРЦАЮЩИХ ЛАМПОЧЕК ПО КРАЯМ =====
+        const cinemaBg = document.querySelector('.cinema-bg');
+
+        // Лампочки по периметру
+        const positions = [];
+        const step = 8; // шаг в процентах
+
+        // Верхний и нижний ряды
+        for (let x = 2; x < 100; x += step) {
+            positions.push({ left: x + '%', top: '2%' });
+            positions.push({ left: x + '%', top: '98%' });
+        }
+        // Левый и правый ряды
+        for (let y = 8; y < 95; y += step) {
+            positions.push({ left: '2%', top: y + '%' });
+            positions.push({ left: '98%', top: y + '%' });
+        }
+
+        positions.forEach((pos, i) => {
+            const light = document.createElement('div');
+            light.className = 'fairy-light';
+            light.style.left = pos.left;
+            light.style.top = pos.top;
+            light.style.setProperty('--blink-dur', (Math.random() * 3 + 1.5) + 's');
+            light.style.animationDelay = (Math.random() * 4) + 's';
+
+            // Цветовые вариации
+            const r = Math.random();
+            if (r > 0.7) {
+                light.style.background = '#ffb347';
+                light.style.boxShadow = '0 0 12px 3px rgba(255, 180, 80, 0.8), 0 0 25px 8px rgba(255, 140, 50, 0.4)';
+            } else if (r > 0.4) {
+                light.style.background = '#fff4d6';
+                light.style.boxShadow = '0 0 12px 3px rgba(255, 240, 200, 0.9), 0 0 25px 8px rgba(255, 210, 150, 0.5)';
+            }
+
+            cinemaBg.appendChild(light);
+        });
+
+        // ===== ГЕНЕРАЦИЯ ДОПОЛНИТЕЛЬНЫХ ПЛАВАЮЩИХ ПОПКОРНОВ =====
+        for (let i = 0; i < 6; i++) {
+            const pop = document.createElement('div');
+            pop.className = 'popcorn';
+            pop.textContent = '🍿';
+            pop.style.left = (Math.random() * 90 + 5) + '%';
+            pop.style.setProperty('--pop-dur', (Math.random() * 10 + 14) + 's');
+            pop.style.animationDelay = (Math.random() * 15) + 's';
+            pop.style.fontSize = (Math.random() * 1.2 + 1) + 'rem';
+            cinemaBg.appendChild(pop);
+        }
+
+        // ===== ЛЁГКИЙ ПАРАЛЛАКС ПРИ ДВИЖЕНИИ МЫШИ =====
+        const ticket = document.getElementById('appContainer');
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 2;
+            const y = (e.clientY / window.innerHeight - 0.5) * 2;
+            const beams = document.querySelectorAll('.projector-beam');
+            beams.forEach((beam, i) => {
+                const factor = (i + 1) * 2;
+                beam.style.transform = `rotate(${beam.dataset.rot || 8}deg) translateX(${x * factor}px)`;
+            });
+        });
+    })();
+</script>
+
+</body>
+</html>
