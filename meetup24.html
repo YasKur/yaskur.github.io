@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Приглашение на отдых в четверг 🌿</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Comfortaa:wght@400;600;700&family=Lobster&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-family: 'Comfortaa', cursive;
+            position: relative;
+            overflow-x: hidden;
+            background: #0a1a2a;
+        }
+
+        /* ===== ФОН ДЛЯ ОТДЫХА (спокойный, природный, расслабляющий) ===== */
+        .party-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background:
+                    radial-gradient(ellipse at 20% 30%, #2ecc71 0%, #1a8a4a 30%, #0d4a2a 60%, #061a0e 100%);
+            overflow: hidden;
+        }
+
+        /* ——— Мягкие пятна ——— */
+        .neon-orb {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 2;
+            filter: blur(60px);
+            animation: orbFloat var(--orb-dur, 14s) ease-in-out infinite alternate;
+            mix-blend-mode: screen;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #2ecc71, transparent 70%);
+            top: -5%;
+            left: -10%;
+            --orb-dur: 18s;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #1abc9c, transparent 70%);
+            bottom: -15%;
+            right: -5%;
+            --orb-dur: 22s;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, #f1c40f, transparent 70%);
+            top: 40%;
+            left: 55%;
+            --orb-dur: 20s;
+            animation-delay: -9s;
+        }
+
+        .orb-4 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, #3498db, transparent 70%);
+            top: 10%;
+            right: 15%;
+            --orb-dur: 24s;
+            animation-delay: -3s;
+        }
+
+        .orb-5 {
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, #e67e22, transparent 70%);
+            bottom: 20%;
+            left: 10%;
+            --orb-dur: 16s;
+            animation-delay: -7s;
+        }
+
+        @keyframes orbFloat {
+            0%   { transform: translate(0, 0) scale(1); }
+            50%  { transform: translate(40px, 30px) scale(1.2); }
+            100% { transform: translate(60px, -30px) scale(1.3); }
+        }
+
+        /* ——— Волны ——— */
+        .neon-wave {
+            position: absolute;
+            width: 200%;
+            height: 250px;
+            left: -50%;
+            pointer-events: none;
+            z-index: 1;
+            filter: blur(50px);
+            opacity: 0.5;
+            mix-blend-mode: screen;
+        }
+
+        .wave-1 {
+            top: 10%;
+            background: linear-gradient(90deg, transparent, #2ecc71, #1abc9c, transparent);
+            animation: waveMove 12s ease-in-out infinite alternate;
+        }
+
+        .wave-2 {
+            top: 40%;
+            background: linear-gradient(90deg, transparent, #f1c40f, #e67e22, transparent);
+            animation: waveMove 16s ease-in-out infinite alternate-reverse;
+        }
+
+        .wave-3 {
+            top: 70%;
+            background: linear-gradient(90deg, transparent, #3498db, #2ecc71, transparent);
+            animation: waveMove 20s ease-in-out infinite alternate;
+            animation-delay: -6s;
+        }
+
+        @keyframes waveMove {
+            0%   { transform: translateX(-10%) skewY(-3deg); opacity: 0.3; }
+            100% { transform: translateX(10%) skewY(3deg); opacity: 0.7; }
+        }
+
+        /* ——— Сетка ——— */
+        .neon-grid {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background-image:
+                    linear-gradient(rgba(46, 204, 113, 0.12) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(26, 188, 156, 0.12) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridPulse 6s ease-in-out infinite;
+        }
+
+        @keyframes gridPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+
+        /* ——— Пузыри ——— */
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 3;
+            opacity: 0;
+            animation: bubbleFloat var(--b-dur, 12s) ease-in infinite;
+            box-shadow: 0 0 20px 8px rgba(46, 204, 113, 0.4);
+        }
+
+        @keyframes bubbleFloat {
+            0% {
+                transform: translateY(100vh) scale(0.3) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 0.8; }
+            50% {
+                transform: translateY(40vh) scale(1) rotate(180deg);
+                opacity: 0.6;
+            }
+            90% { opacity: 0.3; }
+            100% {
+                transform: translateY(-20vh) scale(0.5) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* ——— Падающие блёстки ——— */
+        .sparkle {
+            position: absolute;
+            top: -10vh;
+            pointer-events: none;
+            z-index: 3;
+            opacity: 0;
+            animation: sparkleFall var(--s-dur, 10s) linear infinite;
+            filter: drop-shadow(0 0 10px currentColor);
+        }
+
+        @keyframes sparkleFall {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            8% { opacity: 0.9; }
+            50% {
+                transform: translateY(50vh) translateX(40px) rotate(180deg) scale(1.1);
+                opacity: 0.8;
+            }
+            92% { opacity: 0.4; }
+            100% {
+                transform: translateY(110vh) translateX(-30px) rotate(360deg) scale(0.7);
+                opacity: 0;
+            }
+        }
+
+        /* ——— Летающие emoji ——— */
+        .fly-emoji {
+            position: absolute;
+            top: -10vh;
+            pointer-events: none;
+            z-index: 4;
+            opacity: 0;
+            animation: flyEmoji var(--e-dur, 14s) linear infinite;
+            filter: drop-shadow(0 0 15px rgba(46, 204, 113, 0.8));
+        }
+
+        @keyframes flyEmoji {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            10% { opacity: 0.9; }
+            50% {
+                transform: translateY(45vh) translateX(-50px) rotate(200deg) scale(1.2);
+                opacity: 0.8;
+            }
+            90% { opacity: 0.5; }
+            100% {
+                transform: translateY(115vh) translateX(40px) rotate(400deg) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* ——— Пульсирующие частицы ——— */
+        .party-particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 3;
+            opacity: 0;
+            animation: partyPulse var(--pp-dur, 6s) ease-in-out infinite;
+        }
+
+        @keyframes partyPulse {
+            0%, 100% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0.9;
+            }
+        }
+
+        /* ===== КОНТЕЙНЕР-ОТКРЫТКА ===== */
+        .ticket {
+            position: relative;
+            z-index: 30;
+            backdrop-filter: blur(22px) saturate(1.6);
+            -webkit-backdrop-filter: blur(22px) saturate(1.6);
+            background: rgba(10, 30, 20, 0.72);
+            border-radius: 30px;
+            padding: 28px 28px 30px;
+            max-width: 490px;
+            width: 100%;
+            box-shadow:
+                    0 30px 90px rgba(0, 0, 0, 0.9),
+                    0 0 0 1px rgba(100, 255, 180, 0.6),
+                    0 0 60px rgba(46, 204, 113, 0.3),
+                    0 0 120px rgba(26, 188, 156, 0.2),
+                    inset 0 1px 0 rgba(180, 255, 220, 0.3);
+            border: 2px dashed rgba(100, 255, 180, 0.55);
+            transition: all 0.3s ease;
+            animation: ticketIn 0.9s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+        }
+
+        @keyframes ticketIn {
+            0%   { opacity: 0; transform: translateY(50px) scale(0.85) rotate(-3deg); }
+            100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+        }
+
+        /* Зубчики открытки */
+        .ticket::before,
+        .ticket::after {
+            content: '';
+            position: absolute;
+            width: 34px;
+            height: 34px;
+            background: #0a1a2a;
+            border-radius: 50%;
+            border: 2px dashed rgba(100, 255, 180, 0.55);
+            z-index: 31;
+        }
+
+        .ticket::before {
+            top: 50%;
+            left: -18px;
+            transform: translateY(-50%);
+        }
+
+        .ticket::after {
+            top: 50%;
+            right: -18px;
+            transform: translateY(-50%);
+        }
+
+        /* ===== ГИФКА С КОТОМ СВЕРХУ ===== */
+        .cat-gif-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 6px;
+            position: relative;
+            z-index: 35;
+        }
+
+        .cat-gif {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(100, 255, 180, 0.7);
+            box-shadow:
+                    0 0 30px rgba(46, 204, 113, 0.7),
+                    0 0 60px rgba(26, 188, 156, 0.4),
+                    0 0 100px rgba(46, 204, 113, 0.2);
+            animation: catBounce 2.5s ease-in-out infinite;
+            background: #0a1a2a;
+        }
+
+        @keyframes catBounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-12px) scale(1.05); }
+        }
+
+        /* ===== УГОЛКИ-ЭМОДЗИ ===== */
+        .corner-decor {
+            position: absolute;
+            font-size: 1.8rem;
+            opacity: 0.95;
+            filter: drop-shadow(0 0 20px rgba(100, 255, 180, 1));
+            user-select: none;
+            pointer-events: none;
+            animation: decorFloat 6s ease-in-out infinite;
+            z-index: 32;
+        }
+        .corner-decor:nth-child(1) { top: 14px; left: 16px; animation-delay: 0s; }
+        .corner-decor:nth-child(2) { top: 14px; right: 16px; animation-delay: 1.5s; }
+        .corner-decor:nth-child(3) { bottom: 14px; left: 16px; animation-delay: 3s; }
+        .corner-decor:nth-child(4) { bottom: 14px; right: 16px; animation-delay: 4.5s; }
+
+        @keyframes decorFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.7; }
+            50%      { transform: translateY(-12px) rotate(12deg) scale(1.2); opacity: 1; }
+        }
+
+        /* ===== КОНТЕНТ ===== */
+        .content-screen {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: center;
+        }
+
+        /* ——— Заголовок ——— */
+        .party-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            letter-spacing: 6px;
+            background: linear-gradient(180deg, #e6fff5, #2ecc71, #1abc9c, #f1c40f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 50px rgba(100, 255, 180, 0.8);
+            line-height: 1.1;
+            margin-bottom: 2px;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+
+        .party-subtitle {
+            font-family: 'Lobster', cursive;
+            font-size: 1.7rem;
+            color: #b3ffd9;
+            text-shadow: 0 0 30px rgba(100, 255, 180, 0.9), 0 0 60px rgba(26, 188, 156, 0.5);
+            margin-bottom: 6px;
+            transform: rotate(-2deg);
+        }
+
+        /* ——— Разделитель ——— */
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 8px 0;
+            color: #b3ffd9;
+            font-size: 1rem;
+            letter-spacing: 4px;
+            font-weight: 600;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(100, 255, 180, 0.8), transparent);
+            max-width: 80px;
+        }
+
+        /* ——— Основной текст ——— */
+        .message-text {
+            font-size: 1rem;
+            color: #e0fff0;
+            line-height: 1.9;
+            max-width: 380px;
+            margin: 0 auto;
+            text-align: center;
+            font-weight: 400;
+            background: rgba(10, 30, 20, 0.6);
+            border-radius: 22px;
+            padding: 24px 22px 20px;
+            border: 1px solid rgba(100, 255, 180, 0.4);
+            box-shadow: inset 0 1px 0 rgba(180, 255, 220, 0.2);
+        }
+
+        .message-text p {
+            margin-bottom: 14px;
+            font-weight: 400;
+            color: #e0fff0;
+        }
+
+        .message-text p:first-of-type {
+            color: #b3ffd9;
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+        }
+
+        .message-text p:last-of-type {
+            margin-bottom: 0;
+            color: #b3ffd9;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.8px;
+            line-height: 1.7;
+            text-shadow: 0 0 25px rgba(100, 255, 180, 0.8);
+        }
+
+        /* ——— Штрих-код ——— */
+        .barcode {
+            display: flex;
+            justify-content: center;
+            gap: 3px;
+            margin-top: 16px;
+            opacity: 0.6;
+        }
+
+        .barcode span {
+            display: block;
+            height: 26px;
+            background: linear-gradient(180deg, #2ecc71, #1abc9c);
+            border-radius: 1px;
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 420px) {
+            .ticket { padding: 22px 16px 24px; border-radius: 24px; }
+            .ticket::before, .ticket::after { width: 26px; height: 26px; }
+            .ticket::before { left: -14px; }
+            .ticket::after { right: -14px; }
+            .cat-gif { width: 110px; height: 110px; }
+            .party-title { font-size: 2.2rem; letter-spacing: 4px; }
+            .party-subtitle { font-size: 1.3rem; }
+            .message-text { font-size: 0.88rem; padding: 18px 14px; }
+            .corner-decor { font-size: 1.3rem; }
+            .sparkle { display: none; }
+            .fly-emoji { display: none; }
+            .bubble { display: none; }
+            .neon-orb { display: none; }
+            .neon-wave { display: none; }
+            .party-particle { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ФОН ДЛЯ ОТДЫХА -->
+<div class="party-bg">
+    <!-- Мягкие пятна -->
+    <div class="neon-orb orb-1"></div>
+    <div class="neon-orb orb-2"></div>
+    <div class="neon-orb orb-3"></div>
+    <div class="neon-orb orb-4"></div>
+    <div class="neon-orb orb-5"></div>
+
+    <!-- Волны -->
+    <div class="neon-wave wave-1"></div>
+    <div class="neon-wave wave-2"></div>
+    <div class="neon-wave wave-3"></div>
+
+    <!-- Сетка -->
+    <div class="neon-grid"></div>
+</div>
+
+<!-- ОТКРЫТКА-ПРИГЛАШЕНИЕ -->
+<div class="ticket" id="appContainer">
+    <span class="corner-decor">🌿</span>
+    <span class="corner-decor">🌞</span>
+    <span class="corner-decor">🍃</span>
+    <span class="corner-decor">🌸</span>
+
+    <div id="mainScreen" class="content-screen">
+        <div class="party-title">RELAX</div>
+        <div class="party-subtitle">Приглашение на отдых 🌿</div>
+
+        <div class="divider">✦ <span id="todayDate">--.--.--</span> ✦</div>
+
+        <div class="message-text">
+            <p>Дорогая Софья Эдуардовна!</p>
+            <p>Приглашаю вас в сегодня на отдых!</p>
+            <p>Будем отдыхать, набираться сил и наслаждаться спокойствием</p>
+            <p>Жду с нетерпением✨</p>
+        </div>
+
+        <!-- Штрих-код -->
+        <div class="barcode">
+            <span style="width:3px;"></span>
+            <span style="width:2px;"></span>
+            <span style="width:5px;"></span>
+            <span style="width:2px;"></span>
+            <span style="width:3px;"></span>
+            <span style="width:6px;"></span>
+            <span style="width:2px;"></span>
+            <span style="width:4px;"></span>
+            <span style="width:2px;"></span>
+            <span style="width:3px;"></span>
+            <span style="width:5px;"></span>
+            <span style="width:2px;"></span>
+            <span style="width:3px;"></span>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ===== СЕГОДНЯШНЯЯ ДАТА =====
+        const dateEl = document.getElementById('todayDate');
+        const now = new Date();
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const year = String(now.getFullYear()).slice(-2);
+        dateEl.textContent = day + '.' + month + '.' + year;
+
+        const partyBg = document.querySelector('.party-bg');
+
+        // ===== ГЕНЕРАЦИЯ БЛЁСТОК / ЗВЁЗД =====
+        const sparkleChars = ['✨', '⭐', '🌟', '💫', '✦', '✧'];
+        const sparkleColors = ['#2ecc71', '#1abc9c', '#f1c40f', '#e67e22', '#3498db'];
+
+        for (let i = 0; i < 30; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.textContent = sparkleChars[Math.floor(Math.random() * sparkleChars.length)];
+            sparkle.style.left = (Math.random() * 96 + 2) + '%';
+            const dur = Math.random() * 8 + 8;
+            sparkle.style.setProperty('--s-dur', dur + 's');
+            sparkle.style.animationDelay = (Math.random() * 20) + 's';
+            const size = Math.random() * 1.2 + 0.8;
+            sparkle.style.fontSize = size + 'rem';
+            sparkle.style.color = sparkleColors[Math.floor(Math.random() * sparkleColors.length)];
+            sparkle.style.top = (Math.random() * -15 - 5) + 'vh';
+            partyBg.appendChild(sparkle);
+        }
+
+        // ===== ГЕНЕРАЦИЯ ЛЕТАЮЩИХ EMOJI =====
+        const emojis = ['🌿', '🍃', '🌸', '🌞', '🌻', '🦋', '🌺', '🍀', '🌴', '☀️', '🌈', '🕊️'];
+
+        for (let i = 0; i < 16; i++) {
+            const emoji = document.createElement('div');
+            emoji.className = 'fly-emoji';
+            emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            emoji.style.left = (Math.random() * 94 + 3) + '%';
+            const dur = Math.random() * 10 + 12;
+            emoji.style.setProperty('--e-dur', dur + 's');
+            emoji.style.animationDelay = (Math.random() * 25) + 's';
+            const size = Math.random() * 1.8 + 1.2;
+            emoji.style.fontSize = size + 'rem';
+            emoji.style.top = (Math.random() * -15 - 5) + 'vh';
+            partyBg.appendChild(emoji);
+        }
+
+        // ===== ГЕНЕРАЦИЯ ПУЗЫРЕЙ =====
+        for (let i = 0; i < 18; i++) {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            const size = Math.random() * 80 + 30;
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            bubble.style.left = (Math.random() * 96 + 2) + '%';
+            const dur = Math.random() * 12 + 10;
+            bubble.style.setProperty('--b-dur', dur + 's');
+            bubble.style.animationDelay = (Math.random() * 20) + 's';
+
+            const colors = [
+                'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), rgba(46,204,113,0.3))',
+                'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), rgba(26,188,156,0.3))',
+                'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), rgba(241,196,15,0.3))',
+                'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), rgba(52,152,219,0.3))'
+            ];
+            bubble.style.background = colors[Math.floor(Math.random() * colors.length)];
+            partyBg.appendChild(bubble);
+        }
+
+        // ===== ГЕНЕРАЦИЯ ПУЛЬСИРУЮЩИХ ЧАСТИЦ =====
+        for (let i = 0; i < 25; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'party-particle';
+            const size = Math.random() * 6 + 3;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.left = (Math.random() * 100) + '%';
+            particle.style.top = (Math.random() * 100) + '%';
+            const dur = Math.random() * 4 + 4;
+            particle.style.setProperty('--pp-dur', dur + 's');
+            particle.style.animationDelay = (Math.random() * 10) + 's';
+
+            const color = sparkleColors[Math.floor(Math.random() * sparkleColors.length)];
+            particle.style.background = color;
+            particle.style.boxShadow = `0 0 12px 4px ${color}80, 0 0 24px 8px ${color}40`;
+            partyBg.appendChild(particle);
+        }
+
+        // ===== ЛЁГКИЙ ПАРАЛЛАКС ПРИ ДВИЖЕНИИ МЫШИ =====
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 2;
+            const y = (e.clientY / window.innerHeight - 0.5) * 2;
+
+            const sparkles = document.querySelectorAll('.sparkle');
+            sparkles.forEach((el, i) => {
+                const factor = (i % 4 + 1) * 2;
+                el.style.marginLeft = (x * factor) + 'px';
+                el.style.marginTop = (y * factor) + 'px';
+            });
+
+            const orbs = document.querySelectorAll('.neon-orb');
+            orbs.forEach((orb, i) => {
+                const factor = (i + 1) * 5;
+                orb.style.transform = `translate(${x * factor}px, ${y * factor}px)`;
+            });
+
+            const waves = document.querySelectorAll('.neon-wave');
+            waves.forEach((wave, i) => {
+                const factor = (i + 1) * 3;
+                wave.style.marginLeft = (x * factor) + 'px';
+            });
+
+            const emojis = document.querySelectorAll('.fly-emoji');
+            emojis.forEach((el, i) => {
+                const factor = (i % 5 + 1) * 2;
+                el.style.marginLeft = (x * factor) + 'px';
+                el.style.marginTop = (y * factor) + 'px';
+            });
+        });
+    })();
+</script>
+
+</body>
+</html>
