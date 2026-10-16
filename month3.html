@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>3 месяца</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Comfortaa:wght@400;600;700&family=Lobster&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-family: 'Comfortaa', cursive;
+            position: relative;
+            overflow-x: hidden;
+            background: #021b2e;
+        }
+
+        /* ===== МОРСКОЙ ФОН ===== */
+        .sea-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            background: linear-gradient(180deg, #0a2a43 0%, #0e3a5c 30%, #145a7a 60%, #1e7a96 100%);
+        }
+
+        /* ——— Фотография на заднем фоне (вставьте свою) ——— */
+        .sea-photo {
+            position: absolute;
+            inset: 0;
+            background-image: url('./more.jpg'); /* ← ВСТАВЬТЕ ССЫЛКУ НА ФОТО ИЛИ ПУТЬ К ФАЙЛУ */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.55;
+            filter: saturate(1.2) brightness(0.9) contrast(1.05);
+            z-index: 0;
+            animation: photoBreath 30s ease-in-out infinite alternate;
+        }
+
+        @keyframes photoBreath {
+            0%   { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.08) translate(-1%, -1%); }
+        }
+
+        /* ——— Затемняющий градиент поверх фото для читаемости ——— */
+        .sea-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background:
+                    radial-gradient(ellipse at 50% 120%, rgba(0, 40, 70, 0.1) 0%, rgba(0, 20, 40, 0.75) 70%),
+                    linear-gradient(180deg, rgba(0, 20, 40, 0.55) 0%, rgba(0, 30, 55, 0.35) 45%, rgba(0, 45, 80, 0.6) 100%);
+            pointer-events: none;
+        }
+
+        /* ——— Солнечные блики на воде ——— */
+        .sea-sun-glare {
+            position: absolute;
+            bottom: 8%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 40%;
+            background: radial-gradient(ellipse at center, rgba(255, 240, 200, 0.35) 0%, rgba(255, 220, 150, 0.15) 35%, transparent 70%);
+            z-index: 2;
+            pointer-events: none;
+            filter: blur(30px);
+            animation: glarePulse 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes glarePulse {
+            0%   { opacity: 0.6; transform: translateX(-50%) scale(1); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1.15); }
+        }
+
+        /* ——— Волны (несколько слоёв для глубины) ——— */
+        .sea-waves {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 220px;
+            z-index: 3;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background-repeat: repeat-x;
+            background-size: 50% 100%;
+            opacity: 0.7;
+        }
+
+        .wave-1 {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,60 C150,100 350,0 600,60 C850,120 1050,20 1200,60 L1200,120 L0,120 Z' fill='%231e7a96'/%3E%3C/svg%3E");
+            animation: waveMove 12s linear infinite;
+            opacity: 0.5;
+            z-index: 1;
+        }
+
+        .wave-2 {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,80 C200,30 400,110 600,70 C800,30 1000,100 1200,60 L1200,120 L0,120 Z' fill='%23145a7a'/%3E%3C/svg%3E");
+            animation: waveMove 8s linear infinite reverse;
+            opacity: 0.6;
+            z-index: 2;
+        }
+
+        .wave-3 {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,50 C180,90 380,10 600,60 C820,110 1020,30 1200,70 L1200,120 L0,120 Z' fill='%230e3a5c'/%3E%3C/svg%3E");
+            animation: waveMove 16s linear infinite;
+            opacity: 0.7;
+            z-index: 3;
+        }
+
+        @keyframes waveMove {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ——— Блики на воде (мерцающие полосы) ——— */
+        .sea-shimmer {
+            position: absolute;
+            inset: 0;
+            z-index: 4;
+            pointer-events: none;
+            background:
+                    repeating-linear-gradient(
+                            90deg,
+                            transparent 0px,
+                            rgba(255, 240, 200, 0.06) 2px,
+                            transparent 4px,
+                            transparent 80px
+                    );
+            mix-blend-mode: overlay;
+            animation: shimmerMove 18s linear infinite;
+        }
+
+        @keyframes shimmerMove {
+            0%   { transform: translateX(0); opacity: 0.5; }
+            50%  { opacity: 1; }
+            100% { transform: translateX(-80px); opacity: 0.5; }
+        }
+
+        /* ——— Лучи света сквозь воду ——— */
+        .sea-rays {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+            background:
+                    linear-gradient(115deg, transparent 30%, rgba(255, 250, 220, 0.06) 40%, transparent 50%),
+                    linear-gradient(115deg, transparent 55%, rgba(255, 250, 220, 0.05) 63%, transparent 72%),
+                    linear-gradient(115deg, transparent 75%, rgba(255, 250, 220, 0.04) 82%, transparent 90%);
+            animation: raysMove 14s ease-in-out infinite alternate;
+        }
+
+        @keyframes raysMove {
+            0%   { opacity: 0.4; transform: translateX(-20px); }
+            100% { opacity: 0.9; transform: translateX(20px); }
+        }
+
+        /* ——— Пузыри (морские) ——— */
+        .sea-bubble {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 5;
+            opacity: 0;
+            animation: bubbleRise var(--b-dur, 14s) ease-in infinite;
+            box-shadow: inset -3px -3px 8px rgba(255, 255, 255, 0.5), 0 0 15px rgba(180, 230, 255, 0.4);
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(180, 230, 255, 0.15));
+        }
+
+        @keyframes bubbleRise {
+            0% {
+                transform: translateY(0) scale(0.4) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 0.7; }
+            50% {
+                transform: translateY(-45vh) scale(1) rotate(180deg);
+                opacity: 0.5;
+            }
+            90% { opacity: 0.2; }
+            100% {
+                transform: translateY(-95vh) scale(0.6) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* ——— Блики/блёстки на воде ——— */
+        .sea-sparkle {
+            position: absolute;
+            pointer-events: none;
+            z-index: 5;
+            opacity: 0;
+            animation: sparkleFloat var(--s-dur, 10s) ease-in-out infinite;
+            filter: drop-shadow(0 0 8px currentColor);
+        }
+
+        @keyframes sparkleFloat {
+            0%, 100% {
+                transform: translateY(0) scale(0.5) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                transform: translateY(-15px) scale(1.2) rotate(180deg);
+                opacity: 0.9;
+            }
+        }
+
+        /* ——— Чайки / морские emoji ——— */
+        .sea-emoji {
+            position: absolute;
+            top: -10vh;
+            pointer-events: none;
+            z-index: 6;
+            opacity: 0;
+            animation: flySea var(--e-dur, 16s) linear infinite;
+            filter: drop-shadow(0 0 10px rgba(200, 240, 255, 0.8));
+        }
+
+        @keyframes flySea {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            10% { opacity: 0.85; }
+            50% {
+                transform: translateY(45vh) translateX(-60px) rotate(15deg) scale(1.1);
+                opacity: 0.7;
+            }
+            90% { opacity: 0.4; }
+            100% {
+                transform: translateY(115vh) translateX(60px) rotate(-10deg) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* ——— Морские частицы (планктон) ——— */
+        .sea-particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 5;
+            opacity: 0;
+            animation: particlePulse var(--pp-dur, 6s) ease-in-out infinite;
+        }
+
+        @keyframes particlePulse {
+            0%, 100% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.4);
+                opacity: 0.8;
+            }
+        }
+
+        /* ===== КОНТЕЙНЕР-ОТКРЫТКА ===== */
+        .kinder-ticket {
+            position: relative;
+            z-index: 30;
+            backdrop-filter: blur(22px) saturate(1.6);
+            -webkit-backdrop-filter: blur(22px) saturate(1.6);
+            background: rgba(5, 30, 55, 0.78);
+            border-radius: 30px;
+            padding: 28px 28px 30px;
+            max-width: 490px;
+            width: 100%;
+            box-shadow:
+                    0 30px 90px rgba(0, 0, 0, 0.8),
+                    0 0 0 1px rgba(150, 220, 255, 0.7),
+                    0 0 60px rgba(100, 200, 255, 0.35),
+                    0 0 120px rgba(50, 150, 220, 0.2),
+                    inset 0 1px 0 rgba(200, 240, 255, 0.35);
+            border: 2px dashed rgba(150, 220, 255, 0.7);
+            transition: all 0.3s ease;
+            animation: ticketIn 0.9s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+        }
+
+        @keyframes ticketIn {
+            0%   { opacity: 0; transform: translateY(50px) scale(0.85) rotate(-3deg); }
+            100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+        }
+
+        .kinder-ticket::before,
+        .kinder-ticket::after {
+            content: '';
+            position: absolute;
+            width: 34px;
+            height: 34px;
+            background: #021b2e;
+            border-radius: 50%;
+            border: 2px dashed rgba(150, 220, 255, 0.7);
+            z-index: 31;
+        }
+
+        .kinder-ticket::before {
+            top: 50%;
+            left: -18px;
+            transform: translateY(-50%);
+        }
+
+        .kinder-ticket::after {
+            top: 50%;
+            right: -18px;
+            transform: translateY(-50%);
+        }
+
+        /* ===== ГИФКА С КОТОМ СВЕРХУ ===== */
+        .cat-gif-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 6px;
+            position: relative;
+            z-index: 35;
+        }
+
+        .cat-gif {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(150, 220, 255, 0.8);
+            box-shadow:
+                    0 0 30px rgba(100, 200, 255, 0.8),
+                    0 0 60px rgba(50, 150, 220, 0.5),
+                    0 0 100px rgba(200, 240, 255, 0.3);
+            animation: catBounce 2.5s ease-in-out infinite;
+            background: #052a45;
+        }
+
+        @keyframes catBounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-12px) scale(1.05); }
+        }
+
+        /* ===== УГОЛКИ-ЭМОДЗИ ===== */
+        .kinder-corner {
+            position: absolute;
+            font-size: 1.8rem;
+            opacity: 0.95;
+            filter: drop-shadow(0 0 20px rgba(150, 220, 255, 1));
+            user-select: none;
+            pointer-events: none;
+            animation: decorFloat 6s ease-in-out infinite;
+            z-index: 32;
+        }
+        .kinder-corner:nth-child(1) { top: 14px; left: 16px; animation-delay: 0s; }
+        .kinder-corner:nth-child(2) { top: 14px; right: 16px; animation-delay: 1.5s; }
+        .kinder-corner:nth-child(3) { bottom: 14px; left: 16px; animation-delay: 3s; }
+        .kinder-corner:nth-child(4) { bottom: 14px; right: 16px; animation-delay: 4.5s; }
+
+        @keyframes decorFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.7; }
+            50%      { transform: translateY(-12px) rotate(12deg) scale(1.2); opacity: 1; }
+        }
+
+        /* ===== КОНТЕНТ ===== */
+        .content-screen {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: center;
+        }
+
+        .kinder-subtitle {
+            font-family: 'Lobster', cursive;
+            font-size: 1.7rem;
+            color: #d6f0ff;
+            text-shadow: 0 0 30px rgba(150, 220, 255, 0.9), 0 0 60px rgba(50, 150, 220, 0.6);
+            margin-bottom: 6px;
+            transform: rotate(-2deg);
+        }
+
+        .kinder-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 8px 0;
+            color: #d6f0ff;
+            font-size: 1rem;
+            letter-spacing: 4px;
+            font-weight: 600;
+        }
+
+        .kinder-divider::before,
+        .kinder-divider::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(150, 220, 255, 0.9), transparent);
+            max-width: 80px;
+        }
+
+        .kinder-message {
+            font-size: 1rem;
+            color: #e6f7ff;
+            line-height: 1.9;
+            max-width: 380px;
+            margin: 0 auto;
+            text-align: center;
+            font-weight: 400;
+            background: rgba(5, 30, 55, 0.6);
+            border-radius: 22px;
+            padding: 24px 22px 20px;
+            border: 1px solid rgba(150, 220, 255, 0.5);
+            box-shadow: inset 0 1px 0 rgba(200, 240, 255, 0.2);
+        }
+
+        .kinder-message p {
+            margin-bottom: 14px;
+            font-weight: 400;
+            color: #e6f7ff;
+        }
+
+        .kinder-message p:first-of-type {
+            color: #a8e0ff;
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+        }
+
+        .kinder-message p:last-of-type {
+            margin-bottom: 0;
+            color: #d6f0ff;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.8px;
+            line-height: 1.7;
+            text-shadow: 0 0 25px rgba(150, 220, 255, 0.9);
+        }
+
+        .kinder-barcode {
+            display: flex;
+            justify-content: center;
+            gap: 3px;
+            margin-top: 16px;
+            opacity: 0.65;
+        }
+
+        .kinder-barcode span {
+            display: block;
+            height: 26px;
+            background: linear-gradient(180deg, #a8e0ff, #2e8bc0);
+            border-radius: 1px;
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 420px) {
+            .kinder-ticket { padding: 22px 16px 24px; border-radius: 24px; }
+            .kinder-ticket::before, .kinder-ticket::after { width: 26px; height: 26px; }
+            .kinder-ticket::before { left: -14px; }
+            .kinder-ticket::after { right: -14px; }
+            .cat-gif { width: 110px; height: 110px; }
+            .kinder-subtitle { font-size: 1.3rem; }
+            .kinder-message { font-size: 0.88rem; padding: 18px 14px; }
+            .kinder-corner { font-size: 1.3rem; }
+            .sea-sparkle, .sea-emoji, .sea-bubble, .sea-particle { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- МОРСКОЙ ФОН -->
+<div class="sea-bg">
+    <!-- Ваша фотография -->
+    <div class="sea-photo"></div>
+    <!-- Затемнение -->
+    <div class="sea-overlay"></div>
+    <!-- Солнечный блик -->
+    <div class="sea-sun-glare"></div>
+    <!-- Лучи света -->
+    <div class="sea-rays"></div>
+    <!-- Мерцание воды -->
+    <div class="sea-shimmer"></div>
+
+    <!-- Волны -->
+    <div class="sea-waves">
+        <div class="wave wave-1"></div>
+        <div class="wave wave-2"></div>
+        <div class="wave wave-3"></div>
+    </div>
+</div>
+
+<div class="kinder-ticket" id="appContainer">
+    <span class="kinder-corner">🥚</span>
+    <span class="kinder-corner">🐚</span>
+    <span class="kinder-corner">🧸</span>
+    <span class="kinder-corner">🌊</span>
+
+    <div id="mainScreen" class="content-screen">
+        <div class="kinder-subtitle">3 месяца</div>
+
+        <div class="kinder-divider">✦ 13.10.26 ✦</div>
+
+        <div class="kinder-message">
+            <p>Лучшая Софья Эдуардовна!</p>
+            <p>С опозданием поздравляю нас с 3мя месяцами! Они пролетели как один день!</p>
+            <p>Вы замечательная девушка, спасибо что вы есть, дальше больше!</p>
+            <p>Обожаю вас!</p>
+        </div>
+
+        <!-- Штрих-код -->
+        <div class="kinder-barcode">
+            <span style="width:3px;"></span>
+            <span style="width:2px;"></span>
+            <span style="width:5px;"></span>
+            <span style="width:2px;"></span>
+            <span style="width:3px;"></span>
+            <span style="width:6px;"></span>
+            <span style="width:2px;"></span>
+            <span style="width:4px;"></span>
+            <span style="width:2px;"></span>
+            <span style="width:3px;"></span>
+            <span style="width:5px;"></span>
+            <span style="width:2px;"></span>
+            <span style="width:3px;"></span>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ===== СЕГОДНЯШНЯЯ ДАТА =====
+        const dateEl = document.getElementById('todayDate');
+        const now = new Date();
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const year = String(now.getFullYear()).slice(-2);
+        dateEl.textContent = day + '.' + month + '.' + year;
+
+        const seaBg = document.querySelector('.sea-bg');
+
+        // ===== ГЕНЕРАЦИЯ МОРСКИХ ПУЗЫРЕЙ =====
+        for (let i = 0; i < 22; i++) {
+            const bubble = document.createElement('div');
+            bubble.className = 'sea-bubble';
+            const size = Math.random() * 60 + 10;
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            bubble.style.left = (Math.random() * 96 + 2) + '%';
+            bubble.style.bottom = '-10vh';
+            const dur = Math.random() * 12 + 10;
+            bubble.style.setProperty('--b-dur', dur + 's');
+            bubble.style.animationDelay = (Math.random() * 20) + 's';
+            seaBg.appendChild(bubble);
+        }
+
+        // ===== ГЕНЕРАЦИЯ БЛИКОВ / БЛЁСТОК НА ВОДЕ =====
+        const sparkleChars = ['✦', '✧', '✨', '·', '˚', '｡'];
+        const sparkleColors = ['#ffffff', '#a8e0ff', '#d6f0ff', '#7ec8e3', '#cceeff'];
+
+        for (let i = 0; i < 35; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sea-sparkle';
+            sparkle.textContent = sparkleChars[Math.floor(Math.random() * sparkleChars.length)];
+            sparkle.style.left = (Math.random() * 96 + 2) + '%';
+            sparkle.style.bottom = (Math.random() * 60 + 5) + '%';
+            const dur = Math.random() * 6 + 6;
+            sparkle.style.setProperty('--s-dur', dur + 's');
+            sparkle.style.animationDelay = (Math.random() * 15) + 's';
+            const size = Math.random() * 1.2 + 0.6;
+            sparkle.style.fontSize = size + 'rem';
+            sparkle.style.color = sparkleColors[Math.floor(Math.random() * sparkleColors.length)];
+            seaBg.appendChild(sparkle);
+        }
+
+        // ===== ГЕНЕРАЦИЯ МОРСКИХ EMOJI (чайки, рыбы, ракушки) =====
+        const seaEmojis = ['🐚', '🌊', '🐟', '🐠', '🦀', '🐬', '⛵', '🕊️', '🦅', '🌅', '🏖️', '🐳'];
+
+        for (let i = 0; i < 14; i++) {
+            const emoji = document.createElement('div');
+            emoji.className = 'sea-emoji';
+            emoji.textContent = seaEmojis[Math.floor(Math.random() * seaEmojis.length)];
+            emoji.style.left = (Math.random() * 94 + 3) + '%';
+            const dur = Math.random() * 10 + 14;
+            emoji.style.setProperty('--e-dur', dur + 's');
+            emoji.style.animationDelay = (Math.random() * 25) + 's';
+            const size = Math.random() * 1.6 + 1.2;
+            emoji.style.fontSize = size + 'rem';
+            emoji.style.top = (Math.random() * -15 - 5) + 'vh';
+            seaBg.appendChild(emoji);
+        }
+
+        // ===== ГЕНЕРАЦИЯ МОРСКИХ ЧАСТИЦ (планктон) =====
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'sea-particle';
+            const size = Math.random() * 5 + 2;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.left = (Math.random() * 100) + '%';
+            particle.style.top = (Math.random() * 100) + '%';
+            const dur = Math.random() * 4 + 4;
+            particle.style.setProperty('--pp-dur', dur + 's');
+            particle.style.animationDelay = (Math.random() * 10) + 's';
+
+            const color = sparkleColors[Math.floor(Math.random() * sparkleColors.length)];
+            particle.style.background = color;
+            particle.style.boxShadow = `0 0 12px 4px ${color}80, 0 0 24px 8px ${color}40`;
+            seaBg.appendChild(particle);
+        }
+
+        // ===== ЛЁГКИЙ ПАРАЛЛАКС ПРИ ДВИЖЕНИИ МЫШИ =====
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 2;
+            const y = (e.clientY / window.innerHeight - 0.5) * 2;
+
+            const photo = document.querySelector('.sea-photo');
+            if (photo) {
+                photo.style.transform = `scale(1.08) translate(${x * -12}px, ${y * -12}px)`;
+            }
+
+            const sparkles = document.querySelectorAll('.sea-sparkle');
+            sparkles.forEach((el, i) => {
+                const factor = (i % 4 + 1) * 3;
+                el.style.marginLeft = (x * factor) + 'px';
+                el.style.marginTop = (y * factor) + 'px';
+            });
+
+            const emojis = document.querySelectorAll('.sea-emoji');
+            emojis.forEach((el, i) => {
+                const factor = (i % 5 + 1) * 3;
+                el.style.marginLeft = (x * factor) + 'px';
+                el.style.marginTop = (y * factor) + 'px';
+            });
+
+            const bubbles = document.querySelectorAll('.sea-bubble');
+            bubbles.forEach((el, i) => {
+                const factor = (i % 3 + 1) * 2;
+                el.style.marginLeft = (x * factor) + 'px';
+            });
+
+            const glare = document.querySelector('.sea-sun-glare');
+            if (glare) {
+                glare.style.transform = `translateX(-50%) scale(1.1) translate(${x * 15}px, ${y * 5}px)`;
+            }
+        });
+    })();
+</script>
+
+</body>
+</html>
