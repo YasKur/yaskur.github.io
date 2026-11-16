@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Хорошего вечера ✨</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background: linear-gradient(160deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            touch-action: manipulation;
+        }
+
+        /* ---------- Фоновая анимация: звёзды и aurora ---------- */
+        .bg-scene {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Плавающие цветные пятна (aurora) */
+        .aurora {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.55;
+            animation: auroraMove 18s ease-in-out infinite alternate;
+        }
+
+        .aurora.a1 {
+            width: 60vmax; height: 60vmax;
+            background: radial-gradient(circle, #6a11cb, transparent 70%);
+            top: -20vmax; left: -15vmax;
+            animation-duration: 22s;
+        }
+        .aurora.a2 {
+            width: 55vmax; height: 55vmax;
+            background: radial-gradient(circle, #ff5f6d, transparent 70%);
+            bottom: -20vmax; right: -15vmax;
+            animation-duration: 26s;
+            animation-delay: -6s;
+        }
+        .aurora.a3 {
+            width: 45vmax; height: 45vmax;
+            background: radial-gradient(circle, #00c6ff, transparent 70%);
+            top: 30%; left: 40%;
+            animation-duration: 20s;
+            animation-delay: -12s;
+        }
+
+        @keyframes auroraMove {
+            0%   { transform: translate(0, 0) scale(1); }
+            50%  { transform: translate(8vmax, -6vmax) scale(1.15); }
+            100% { transform: translate(-6vmax, 8vmax) scale(0.95); }
+        }
+
+        /* Звёзды */
+        .stars {
+            position: absolute;
+            inset: 0;
+        }
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--dur, 3s) ease-in-out infinite;
+            opacity: 0;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.1; transform: scale(0.8); }
+            50%      { opacity: 0.9; transform: scale(1.2); }
+        }
+
+        /* Летящие искры/светлячки */
+        .firefly {
+            position: absolute;
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: #ffe9a8;
+            box-shadow: 0 0 12px 3px rgba(255, 233, 168, 0.7);
+            animation: floatUp linear infinite;
+            opacity: 0;
+        }
+        @keyframes floatUp {
+            0%   { transform: translateY(0) translateX(0) scale(0.6); opacity: 0; }
+            10%  { opacity: 0.9; }
+            90%  { opacity: 0.7; }
+            100% { transform: translateY(-110vh) translateX(30px) scale(1.1); opacity: 0; }
+        }
+
+        /* ---------- Карточка ---------- */
+        .card {
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 48px;
+            padding: 36px 26px 42px;
+            width: 92%;
+            max-width: 400px;
+            margin: 0 16px;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45),
+            0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .emoji-big {
+            font-size: 4.5rem;
+            display: block;
+            margin-bottom: 10px;
+            animation: gentleBob 4s ease-in-out infinite;
+        }
+        @keyframes gentleBob {
+            0%, 100% { transform: translateY(0); }
+            50%      { transform: translateY(-8px); }
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+            line-height: 1.25;
+            text-shadow: 0 2px 20px rgba(255, 180, 200, 0.35);
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #d6e4ff;
+            margin-bottom: 30px;
+            font-weight: 400;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 60px;
+            padding: 16px 44px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.18s ease;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            letter-spacing: 0.5px;
+            min-width: 120px;
+            color: #1a1a2e;
+            background: linear-gradient(135deg, #ffe9a8, #ffb6c1);
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.45);
+        }
+
+        .btn:active {
+            transform: scale(0.94);
+            box-shadow: 0 4px 14px rgba(255, 182, 193, 0.5);
+        }
+
+        .hidden-message {
+            display: none;
+            margin-top: 22px;
+            animation: fadeUp 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.2) forwards;
+        }
+        .hidden-message.show { display: block; }
+
+        .hidden-message p {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px 18px;
+            border-radius: 36px;
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            line-height: 1.6;
+        }
+
+        .hidden-message .big-glow {
+            font-size: 2.2rem;
+            display: block;
+            margin-top: 10px;
+        }
+
+        @keyframes fadeUp {
+            0%   { opacity: 0; transform: translateY(30px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        #confetti-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        @media (max-width: 420px) {
+            .card { padding: 28px 18px 34px; }
+            h1 { font-size: 1.65rem; }
+            .btn { padding: 14px 30px; font-size: 1.15rem; min-width: 100px; }
+            .hidden-message p { font-size: 1.05rem; }
+            .emoji-big { font-size: 3.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Фоновая сцена -->
+<div class="bg-scene" id="bgScene">
+    <div class="aurora a1"></div>
+    <div class="aurora a2"></div>
+    <div class="aurora a3"></div>
+    <div class="stars" id="starsLayer"></div>
+</div>
+
+<canvas id="confetti-canvas"></canvas>
+
+<div class="card" id="mainCard">
+    <span class="emoji-big">🌙</span>
+    <h1>Замечательного вечера Софья Эдуардовна!</h1>
+    <p class="subtitle">Пусть этот вечер будет тёплым,<br>а настроение — прекрасным ✨</p>
+
+    <button class="btn" id="yesBtn">Пожелать 💫</button>
+
+    <div class="hidden-message" id="surpriseMessage">
+        <p>
+            Желаю вам замечательного,<br>
+            прекрасного настроения! 🌸<br>
+            Вы лучшая!
+            <span class="big-glow">💛✨</span>
+        </p>
+    </div>
+</div>
+
+<script>
+    (function() {
+        "use strict";
+
+        const yesBtn = document.getElementById('yesBtn');
+        const surprise = document.getElementById('surpriseMessage');
+
+        // ---------- Звёзды на фоне ----------
+        function createStars() {
+            const layer = document.getElementById('starsLayer');
+            const count = 90;
+            for (let i = 0; i < count; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = 1 + Math.random() * 2.5;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.setProperty('--dur', (2 + Math.random() * 4) + 's');
+                star.style.animationDelay = (Math.random() * 5) + 's';
+                layer.appendChild(star);
+            }
+        }
+        createStars();
+
+        // ---------- Светлячки ----------
+        function createFireflies() {
+            const scene = document.getElementById('bgScene');
+            const count = 14;
+            for (let i = 0; i < count; i++) {
+                const f = document.createElement('div');
+                f.className = 'firefly';
+                f.style.left = Math.random() * 100 + '%';
+                f.style.bottom = (-10 - Math.random() * 20) + '%';
+                f.style.animationDuration = (12 + Math.random() * 16) + 's';
+                f.style.animationDelay = (Math.random() * 14) + 's';
+                const hue = 40 + Math.random() * 30;
+                f.style.background = `hsl(${hue}, 100%, 80%)`;
+                f.style.boxShadow = `0 0 12px 3px hsla(${hue}, 100%, 75%, 0.7)`;
+                scene.appendChild(f);
+            }
+        }
+        createFireflies();
+
+        // ---------- Конфетти ----------
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let confettiPieces = [];
+        let confettiActive = false;
+
+        function resizeCanvas() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class ConfettiPiece {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height - height;
+                this.size = 5 + Math.random() * 9;
+                this.speedY = 2.5 + Math.random() * 5;
+                this.speedX = (Math.random() - 0.5) * 3;
+                this.rotation = Math.random() * 360;
+                this.rotateSpeed = (Math.random() - 0.5) * 7;
+                this.color = `hsl(${Math.random() * 360}, 85%, 68%)`;
+                this.shape = Math.random() > 0.5 ? 'rect' : 'circle';
+            }
+
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX + Math.sin(this.y * 0.02) * 0.4;
+                this.rotation += this.rotateSpeed;
+                if (this.y > height + 30) {
+                    this.y = -30;
+                    this.x = Math.random() * width;
+                    this.speedY = 2.5 + Math.random() * 5;
+                    this.color = `hsl(${Math.random() * 360}, 85%, 68%)`;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.fillStyle = this.color;
+                ctx.shadowColor = 'rgba(255, 220, 220, 0.35)';
+                ctx.shadowBlur = 6;
+
+                if (this.shape === 'rect') {
+                    ctx.fillRect(-this.size / 2, -this.size / 4, this.size, this.size / 2);
+                } else {
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.restore();
+            }
+        }
+
+        function startConfetti(count = 180) {
+            if (confettiActive) return;
+            confettiActive = true;
+            for (let i = 0; i < count; i++) {
+                confettiPieces.push(new ConfettiPiece());
+            }
+            animateConfetti();
+        }
+
+        function animateConfetti() {
+            if (!confettiActive) return;
+            ctx.clearRect(0, 0, width, height);
+            for (let p of confettiPieces) {
+                p.update();
+                p.draw();
+            }
+            requestAnimationFrame(animateConfetti);
+        }
+
+        function stopConfetti() {
+            confettiActive = false;
+            ctx.clearRect(0, 0, width, height);
+            confettiPieces = [];
+        }
+
+        // ---------- Показ пожелания ----------
+        function showSurprise() {
+            if (surprise.classList.contains('show')) return;
+
+            yesBtn.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            yesBtn.style.opacity = '0';
+            yesBtn.style.transform = 'scale(0.8)';
+            setTimeout(() => { yesBtn.style.display = 'none'; }, 300);
+
+            document.querySelector('h1').textContent = 'Прекрасного вечера!';
+            document.querySelector('.subtitle').textContent = 'Пусть всё будет хорошо 💫';
+            document.querySelector('.emoji-big').textContent = '🌟';
+
+            surprise.classList.add('show');
+            startConfetti(200);
+
+            if (navigator.vibrate) navigator.vibrate(30);
+
+            setTimeout(() => { stopConfetti(); }, 7000);
+        }
+
+        yesBtn.addEventListener('click', showSurprise);
+        yesBtn.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            showSurprise();
+        }, { passive: false });
+
+        // Защита от скролла
+        document.addEventListener('touchmove', function(e) {
+            if (e.target.closest('.card')) e.preventDefault();
+        }, { passive: false });
+
+        console.log('Вечернее пожелание загружено ✨');
+    })();
+</script>
+</body>
+</html>
