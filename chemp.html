@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Победа! 🏆</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background: linear-gradient(160deg, #0a0a1a 0%, #1a1a3e 40%, #2a1a4e 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            touch-action: manipulation;
+        }
+
+        /* ---------- Фон: чемпионские лучи и золотые искры ---------- */
+        .bg-scene {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Вращающиеся золотые лучи (эффект пьедестала) */
+        .ray {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200vmax;
+            height: 200vmax;
+            margin: -100vmax 0 0 -100vmax;
+            background: conic-gradient(
+                    from 0deg,
+                    transparent 0deg,
+                    rgba(255, 215, 0, 0.06) 10deg,
+                    transparent 20deg,
+                    transparent 40deg,
+                    rgba(255, 215, 0, 0.04) 50deg,
+                    transparent 60deg,
+                    transparent 90deg,
+                    rgba(255, 215, 0, 0.07) 100deg,
+                    transparent 110deg,
+                    transparent 140deg,
+                    rgba(255, 215, 0, 0.05) 150deg,
+                    transparent 160deg,
+                    transparent 200deg,
+                    rgba(255, 215, 0, 0.06) 210deg,
+                    transparent 220deg,
+                    transparent 260deg,
+                    rgba(255, 215, 0, 0.08) 270deg,
+                    transparent 280deg,
+                    transparent 310deg,
+                    rgba(255, 215, 0, 0.05) 320deg,
+                    transparent 330deg
+            );
+            animation: raySpin 30s linear infinite;
+            opacity: 0.9;
+        }
+
+        .ray.r2 {
+            animation-duration: 45s;
+            animation-direction: reverse;
+            opacity: 0.5;
+            background: conic-gradient(
+                    from 45deg,
+                    transparent 0deg,
+                    rgba(255, 255, 200, 0.04) 15deg,
+                    transparent 30deg,
+                    transparent 70deg,
+                    rgba(255, 255, 200, 0.03) 85deg,
+                    transparent 100deg,
+                    transparent 150deg,
+                    rgba(255, 255, 200, 0.05) 165deg,
+                    transparent 180deg,
+                    transparent 240deg,
+                    rgba(255, 255, 200, 0.04) 255deg,
+                    transparent 270deg,
+                    transparent 330deg,
+                    rgba(255, 255, 200, 0.03) 345deg,
+                    transparent 360deg
+            );
+        }
+
+        @keyframes raySpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Золотые частицы (поднимающиеся) */
+        .spark {
+            position: absolute;
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: #ffd966;
+            box-shadow: 0 0 14px 4px rgba(255, 215, 0, 0.7);
+            animation: sparkRise linear infinite;
+            opacity: 0;
+        }
+        @keyframes sparkRise {
+            0%   { transform: translateY(0) scale(0.5); opacity: 0; }
+            10%  { opacity: 1; }
+            85%  { opacity: 0.8; }
+            100% { transform: translateY(-110vh) scale(1.2); opacity: 0; }
+        }
+
+        /* ---------- Карточка чемпиона ---------- */
+        .card {
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 48px;
+            padding: 36px 26px 42px;
+            width: 92%;
+            max-width: 420px;
+            margin: 0 16px;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55),
+            0 0 0 1px rgba(255, 215, 0, 0.18) inset;
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.25);
+        }
+
+        /* Кубок */
+        .trophy-wrap {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .emoji-big {
+            font-size: 4.5rem;
+            display: block;
+            animation: championBob 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6));
+        }
+
+        @keyframes championBob {
+            0%, 100% { transform: translateY(0) rotate(-3deg); }
+            50%      { transform: translateY(-10px) rotate(3deg); }
+        }
+
+        /* Золотое сияние за кубком */
+        .trophy-wrap::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 130px; height: 130px;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.25), transparent 70%);
+            animation: glowPulse 2.5s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+            50%      { transform: translate(-50%, -50%) scale(1.35); opacity: 1; }
+        }
+
+        h1 {
+            font-size: 1.9rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffeaa7, #ffd700, #ffb347);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+            line-height: 1.25;
+            text-shadow: 0 0 40px rgba(255, 215, 0, 0.35);
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #e8e0ff;
+            margin-bottom: 30px;
+            font-weight: 400;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 60px;
+            padding: 16px 44px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.18s ease;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            letter-spacing: 0.5px;
+            min-width: 140px;
+            color: #3a2a00;
+            background: linear-gradient(135deg, #ffeaa7, #ffd700, #ffc107);
+            box-shadow: 0 10px 35px rgba(255, 200, 0, 0.55), 0 0 0 2px rgba(255, 255, 255, 0.15) inset;
+        }
+
+        .btn:active {
+            transform: scale(0.94);
+            box-shadow: 0 4px 14px rgba(255, 200, 0, 0.6);
+        }
+
+        .hidden-message {
+            display: none;
+            margin-top: 22px;
+            animation: fadeUp 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.2) forwards;
+        }
+        .hidden-message.show { display: block; }
+
+        .hidden-message p {
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: #ffffff;
+            background: rgba(255, 215, 0, 0.08);
+            padding: 20px 18px;
+            border-radius: 36px;
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 215, 0, 0.25);
+            line-height: 1.6;
+        }
+
+        .hidden-message .big-glow {
+            font-size: 2.2rem;
+            display: block;
+            margin-top: 10px;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
+        }
+
+        @keyframes fadeUp {
+            0%   { opacity: 0; transform: translateY(30px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        #confetti-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        @media (max-width: 420px) {
+            .card { padding: 28px 18px 34px; }
+            h1 { font-size: 1.55rem; }
+            .btn { padding: 14px 30px; font-size: 1.15rem; min-width: 110px; }
+            .hidden-message p { font-size: 1.05rem; }
+            .emoji-big { font-size: 3.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Чемпионский фон -->
+<div class="bg-scene" id="bgScene">
+    <div class="ray"></div>
+    <div class="ray r2"></div>
+</div>
+
+<canvas id="confetti-canvas"></canvas>
+
+<div class="card" id="mainCard">
+    <div class="trophy-wrap">
+        <span class="emoji-big">🏆</span>
+    </div>
+    <h1>Софья Эдуардовна - только первое место!</h1>
+    <p class="subtitle">Прекрасной игры в кайф! Пусть всё получается, вы машина💥</p>
+
+    <button class="btn" id="yesBtn">OOOO FUCK</button>
+
+    <div class="hidden-message" id="surpriseMessage">
+        <p>
+            Желаю только первого места 🥇<br>
+            Получайте удовольствие<br>
+            Забирайте все мячи,<br>
+            вы прелесть<br>
+            <span class="big-glow">🏆✨🔥</span>
+        </p>
+    </div>
+</div>
+
+<script>
+    (function() {
+        "use strict";
+
+        const yesBtn = document.getElementById('yesBtn');
+        const surprise = document.getElementById('surpriseMessage');
+
+        // ---------- Золотые искры на фоне ----------
+        function createSparks() {
+            const scene = document.getElementById('bgScene');
+            const count = 22;
+            for (let i = 0; i < count; i++) {
+                const s = document.createElement('div');
+                s.className = 'spark';
+                s.style.left = Math.random() * 100 + '%';
+                s.style.bottom = (-10 - Math.random() * 30) + '%';
+                s.style.animationDuration = (8 + Math.random() * 14) + 's';
+                s.style.animationDelay = (Math.random() * 12) + 's';
+                const size = 3 + Math.random() * 6;
+                s.style.width = size + 'px';
+                s.style.height = size + 'px';
+                const hue = 45 + Math.random() * 15;
+                s.style.background = `hsl(${hue}, 100%, 65%)`;
+                s.style.boxShadow = `0 0 16px 5px hsla(${hue}, 100%, 55%, 0.6)`;
+                scene.appendChild(s);
+            }
+        }
+        createSparks();
+
+        // ---------- Победное конфетти ----------
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let confettiPieces = [];
+        let confettiActive = false;
+
+        function resizeCanvas() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class ConfettiPiece {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height - height;
+                this.size = 6 + Math.random() * 10;
+                this.speedY = 2.5 + Math.random() * 6;
+                this.speedX = (Math.random() - 0.5) * 3.5;
+                this.rotation = Math.random() * 360;
+                this.rotateSpeed = (Math.random() - 0.5) * 9;
+                // Золотые, белые, оранжевые оттенки + немного фиолетового
+                const palette = [
+                    '#FFD700', '#FFC107', '#FFEB3B', '#FFE082',
+                    '#FFFFFF', '#FFF8E1', '#FFB300', '#FFA000',
+                    '#E1BEE7', '#CE93D8'
+                ];
+                this.color = palette[Math.floor(Math.random() * palette.length)];
+                this.shape = Math.random() > 0.4 ? 'star' : 'rect';
+                this.shimmer = Math.random() * 0.5 + 0.5;
+            }
+
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX + Math.sin(this.y * 0.02) * 0.6;
+                this.rotation += this.rotateSpeed;
+                if (this.y > height + 30) {
+                    this.y = -30;
+                    this.x = Math.random() * width;
+                    this.speedY = 2.5 + Math.random() * 6;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.fillStyle = this.color;
+                ctx.shadowColor = 'rgba(255, 215, 0, 0.6)';
+                ctx.shadowBlur = 8;
+                ctx.globalAlpha = this.shimmer;
+
+                if (this.shape === 'rect') {
+                    ctx.fillRect(-this.size / 2, -this.size / 4, this.size, this.size / 2);
+                } else {
+                    // Звезда
+                    const spikes = 5;
+                    const outerR = this.size / 2;
+                    const innerR = outerR / 2.3;
+                    let rot = (Math.PI / 2) * 3;
+                    const step = Math.PI / spikes;
+
+                    ctx.beginPath();
+                    ctx.moveTo(0, -outerR);
+                    for (let i = 0; i < spikes; i++) {
+                        ctx.lineTo(Math.cos(rot) * outerR, Math.sin(rot) * outerR);
+                        rot += step;
+                        ctx.lineTo(Math.cos(rot) * innerR, Math.sin(rot) * innerR);
+                        rot += step;
+                    }
+                    ctx.closePath();
+                    ctx.fill();
+                }
+                ctx.restore();
+            }
+        }
+
+        function startConfetti(count = 220) {
+            if (confettiActive) return;
+            confettiActive = true;
+            for (let i = 0; i < count; i++) {
+                confettiPieces.push(new ConfettiPiece());
+            }
+            animateConfetti();
+        }
+
+        function animateConfetti() {
+            if (!confettiActive) return;
+            ctx.clearRect(0, 0, width, height);
+            for (let p of confettiPieces) {
+                p.update();
+                p.draw();
+            }
+            requestAnimationFrame(animateConfetti);
+        }
+
+        function stopConfetti() {
+            confettiActive = false;
+            ctx.clearRect(0, 0, width, height);
+            confettiPieces = [];
+        }
+
+        // ---------- Показ пожелания ----------
+        function showSurprise() {
+            if (surprise.classList.contains('show')) return;
+
+            yesBtn.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            yesBtn.style.opacity = '0';
+            yesBtn.style.transform = 'scale(0.8)';
+            setTimeout(() => { yesBtn.style.display = 'none'; }, 300);
+
+            document.querySelector('h1').textContent = 'Первое место — твоё!';
+            document.querySelector('.subtitle').textContent = 'Все смеши на вылет, без стекол и сеток 💥';
+            document.querySelector('.emoji-big').textContent = '🥇';
+
+            surprise.classList.add('show');
+            startConfetti(240);
+
+            if (navigator.vibrate) navigator.vibrate([40, 30, 60, 30, 80]);
+
+            setTimeout(() => { stopConfetti(); }, 8000);
+        }
+
+        yesBtn.addEventListener('click', showSurprise);
+        yesBtn.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            showSurprise();
+        }, { passive: false });
+
+        // Защита от скролла
+        document.addEventListener('touchmove', function(e) {
+            if (e.target.closest('.card')) e.preventDefault();
+        }, { passive: false });
+
+        console.log('Чемпионское пожелание загружено 🏆');
+    })();
+</script>
+</body>
+</html>
