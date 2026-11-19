@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Приглашение на просмотр игры 🏟️</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Comfortaa:wght@400;600;700&family=Lobster&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-family: 'Comfortaa', cursive;
+            position: relative;
+            overflow-x: hidden;
+            background: #070b18;
+        }
+
+        /* ============================================================
+           НОЧНОЙ «СТАДИОННЫЙ» ФОН — ПРОЖЕКТОРЫ, ЗВЁЗДЫ, ГЛУБИНА
+           ============================================================ */
+        .night-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            background:
+                    radial-gradient(ellipse 100% 80% at 20% 10%, #16203a 0%, transparent 60%),
+                    radial-gradient(ellipse 90% 70% at 85% 20%, #1b1a3a 0%, transparent 55%),
+                    radial-gradient(ellipse 130% 100% at 50% 100%, #0b1026 0%, #070b18 60%, #04060f 100%);
+        }
+
+        /* ——— Прожекторы (световые конусы) ——— */
+        .spotlight {
+            position: absolute;
+            width: 60vmax;
+            height: 90vmax;
+            top: -20vmax;
+            pointer-events: none;
+            opacity: 0.5;
+            mix-blend-mode: screen;
+            filter: blur(40px);
+            animation: spotlightSway var(--s-dur, 18s) ease-in-out infinite alternate;
+            transform-origin: top center;
+        }
+
+        .spot-1 {
+            left: -10vmax;
+            background: linear-gradient(180deg, rgba(120, 180, 255, 0.35), rgba(80, 120, 255, 0.08) 50%, transparent 80%);
+            --s-dur: 22s;
+            transform: rotate(8deg);
+        }
+
+        .spot-2 {
+            right: -15vmax;
+            background: linear-gradient(180deg, rgba(255, 140, 200, 0.3), rgba(200, 100, 255, 0.08) 50%, transparent 80%);
+            --s-dur: 26s;
+            animation-delay: -8s;
+            transform: rotate(-10deg);
+        }
+
+        .spot-3 {
+            left: 35%;
+            background: linear-gradient(180deg, rgba(140, 255, 220, 0.2), transparent 70%);
+            --s-dur: 30s;
+            animation-delay: -14s;
+            transform: rotate(-2deg);
+        }
+
+        @keyframes spotlightSway {
+            0%   { transform: rotate(6deg) translateX(-3vmax); opacity: 0.35; }
+            50%  { opacity: 0.55; }
+            100% { transform: rotate(14deg) translateX(3vmax); opacity: 0.4; }
+        }
+
+        /* ——— Далёкие «звёзды» ——— */
+        .starfield {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            border-radius: 50%;
+            background: #cfe0ff;
+            opacity: 0;
+            animation: starTwinkle var(--st-dur, 4s) ease-in-out infinite;
+            box-shadow: 0 0 6px 1px rgba(180, 210, 255, 0.7);
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0.15; transform: scale(0.7); }
+            50%      { opacity: 0.9; transform: scale(1.1); }
+        }
+
+        /* ——— Мягкая «дымка» стадиона ——— */
+        .haze {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.35;
+            background-image:
+                    repeating-linear-gradient(115deg,
+                    transparent 0px,
+                    transparent 90px,
+                    rgba(120, 160, 255, 0.04) 90px,
+                    rgba(120, 160, 255, 0.04) 92px);
+            animation: hazeShift 30s linear infinite;
+        }
+
+        @keyframes hazeShift {
+            0%   { background-position: 0 0; }
+            100% { background-position: 400px 200px; }
+        }
+
+        /* ============================================================
+           ПАДАЮЩИЕ «ЗВЁЗДЫ» И «ПОПКОРН» НА ФОНЕ
+           ============================================================ */
+        .falling {
+            position: absolute;
+            top: -10vh;
+            pointer-events: none;
+            z-index: 4;
+            opacity: 0;
+            will-change: transform, opacity;
+            animation: fallingMove var(--f-dur, 16s) linear infinite;
+            filter: drop-shadow(0 0 8px rgba(160, 200, 255, 0.7));
+        }
+
+        @keyframes fallingMove {
+            0% {
+                transform: translate3d(0, 0, 0) rotate(0deg) scale(0.7);
+                opacity: 0;
+            }
+            8%  { opacity: 0.9; }
+            30% {
+                transform: translate3d(40px, 30vh, 0) rotate(140deg) scale(1);
+                opacity: 0.8;
+            }
+            60% {
+                transform: translate3d(-50px, 65vh, 0) rotate(300deg) scale(0.95);
+                opacity: 0.65;
+            }
+            90% { opacity: 0.3; }
+            100% {
+                transform: translate3d(30px, 112vh, 0) rotate(500deg) scale(0.8);
+                opacity: 0;
+            }
+        }
+
+        /* ——— Летающие «пузыри» / искры энергии ——— */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 3;
+            opacity: 0;
+            animation: orbFloat var(--o-dur, 14s) ease-in infinite;
+            background:
+                    radial-gradient(circle at 30% 25%, rgba(200, 230, 255, 0.9), rgba(120, 160, 255, 0.15) 30%, transparent 65%);
+            border: 1px solid rgba(160, 200, 255, 0.5);
+            box-shadow:
+                    inset 0 0 14px rgba(180, 210, 255, 0.6),
+                    0 0 18px rgba(120, 160, 255, 0.4);
+        }
+
+        @keyframes orbFloat {
+            0% {
+                transform: translateY(20vh) translateX(0) scale(0.4);
+                opacity: 0;
+            }
+            15% { opacity: 0.75; }
+            50% {
+                transform: translateY(-25vh) translateX(35px) scale(1);
+                opacity: 0.55;
+            }
+            85% { opacity: 0.25; }
+            100% {
+                transform: translateY(-70vh) translateX(-30px) scale(1.15);
+                opacity: 0;
+            }
+        }
+
+        /* ——— Мерцающие «искорки» ——— */
+        .glint {
+            position: absolute;
+            pointer-events: none;
+            z-index: 5;
+            opacity: 0;
+            animation: glintPulse var(--g-dur, 5s) ease-in-out infinite;
+            filter: drop-shadow(0 0 6px currentColor);
+        }
+
+        @keyframes glintPulse {
+            0%, 100% { transform: scale(0.3) rotate(0deg); opacity: 0; }
+            50%      { transform: scale(1.15) rotate(90deg); opacity: 1; }
+        }
+
+        /* ——— Летающие «мячи» ——— */
+        .ball {
+            position: absolute;
+            pointer-events: none;
+            z-index: 2;
+            opacity: 0;
+            animation: ballFly var(--b-dur, 20s) ease-in-out infinite;
+            filter: drop-shadow(0 0 14px rgba(140, 180, 255, 0.5));
+        }
+
+        @keyframes ballFly {
+            0%   { transform: translate(0, 0) rotate(0deg) scale(0.6); opacity: 0; }
+            20%  { opacity: 0.6; }
+            50%  { transform: translate(60px, -50px) rotate(180deg) scale(1); opacity: 0.4; }
+            80%  { opacity: 0.25; }
+            100% { transform: translate(-40px, -120px) rotate(360deg) scale(0.7); opacity: 0; }
+        }
+
+        /* ============================================================
+           КАРТОЧКА-ПРИГЛАШЕНИЕ
+           ============================================================ */
+        .cheer-card {
+            position: relative;
+            z-index: 30;
+            backdrop-filter: blur(24px) saturate(1.4);
+            -webkit-backdrop-filter: blur(24px) saturate(1.4);
+            background: rgba(12, 18, 38, 0.78);
+            border-radius: 30px;
+            padding: 28px 28px 30px;
+            max-width: 490px;
+            width: 100%;
+            box-shadow:
+                    0 30px 90px rgba(0, 0, 0, 0.6),
+                    0 0 0 1px rgba(120, 160, 255, 0.4),
+                    0 0 70px rgba(100, 140, 255, 0.25),
+                    0 0 140px rgba(80, 120, 255, 0.15),
+                    inset 0 1px 0 rgba(180, 210, 255, 0.2);
+            border: 1px solid rgba(120, 160, 255, 0.35);
+            transition: all 0.3s ease;
+            animation: cardIn 1.1s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+        }
+
+        @keyframes cardIn {
+            0%   { opacity: 0; transform: translateY(60px) scale(0.85) rotate(-2deg); }
+            100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+        }
+
+        /* ——— Мягкое «дыхание» карточки ——— */
+        .cheer-card::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 32px;
+            pointer-events: none;
+            z-index: -1;
+            background: linear-gradient(120deg,
+            rgba(120, 160, 255, 0.35),
+            rgba(200, 120, 255, 0.25),
+            rgba(120, 220, 255, 0.3),
+            rgba(120, 160, 255, 0.35));
+            background-size: 300% 300%;
+            filter: blur(18px);
+            opacity: 0.5;
+            animation: borderFlow 8s ease-in-out infinite;
+        }
+
+        @keyframes borderFlow {
+            0%, 100% { background-position: 0% 50%; opacity: 0.4; }
+            50%      { background-position: 100% 50%; opacity: 0.65; }
+        }
+
+        /* ===== ГИФКА С КОТОМ (теперь в образе спортивного болельщика) ===== */
+        .cat-gif-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 6px;
+            position: relative;
+            z-index: 35;
+        }
+
+        .cat-gif {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(120, 180, 255, 0.9);
+            box-shadow:
+                    0 0 34px rgba(100, 150, 255, 0.6),
+                    0 0 70px rgba(80, 120, 255, 0.4),
+                    0 0 110px rgba(160, 200, 255, 0.3);
+            animation: catBounce 3.4s ease-in-out infinite;
+            background: #0c1226;
+        }
+
+        @keyframes catBounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.04); }
+        }
+
+        /* ===== УГОЛКИ-ЭМОДЗИ ===== */
+        .cozy-corner {
+            position: absolute;
+            font-size: 1.7rem;
+            opacity: 0.9;
+            filter: drop-shadow(0 0 18px rgba(120, 180, 255, 0.9));
+            user-select: none;
+            pointer-events: none;
+            animation: decorFloat 7.5s ease-in-out infinite;
+            z-index: 32;
+        }
+        .cozy-corner:nth-child(1) { top: 14px; left: 16px; animation-delay: 0s; }
+        .cozy-corner:nth-child(2) { top: 14px; right: 16px; animation-delay: 1.9s; }
+        .cozy-corner:nth-child(3) { bottom: 14px; left: 16px; animation-delay: 3.8s; }
+        .cozy-corner:nth-child(4) { bottom: 14px; right: 16px; animation-delay: 5.6s; }
+
+        @keyframes decorFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.6; }
+            50%      { transform: translateY(-10px) rotate(9deg) scale(1.15); opacity: 1; }
+        }
+
+        /* ===== КОНТЕНТ ===== */
+        .content-screen {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: center;
+        }
+
+        .cheer-subtitle {
+            font-family: 'Lobster', cursive;
+            font-size: 1.9rem;
+            color: #7fb2ff;
+            text-shadow: 0 0 30px rgba(100, 160, 255, 0.8), 0 0 60px rgba(80, 120, 255, 0.4);
+            margin-bottom: 6px;
+            transform: rotate(-2deg);
+            letter-spacing: 1px;
+        }
+
+        .cheer-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 8px 0;
+            color: #8fb4e8;
+            font-size: 1rem;
+            letter-spacing: 4px;
+            font-weight: 700;
+        }
+
+        .cheer-divider::before,
+        .cheer-divider::after {
+            content: '';
+            flex: 1;
+            height: 1.5px;
+            background: linear-gradient(90deg, transparent, rgba(120, 160, 255, 0.7), transparent);
+            max-width: 80px;
+        }
+
+        .cheer-message {
+            font-size: 1rem;
+            color: #dbe6ff;
+            line-height: 1.9;
+            max-width: 380px;
+            margin: 0 auto;
+            text-align: center;
+            font-weight: 400;
+            background: rgba(20, 30, 58, 0.85);
+            border-radius: 22px;
+            padding: 24px 22px 20px;
+            border: 1px solid rgba(100, 140, 255, 0.35);
+            box-shadow: inset 0 1px 0 rgba(180, 210, 255, 0.15);
+        }
+
+        .cheer-message p {
+            margin-bottom: 14px;
+            font-weight: 400;
+            color: #dbe6ff;
+        }
+
+        .cheer-message p:first-of-type {
+            color: #9ec4ff;
+            font-weight: 700;
+            font-size: 1.15rem;
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 20px rgba(100, 160, 255, 0.5);
+        }
+
+        .cheer-message p:last-of-type {
+            margin-bottom: 0;
+            color: #b8ccff;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.8px;
+            line-height: 1.7;
+            text-shadow: 0 0 25px rgba(100, 160, 255, 0.6);
+        }
+
+        /* ——— Список «пунктов программы» ——— */
+        .joy-list {
+            list-style: none;
+            margin: 0 0 16px;
+            padding: 0;
+            text-align: left;
+        }
+
+        .joy-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            color: #c8d8ff;
+            font-weight: 600;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            background: rgba(60, 100, 200, 0.25);
+            border-radius: 14px;
+            border: 1px solid rgba(90, 140, 255, 0.4);
+            line-height: 1.5;
+        }
+
+        .joy-list li span.joy-ico {
+            font-size: 1.35rem;
+            filter: drop-shadow(0 0 8px rgba(100, 170, 255, 0.9));
+            flex-shrink: 0;
+        }
+
+        /* ——— «Полоса трансляции» вместо штрих-кода ——— */
+        .cheer-barcode {
+            display: flex;
+            justify-content: center;
+            gap: 3px;
+            margin-top: 16px;
+            opacity: 0.5;
+        }
+
+        .cheer-barcode span {
+            display: block;
+            height: 24px;
+            background: linear-gradient(180deg, #6f9bff, #3a5ccc);
+            border-radius: 1px;
+            animation: barPulse 2.4s ease-in-out infinite;
+        }
+
+        .cheer-barcode span:nth-child(2n) {
+            animation-delay: 0.3s;
+        }
+
+        .cheer-barcode span:nth-child(3n) {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes barPulse {
+            0%, 100% { opacity: 0.5; transform: scaleY(1); }
+            50%      { opacity: 1; transform: scaleY(1.25); }
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 420px) {
+            .cheer-card { padding: 22px 16px 24px; border-radius: 22px; }
+            .cat-gif { width: 110px; height: 110px; }
+            .cheer-subtitle { font-size: 1.5rem; }
+            .cheer-message { font-size: 0.88rem; padding: 18px 14px; }
+            .joy-list li { font-size: 0.85rem; padding: 7px 10px; }
+            .cozy-corner { font-size: 1.3rem; }
+            .falling, .orb, .glint, .ball, .spotlight, .haze, .star { display: none; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .falling, .orb, .glint, .ball, .spotlight, .haze, .star,
+            .cat-gif, .cozy-corner, .cheer-card, .cheer-barcode span {
+                animation: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== НОЧНОЙ ФОН ===== -->
+<div class="night-bg">
+    <!-- Прожекторы -->
+    <div class="spotlight spot-1"></div>
+    <div class="spotlight spot-2"></div>
+    <div class="spotlight spot-3"></div>
+
+    <!-- Звёздное поле -->
+    <div class="starfield" id="starfield"></div>
+
+    <!-- Дымка -->
+    <div class="haze"></div>
+</div>
+
+<!-- ===== КАРТОЧКА-ПРИГЛАШЕНИЕ ===== -->
+<div class="cheer-card" id="appContainer">
+    <span class="cozy-corner">🏟️</span>
+    <span class="cozy-corner">🎾</span>
+    <span class="cozy-corner">📺</span>
+    <span class="cozy-corner">🍿</span>
+
+    <div id="mainScreen" class="content-screen">
+        <div class="cheer-subtitle">Приглашаю на просмотр игры!</div>
+
+        <div class="cheer-divider">✦ <span id="todayDate">19.11.26</span> ✦</div>
+
+        <div class="cheer-message">
+            <p>My dear Софья Эдуардовна!</p>
+            <p>Приглашаю на просмотр вашей игры, покажите розыгрыши и как блестали на корте</p>
+        </div>
+
+        <div class="cheer-barcode">
+            <span style="width:3px;"></span>
+            <span style="width:2px;"></span>
+            <span style="width:5px;"></span>
+            <span style="width:2px;"></span>
+            <span style="width:3px;"></span>
+            <span style="width:6px;"></span>
+            <span style="width:2px;"></span>
+            <span style="width:4px;"></span>
+            <span style="width:2px;"></span>
+            <span style="width:3px;"></span>
+            <span style="width:5px;"></span>
+            <span style="width:2px;"></span>
+            <span style="width:3px;"></span>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+
+        const bg = document.querySelector('.night-bg');
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // ===== ЗВЁЗДНОЕ ПОЛЕ =====
+        const starfield = document.getElementById('starfield');
+        for (let i = 0; i < 90; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const size = Math.random() * 2.4 + 0.6;
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            star.style.left = (Math.random() * 100) + '%';
+            star.style.top = (Math.random() * 100) + '%';
+            const dur = Math.random() * 4 + 2;
+            star.style.setProperty('--st-dur', dur + 's');
+            star.style.animationDelay = (Math.random() * 8) + 's';
+            starfield.appendChild(star);
+        }
+
+        // ===== ПАДАЮЩИЕ «ЗВЁЗДЫ» / ПОПКОРН =====
+        const fallColors = ['#a8c8ff', '#c8b0ff', '#ffd8a8', '#a8ffe0', '#ffb8d8'];
+        const fallShapes = ['✦', '✧', '•', '◦', '·', '✶'];
+
+        for (let i = 0; i < 22; i++) {
+            const el = document.createElement('div');
+            el.className = 'falling';
+            if (i % 3 === 0) {
+                el.textContent = fallShapes[Math.floor(Math.random() * fallShapes.length)];
+                el.style.fontSize = (Math.random() * 1.3 + 0.8) + 'rem';
+                el.style.color = fallColors[Math.floor(Math.random() * fallColors.length)];
+            } else {
+                const w = Math.random() * 10 + 6;
+                const h = w * (Math.random() * 0.5 + 0.55);
+                el.style.width = w + 'px';
+                el.style.height = h + 'px';
+                el.style.borderRadius = '45% 55% 40% 60% / 55% 45% 60% 40%';
+                el.style.background = `radial-gradient(circle at 35% 30%, ${
+                    fallColors[Math.floor(Math.random() * fallColors.length)]
+                }, rgba(150,180,255,0.15) 70%, transparent)`;
+            }
+            el.style.left = (Math.random() * 96 + 2) + '%';
+            const dur = Math.random() * 10 + 12;
+            el.style.setProperty('--f-dur', dur + 's');
+            el.style.animationDelay = (Math.random() * 24) + 's';
+            bg.appendChild(el);
+        }
+
+        // ===== ЛЕТАЮЩИЕ «ПУЗЫРИ» ЭНЕРГИИ =====
+        for (let i = 0; i < 16; i++) {
+            const orb = document.createElement('div');
+            orb.className = 'orb';
+            const size = Math.random() * 24 + 8;
+            orb.style.width = size + 'px';
+            orb.style.height = size + 'px';
+            orb.style.left = (Math.random() * 94 + 3) + '%';
+            orb.style.bottom = (Math.random() * 40 - 10) + 'vh';
+            const dur = Math.random() * 10 + 10;
+            orb.style.setProperty('--o-dur', dur + 's');
+            orb.style.animationDelay = (Math.random() * 18) + 's';
+            bg.appendChild(orb);
+        }
+
+        // ===== ИСКОРКИ =====
+        const glintChars = ['✦', '✧', '✶', '⋆', '✺'];
+        const glintColors = ['#a8c8ff', '#c8b0ff', '#a8ffe0', '#ffd8a8'];
+
+        for (let i = 0; i < 34; i++) {
+            const glint = document.createElement('div');
+            glint.className = 'glint';
+            glint.textContent = glintChars[Math.floor(Math.random() * glintChars.length)];
+            const size = Math.random() * 0.9 + 0.5;
+            glint.style.fontSize = size + 'rem';
+            glint.style.left = (Math.random() * 98 + 1) + '%';
+            glint.style.top = (Math.random() * 95 + 2) + '%';
+            glint.style.color = glintColors[Math.floor(Math.random() * glintColors.length)];
+            const dur = Math.random() * 3.5 + 2.5;
+            glint.style.setProperty('--g-dur', dur + 's');
+            glint.style.animationDelay = (Math.random() * 12) + 's';
+            bg.appendChild(glint);
+        }
+
+        // ===== ЛЕТАЮЩИЕ «МЯЧИ» =====
+        const ballEmojis = ['🎾', '🎾', '🎾', '🎾'];
+
+        for (let i = 0; i < 7; i++) {
+            const ball = document.createElement('div');
+            ball.className = 'ball';
+            ball.textContent = ballEmojis[Math.floor(Math.random() * ballEmojis.length)];
+            const size = Math.random() * 1.6 + 1.1;
+            ball.style.fontSize = size + 'rem';
+            ball.style.left = (Math.random() * 90 + 5) + '%';
+            ball.style.top = (Math.random() * 80 + 10) + '%';
+            const dur = Math.random() * 12 + 14;
+            ball.style.setProperty('--b-dur', dur + 's');
+            ball.style.animationDelay = (Math.random() * 16) + 's';
+            bg.appendChild(ball);
+        }
+
+        // ===== МЯГКИЙ ПАРАЛЛАКС =====
+        if (!reducedMotion) {
+            let targetX = 0, targetY = 0;
+            let curX = 0, curY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                targetX = (e.clientX / window.innerWidth - 0.5) * 2;
+                targetY = (e.clientY / window.innerHeight - 0.5) * 2;
+            });
+
+            const spots = document.querySelectorAll('.spotlight');
+            const fallingEls = document.querySelectorAll('.falling');
+
+            function smoothLoop() {
+                curX += (targetX - curX) * 0.045;
+                curY += (targetY - curY) * 0.045;
+
+                spots.forEach((s, i) => {
+                    const f = (i + 1) * 8;
+                    s.style.marginLeft = (curX * f) + 'px';
+                    s.style.marginTop = (curY * f) + 'px';
+                });
+
+                fallingEls.forEach((el, i) => {
+                    const f = (i % 4 + 1) * 2.2;
+                    el.style.marginLeft = (curX * f) + 'px';
+                });
+
+                requestAnimationFrame(smoothLoop);
+            }
+            smoothLoop();
+        }
+    })();
+</script>
+
+</body>
+</html>
