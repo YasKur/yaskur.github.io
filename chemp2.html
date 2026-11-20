@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Победа! Первое место 🥇</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            min-height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background: #0a0a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            touch-action: manipulation;
+        }
+
+        /* ---------- Живой фон: градиент + лучи + частицы ---------- */
+        .bg-scene {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 30% 20%, #1e1a3a, #0b0b1a 70%);
+            background-size: 200% 200%;
+            animation: bgShift 18s ease infinite alternate;
+        }
+
+        @keyframes bgShift {
+            0%   { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        /* Вращающиеся лучи (как на пьедестале) */
+        .ray {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200vmax;
+            height: 200vmax;
+            margin: -100vmax 0 0 -100vmax;
+            background: conic-gradient(
+                    from 0deg,
+                    transparent 0deg,
+                    rgba(255, 215, 0, 0.09) 10deg,
+                    transparent 20deg,
+                    transparent 40deg,
+                    rgba(255, 220, 100, 0.06) 50deg,
+                    transparent 60deg,
+                    transparent 90deg,
+                    rgba(255, 215, 0, 0.1) 100deg,
+                    transparent 110deg,
+                    transparent 140deg,
+                    rgba(255, 215, 0, 0.07) 150deg,
+                    transparent 160deg,
+                    transparent 200deg,
+                    rgba(255, 215, 0, 0.08) 210deg,
+                    transparent 220deg,
+                    transparent 260deg,
+                    rgba(255, 230, 120, 0.12) 270deg,
+                    transparent 280deg,
+                    transparent 310deg,
+                    rgba(255, 215, 0, 0.07) 320deg,
+                    transparent 330deg
+            );
+            animation: raySpin 24s linear infinite;
+            opacity: 0.85;
+        }
+
+        .ray.r2 {
+            animation-duration: 38s;
+            animation-direction: reverse;
+            opacity: 0.45;
+            background: conic-gradient(
+                    from 45deg,
+                    transparent 0deg,
+                    rgba(255, 255, 210, 0.06) 15deg,
+                    transparent 30deg,
+                    transparent 70deg,
+                    rgba(255, 255, 210, 0.05) 85deg,
+                    transparent 100deg,
+                    transparent 150deg,
+                    rgba(255, 255, 200, 0.07) 165deg,
+                    transparent 180deg,
+                    transparent 240deg,
+                    rgba(255, 255, 210, 0.06) 255deg,
+                    transparent 270deg,
+                    transparent 330deg,
+                    rgba(255, 255, 200, 0.05) 345deg,
+                    transparent 360deg
+            );
+        }
+
+        @keyframes raySpin {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+
+        /* Золотые искры (поднимаются вверх) */
+        .spark {
+            position: absolute;
+            border-radius: 50%;
+            background: #ffd966;
+            box-shadow: 0 0 18px 6px rgba(255, 215, 0, 0.65);
+            animation: sparkRise linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes sparkRise {
+            0%   { transform: translateY(0) scale(0.4); opacity: 0; }
+            8%   { opacity: 1; }
+            85%  { opacity: 0.9; }
+            100% { transform: translateY(-120vh) scale(1.4); opacity: 0; }
+        }
+
+        /* Мячи (футбольные / спортивные) — дополнительный слой */
+        .ball {
+            position: absolute;
+            font-size: 2.4rem;
+            opacity: 0.22;
+            animation: floatBall linear infinite;
+            filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.35));
+            pointer-events: none;
+            user-select: none;
+        }
+
+        @keyframes floatBall {
+            0%   { transform: translateY(0) rotate(0deg); opacity: 0.1; }
+            15%  { opacity: 0.4; }
+            85%  { opacity: 0.35; }
+            100% { transform: translateY(-115vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* ---------- Карточка чемпиона ---------- */
+        .card {
+            position: relative;
+            z-index: 10;
+            background: rgba(20, 18, 40, 0.55);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border-radius: 52px;
+            padding: 40px 26px 48px;
+            width: 92%;
+            max-width: 440px;
+            margin: 0 16px;
+            box-shadow: 0 35px 80px rgba(0, 0, 0, 0.65),
+            0 0 0 1px rgba(255, 215, 0, 0.22) inset,
+            0 0 70px rgba(255, 215, 0, 0.08);
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.28);
+            animation: cardGlow 5s ease-in-out infinite alternate;
+        }
+
+        @keyframes cardGlow {
+            0%   { box-shadow: 0 35px 80px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 215, 0, 0.22) inset, 0 0 60px rgba(255, 215, 0, 0.06); }
+            100% { box-shadow: 0 35px 80px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 215, 0, 0.35) inset, 0 0 90px rgba(255, 215, 0, 0.14); }
+        }
+
+        /* Кубок */
+        .trophy-wrap {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .emoji-big {
+            font-size: 5rem;
+            display: block;
+            animation: championBob 3.2s ease-in-out infinite;
+            filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.75));
+            transform-origin: center;
+        }
+
+        @keyframes championBob {
+            0%, 100% { transform: translateY(0) rotate(-4deg) scale(1); }
+            50%      { transform: translateY(-14px) rotate(4deg) scale(1.05); }
+        }
+
+        /* Золотое сияние за кубком */
+        .trophy-wrap::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 160px; height: 160px;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.3), transparent 70%);
+            animation: glowPulse 2.6s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.5; }
+            50%      { transform: translate(-50%, -50%) scale(1.4); opacity: 1; }
+        }
+
+        h1 {
+            font-size: 1.95rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff3c4, #ffd700, #ffb347, #ffe082);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+            line-height: 1.25;
+            text-shadow: 0 0 50px rgba(255, 215, 0, 0.45);
+            animation: titleShine 4s linear infinite;
+            background-size: 200% auto;
+        }
+
+        @keyframes titleShine {
+            0%   { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .subtitle {
+            font-size: 1.05rem;
+            color: #e8e0ff;
+            margin-bottom: 6px;
+            font-weight: 400;
+            opacity: 0.92;
+            line-height: 1.55;
+        }
+
+        .message-block {
+            margin-top: 26px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .message-item {
+            font-size: 1.12rem;
+            font-weight: 500;
+            color: #ffffff;
+            background: rgba(255, 215, 0, 0.07);
+            padding: 18px 20px;
+            border-radius: 36px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 215, 0, 0.22);
+            line-height: 1.6;
+            animation: itemRise 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.15) both;
+            transform-origin: center;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+        }
+
+        .message-item:nth-child(1) { animation-delay: 0.15s; }
+        .message-item:nth-child(2) { animation-delay: 0.35s; }
+        .message-item:nth-child(3) { animation-delay: 0.55s; }
+        .message-item:nth-child(4) { animation-delay: 0.75s; }
+
+        @keyframes itemRise {
+            0%   { opacity: 0; transform: translateY(28px) scale(0.92); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .big-glow {
+            font-size: 2.2rem;
+            display: block;
+            margin-top: 6px;
+            filter: drop-shadow(0 0 18px rgba(255, 215, 0, 0.9));
+            animation: emojiPulse 1.8s ease-in-out infinite;
+        }
+
+        @keyframes emojiPulse {
+            0%, 100% { transform: scale(1); }
+            50%      { transform: scale(1.12); }
+        }
+
+        /* Дополнительные золотые блики на карточке */
+        .card::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 54px;
+            background: linear-gradient(120deg, transparent 30%, rgba(255, 215, 0, 0.12) 45%, transparent 60%);
+            background-size: 250% 100%;
+            animation: shineSweep 6s linear infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes shineSweep {
+            0%   { background-position: 200% 0; }
+            100% { background-position: -100% 0; }
+        }
+
+        @media (max-width: 420px) {
+            .card { padding: 32px 18px 38px; }
+            h1 { font-size: 1.6rem; }
+            .emoji-big { font-size: 4rem; }
+            .message-item { font-size: 1rem; padding: 16px 14px; }
+            .subtitle { font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Живой фон: лучи, частицы, мячи -->
+<div class="bg-scene" id="bgScene">
+    <div class="ray"></div>
+    <div class="ray r2"></div>
+</div>
+
+<!-- Основная карточка -->
+<div class="card">
+    <div class="trophy-wrap">
+        <span class="emoji-big">🏆</span>
+    </div>
+    <h1>Софья Эдуардовна верю в вас!</h1>
+
+    <div class="message-block">
+        <div class="message-item">✨ Пусть сегодня игра будет вся оу фак</div>
+        <div class="message-item">💥 Все смеши на вылет — без стекол и сеток</div>
+        <div class="message-item">🏅 Спокойно и уверенно</div>
+        <div class="message-item">
+            Вы — машина! <br> Помните - главное удовольствие!
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        "use strict";
+
+        const scene = document.getElementById('bgScene');
+
+        // ---------- Золотые искры ----------
+        function createSparks() {
+            const count = 28;
+            for (let i = 0; i < count; i++) {
+                const s = document.createElement('div');
+                s.className = 'spark';
+                s.style.left = Math.random() * 100 + '%';
+                s.style.bottom = (-10 - Math.random() * 35) + '%';
+                s.style.animationDuration = (7 + Math.random() * 16) + 's';
+                s.style.animationDelay = (Math.random() * 14) + 's';
+                const size = 3 + Math.random() * 7;
+                s.style.width = size + 'px';
+                s.style.height = size + 'px';
+                const hue = 42 + Math.random() * 18;
+                s.style.background = `hsl(${hue}, 100%, 66%)`;
+                s.style.boxShadow = `0 0 20px 7px hsla(${hue}, 100%, 58%, 0.6)`;
+                scene.appendChild(s);
+            }
+        }
+        createSparks();
+
+        // ---------- Плавающие мячи ----------
+        function createBalls() {
+            const ballEmojis = ['⚽', '🏀', '🎾', '🏐', '🥎', '🏈', '⚾'];
+            const count = 10;
+            for (let i = 0; i < count; i++) {
+                const b = document.createElement('div');
+                b.className = 'ball';
+                b.textContent = ballEmojis[Math.floor(Math.random() * ballEmojis.length)];
+                b.style.left = (3 + Math.random() * 94) + '%';
+                b.style.bottom = (-15 - Math.random() * 25) + '%';
+                b.style.fontSize = (1.4 + Math.random() * 2.2) + 'rem';
+                b.style.animationDuration = (18 + Math.random() * 22) + 's';
+                b.style.animationDelay = (Math.random() * 20) + 's';
+                b.style.opacity = 0.1 + Math.random() * 0.2;
+                scene.appendChild(b);
+            }
+        }
+        createBalls();
+
+        // ---------- Лёгкое покачивание карточки за курсором (только на десктопе) ----------
+        if (window.matchMedia('(pointer: fine)').matches) {
+            const card = document.querySelector('.card');
+            document.addEventListener('mousemove', (e) => {
+                const xAxis = (window.innerWidth / 2 - e.pageX) / 55;
+                const yAxis = (window.innerHeight / 2 - e.pageY) / 55;
+                card.style.transform = `perspective(1000px) rotateY(${xAxis * 0.25}deg) rotateX(${yAxis * 0.2}deg)`;
+                card.style.transition = 'transform 0.12s ease-out';
+            });
+            document.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg)';
+                card.style.transition = 'transform 0.5s ease-out';
+            });
+        }
+
+        // ---------- Дополнительные вспышки-частицы при загрузке (конфетти без canvas) ----------
+        function spawnSparkleBurst() {
+            const colors = ['#FFD700', '#FFC107', '#FFEB3B', '#FFFFFF', '#FFE082', '#FFB300'];
+            const rect = document.querySelector('.card').getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            for (let i = 0; i < 40; i++) {
+                const p = document.createElement('div');
+                p.style.position = 'fixed';
+                p.style.left = centerX + 'px';
+                p.style.top = centerY + 'px';
+                p.style.width = (4 + Math.random() * 9) + 'px';
+                p.style.height = (4 + Math.random() * 9) + 'px';
+                p.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                p.style.background = colors[Math.floor(Math.random() * colors.length)];
+                p.style.pointerEvents = 'none';
+                p.style.zIndex = 1000;
+                p.style.boxShadow = '0 0 15px 3px rgba(255,215,0,0.5)';
+                p.style.transition = 'transform 1.4s cubic-bezier(0.15,0.9,0.3,1), opacity 1.4s ease';
+                document.body.appendChild(p);
+
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 90 + Math.random() * 260;
+                const dx = Math.cos(angle) * distance;
+                const dy = Math.sin(angle) * distance - 60;
+
+                requestAnimationFrame(() => {
+                    p.style.transform = `translate(${dx}px, ${dy}px) rotate(${Math.random() * 720}deg) scale(${0.3 + Math.random() * 0.8})`;
+                    p.style.opacity = '0';
+                });
+
+                setTimeout(() => p.remove(), 1500);
+            }
+        }
+
+        // Запускаем вспышку через небольшую задержку после загрузки
+        window.addEventListener('load', () => {
+            setTimeout(spawnSparkleBurst, 400);
+        });
+
+        // ---------- Лёгкая вибрация при загрузке (если поддерживается) ----------
+        if (navigator.vibrate) {
+            setTimeout(() => navigator.vibrate([30, 20, 40]), 300);
+        }
+
+        console.log('Чемпионский фон и анимации активированы 🏆');
+    })();
+</script>
+</body>
+</html>
